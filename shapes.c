@@ -6,13 +6,13 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/21 19:06:51 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/21 22:33:43 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	dda(t_data *img, double x0, double y0, double x1, double y1, int color)
+void	dda(t_data *v, double x0, double y0, double x1, double y1, int color)
 {
 	int		i;
 	double	xinc;
@@ -26,36 +26,34 @@ void	dda(t_data *img, double x0, double y0, double x1, double y1, int color)
 	while (i <= steps)
 	{
 		if (round(x0) >= 0 && round(x0) < 1920 && round(y0) >= 0 && round(y0) < 1080)
-			my_mlx_pixel_put(img ,round(x0), round(y0), color);
+			my_mlx_pixel_put(v ,round(x0), round(y0), color);
 		x0 = x0 + xinc;
 		y0 = y0 + yinc;
 		i++;
 	}
 }
 
-// void ray(t_data *img, int x, int y, int distance, int color)
-// [
-    
-// ]
-
-void rectangle(t_data *img, int x, int y, int hight, int width, int color)
+void rectangle(t_data *v, int x, int y, int color)
 {
     int i;
     int j;
 
     j = -1;
-    while (++j < hight)
+    while (++j < v->surface)
     {
         i = -1;
-        while (++i < width)
-            my_mlx_pixel_put(img, x + i, y + j, color);
+        while (++i < v->surface)
+            my_mlx_pixel_put(v, x + i, y + j, color);
     }
 }
 
-void disc(t_data *img, int x, int y, int radius, int color)
+void disc(t_data *v, int color)
 {
-    int x0, y0;
+    int x0;
+    int y0;
+    int radius;
 
+    radius = v->surface / 5;
     y0 = -radius;
     while (y0 <= radius)
     {
@@ -63,7 +61,7 @@ void disc(t_data *img, int x, int y, int radius, int color)
         while (x0 <= radius)
         {
             if (x0 * x0 + y0 * y0 <= radius * radius)
-                my_mlx_pixel_put(img, x0 + x, y0 + y, color);
+                my_mlx_pixel_put(v, x0 + v->x, y0 + v->y, color);
             x0++;
         }
         y0++;

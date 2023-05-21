@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/21 18:40:30 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/21 23:18:29 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,36 @@
 # include <unistd.h>
 # include<limits.h>
 
-typedef struct	s_data {
+typedef struct	s_mlx {
+	void	*mlx;
+	void	*mlx_win;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}				t_mlx;
 
-void    rectangle(t_data *img, int x, int y, int hight, int width, int color);
-void    maps_2d(t_data *img, char **map);
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	dda(t_data *img, double x0, double y0, double x1, double y1, int color);
-void	rectangle(t_data *img, int x, int y, int hight, int width, int color);
-void	disc(t_data *img, int x, int y, int radius, int color);
+typedef struct	s_data {
+	
+	//map
+	char **map;
+	int surface;
+	//player
+	int x;
+	int y;
+	int angle;
+	t_mlx mlx;
+}	t_data;
+
+
+
+void maps_2d(t_data *v);
+// void    maps_2d(t_mlx *img, char **map);
+void	my_mlx_pixel_put(t_data *v, int x, int y, int color);
+void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
+void rectangle(t_data *v, int x, int y, int color);
+void disc(t_data *v, int color);
+// void	disc(t_data *v, int x, int y, int radius, int color);
 
 #endif

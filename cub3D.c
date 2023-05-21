@@ -6,20 +6,27 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/21 18:50:20 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/21 23:32:42 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *v, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = v->mlx.addr + (y * v->mlx.line_length + x * (v->mlx.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
+void initialisation(t_data *v)
+{
+    v->surface = 30;
+    v->x = 10 * v->surface + v->surface / 2;
+    v->y = 10 * v->surface + v->surface / 2;
+    v->angle = 90;
+}
 
 char **read_maps(char *file)
 {
@@ -40,23 +47,56 @@ char **read_maps(char *file)
     s = ft_split(str, '\n');
     return(s);
 }
+int destroy(void)
+{
+    exit(0);
+    return (0);
+}
+int	key(int keycode, t_data *v)
+{
+    if (keycode == 53)
+		exit(0);
+    else if (keycode == 123)
+		v->angle = 180;
+	else if (keycode == 124)
+		v->angle = 0;
+	else if (keycode == 126)
+		v->angle = -90;
+	else if (keycode == 125)
+		v->angle = 90;
+    else if (keycode == 0)
+        v->x -= 10;     
+    else if (keycode == 2)
+        v->x += 10;     
+    else if (keycode == 13)
+        v->y -= 10;     
+    else if (keycode == 1)
+        v->y += 10;
+    mlx_destroy_image(v->mlx.mlx, v->mlx.img);
+	v->mlx.img = mlx_new_image(v->mlx.mlx, 1920, 1080);
+	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
+			&v->mlx.endian);
+	maps_2d(v);
+	mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
+    return(0);
+}
+
 int main(int ac ,char **av)
 {
-    char **s;
-    // (void)av;
+	t_data v;
+    
     (void)ac;
-    // printf("%c\n", s[3][4]);
-    void	*mlx;
-	void	*mlx_win;
-	t_data	img;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-    s = read_maps(av[1]);
-    maps_2d(&img, s);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	v.mlx.mlx = mlx_init();
+	v.mlx.mlx_win = mlx_new_window(v.mlx.mlx, 1920, 1080, "Hello world!");
+	v.mlx.img = mlx_new_image(v.mlx.mlx, 1920, 1080);
+	v.mlx.addr = mlx_get_data_addr(v.mlx.img, &v.mlx.bits_per_pixel, &v.mlx.line_length,
+								&v.mlx.endian);
+    v.map = read_maps(av[1]);
+    initialisation(&v);
+    maps_2d(&v);
+	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);
+    mlx_hook(v.mlx.mlx_win, 2, 0, key, &v);
+    mlx_hook(v.mlx.mlx_win, 17, 0, destroy, &v);
+	mlx_loop(v.mlx.mlx);
 }
