@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/21 23:18:29 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/23 00:31:54 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,14 @@ typedef struct	s_data {
 	
 	//map
 	char **map;
-	int surface;
+	int scal;
 	//player
-	int x;
-	int y;
+	double x;
+	double y;
 	int angle;
+	//raycast
+	double x_first;
+    double y_first;
 	t_mlx mlx;
 }	t_data;
 

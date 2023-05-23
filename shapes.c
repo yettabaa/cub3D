@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/21 22:33:43 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:38:05 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void rectangle(t_data *v, int x, int y, int color)
     int j;
 
     j = -1;
-    while (++j < v->surface)
+    while (++j < v->scal)
     {
         i = -1;
-        while (++i < v->surface)
+        while (++i < v->scal)
             my_mlx_pixel_put(v, x + i, y + j, color);
     }
 }
@@ -53,7 +53,7 @@ void disc(t_data *v, int color)
     int y0;
     int radius;
 
-    radius = v->surface / 5;
+    radius = v->scal / 5;
     y0 = -radius;
     while (y0 <= radius)
     {
