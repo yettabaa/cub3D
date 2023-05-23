@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/23 00:31:54 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/23 22:54:01 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ typedef struct	s_data {
 	//raycast
 	double x_first;
     double y_first;
+	
+	double x_H1stp;
+	double y_H1stp;
+	double x_Hstp;
+	double y_Hstp;
+	
+	double x_V1stp;
+	double y_V1stp;
+	double x_Vstp;
+	double y_Vstp;
+    
 	t_mlx mlx;
 }	t_data;
 

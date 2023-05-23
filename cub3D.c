@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/23 19:20:33 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/23 23:18:23 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void initialisation(t_data *v)
     v->scal = 30;
     v->x = 5 * v->scal + v->scal / 2;
     v->y = 5 * v->scal + v->scal / 2;
-    v->angle = 270;
+    v->angle = -90;
 }
 
 char **read_maps(char *file)
