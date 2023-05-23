@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/23 00:51:46 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/23 19:20:33 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	my_mlx_pixel_put(t_data *v, int x, int y, int color)
 void initialisation(t_data *v)
 {
     v->scal = 30;
-    v->x = 10 * v->scal + v->scal / 2;
-    v->y = 10 * v->scal + v->scal / 2;
+    v->x = 5 * v->scal + v->scal / 2;
+    v->y = 5 * v->scal + v->scal / 2;
     v->angle = 270;
 }
 
@@ -59,13 +59,9 @@ int	key(int keycode, t_data *v)
     if (keycode == 53)
 		exit(0);
     else if (keycode == 123)
-		v->angle = 180;
+		v->angle += 2;
 	else if (keycode == 124)
-		v->angle = 0;
-	else if (keycode == 126)
-		v->angle = 270;
-	else if (keycode == 125)
-		v->angle = 90;
+		v->angle -= 2;
     else if (keycode == 0)
         v->x -= 10;
     else if (keycode == 2)
