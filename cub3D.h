@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/23 22:54:01 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/24 03:07:46 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_data {
 	double y;
 	int angle;
 	//raycast
+	
 	double x_first;
     double y_first;
 	
