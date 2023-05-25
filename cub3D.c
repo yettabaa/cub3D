@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/25 18:01:41 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:19:45 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void initialisation(t_data *v)
     v->scal = 30;
     v->x = 5 * v->scal + v->scal / 2;
     v->y = 5 * v->scal + v->scal / 2;
-    v->angle = 0;
+    v->angle = 270;
 }
 
 
@@ -61,9 +61,9 @@ int	key(int keycode, t_data *v)
     if (keycode == 53)
 		exit(0);
     else if (keycode == 123)
-		v->angle += 2;
-	else if (keycode == 124)
 		v->angle -= 2;
+	else if (keycode == 124)
+		v->angle += 2;
     else if (keycode == 0)
         v->x -= intcr;
     else if (keycode == 2)
