@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/25 19:43:27 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/26 00:14:02 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ void steps(t_data *v, double ang)
     var = (int)(v->y / v->scal);
     v->y_H1stp = (v->y - (var * v->scal)); // up
     (ang > 0 && ang < 180) && (v->y_H1stp = ((var * v->scal + v->scal) - v->y)); // down
-    v->x_H1stp = v->y_H1stp / tan(rad(ang));
+    v->x_H1stp = 0;
+    (ang != 0 && ang != 180) && (v->x_H1stp = v->y_H1stp / tan(rad(ang)));
     v->DHside = sqrt(pow(v->x_H1stp, 2) + pow(v->y_H1stp, 2));
-    // printf("dx = %f dy = %f ipo = %f\n", v->x_H1stp, v->y_H1stp, v->DHside);
+    printf("dx = %f dy = %f ipo = %f\n", v->x_H1stp, v->y_H1stp, v->DHside);
     
     v->y_Hstp = v->scal;
     v->x_Hstp = 0;
-    (ang != 0) &&  (v->x_Hstp = v->scal / tan(rad(ang))); //tan +/-
+    (ang != 0 && ang != 180) &&  (v->x_Hstp = v->scal / tan(rad(ang))); //tan +/-
     v->Hdelta = sqrt(pow(v->x_Hstp, 2) + pow(v->y_Hstp, 2));
     // printf("x_H1stp = %f y_H1stp = %f x_Hstp = %f y_Hstp = %f tan = %f\n", v->x_H1stp, v->y_H1stp,v->x_Hstp,v->x_Hstp, tan(rad(angof_vue)));
     // printf("\nv->x = %f\n", (v->x_V1stp * v->scal + v->scal - v->x));
@@ -61,6 +62,7 @@ void steps(t_data *v, double ang)
     v->x_V1stp = v->x - var * v->scal; // left
     if ((ang > 270 && ang < 360) || (ang > 0 && ang < 90)) // x++ / x-- //right
         v->x_V1stp = (var * v->scal + v->scal) - v->x;
+    (ang == 270 || ang == 90) && (v->x_V1stp = 0);    
     v->y_V1stp = v->x_V1stp * tan(rad((ang)));
     v->DVside = sqrt(fabs(pow(v->x_V1stp , 2)) + fabs(pow(v->y_V1stp, 2)));
 
@@ -68,38 +70,124 @@ void steps(t_data *v, double ang)
     (ang == 0) && (v->y_Vstp = 0);
     v->y_Vstp = v->scal * tan(rad(normalize_angle_180(ang))); // tan vari +/-
     v->Vdelta = sqrt(pow(v->x_Vstp, 2) + pow(v->y_Vstp, 2));
+    // printf("dx = %f dy = %f ipo = %f\n", v->x_V1stp, v->y_V1stp, v->DVside);
 }
 
 int horisontal_intersections(t_data *v, double ang)
 {
     int i;
     int j;
-    double erreur = 0.0001; // ??? hit the wall in the origin axis 
+    double erreur = 0.000001; // ??? hit the wall in the origin axis 
 
-    v->x1 = v->x + (v->DHside * cos(rad(ang))); //translation with distace of adjacent
-    v->y1 = v->y + (v->DHside * sin(rad(ang))); //translation with distace of opposite
+    v->x1 = v->x + (fmin(v->DHside, v->DVside) * cos(rad(ang))); //translation with distace of adjacent
+    v->y1 = v->y + (fmin(v->DHside, v->DVside) * sin(rad(ang))); //translation with distace of opposite
     i = v->x1 / v->scal;
+    (v->DHside > v->DVside && ang > 90 && ang < 270) && (i -= 1); // left // ?
     j = v->y1 / v->scal;
-    (ang > 180 && ang < 360) && (j -= 1); // up
+    (v->DHside < v->DVside && ang > 180 && ang < 360) && (j -= 1); // up
+    // printf("ang = %f h = %f v = %f        i = %d  ,  j = %d\n",ang, v->DHside, v->DVside,i,j);
+    // if ((int)v->map[j][i] != '1')
+    // {
+    //     v->x1 = v->x + (fmax(v->DHside, v->DVside) * cos(rad(ang))); //translation with distace of adjacent
+    //     v->y1 = v->y + (fmax(v->DHside, v->DVside) * sin(rad(ang))); //translation with distace of opposite
+    //     i = v->x1 / v->scal;
+    //     (v->DHside < v->DVside&& ang > 90 && ang < 270) && (i -= 1); // left
+    //     j = v->y1 / v->scal;
+    //     (v->DHside < v->DVside && ang > 180 && ang < 360) && (j -= 1); // up
+    // }
+    
+        
+    // double tx;
+    // double ty;
     puts("----------------");
-    int iq = 0;
-    while (i >= 0 && j >= 0 && v->map[j][i] && (int)v->map[j][i] != '1')
+    int iq = 1;
+    double smal_steps;
+    //     printf("iq = %d (i = %d iz = %f, j = %d) ang = %f cos = %f sin %f\n", iq++, i,(v->x1 / v->scal),j,ang, v->Hdelta * cos(rad(ang)), v->Hdelta * sin(rad(ang)));
+    while ((int)v->map[j][i] != '1')
     {
-        v->x1 += (v->Hdelta * cos(rad(ang))) + erreur; //translation with distace of adjacent
-        v->y1 += (v->Hdelta * sin(rad(ang))) + erreur; //translation with distace of opposite
+        smal_steps = (iq * fmin(v->Hdelta, v->Vdelta) + fmin(v->DHside, v->DVside));
+        v->x1 = v->x + (smal_steps * cos(rad(ang))) + erreur; //translation with distace of adjacent
+        v->y1 = v->y + (smal_steps * sin(rad(ang))) + erreur; //translation with distace of opposite
         i = v->x1 / v->scal;
+        (v->DHside > v->DVside && ang > 90 && ang < 270) && (i -= 1); // left // ?
         j = v->y1 / v->scal;
-        (ang > 180 && ang < 360) && (j -= 1); // up
-        printf("iq = %d (i = %d iz = %f, j = %d) ang = %f cos = %f sin %f\n", iq++, i,(v->x1 / v->scal),j,ang, v->Hdelta * cos(rad(ang)), v->Hdelta * sin(rad(ang)));
+        (v->DHside < v->DVside && ang > 180 && ang < 360) && (j -= 1); // up
+        iq++;
     }
+    
+    int iqtale3 = 1;
+    double big_steps;
+    // if ( (int)v->map[j][i] == '1' && fmax(v->Hdelta, v->Vdelta) < smal_steps )
+    // {
+    v->x1 = v->x + (fmax(v->DHside, v->DVside) * cos(rad(ang))); //translation with distace of adjacent
+    v->y1 = v->y + (fmax(v->DHside, v->DVside) * sin(rad(ang))); //translation with distace of opposite
+    i = v->x1 / v->scal;
+    // (v->DHside > v->DVside && ang > 90 && ang < 270) && (i -= 1); // left // ?
+    j = v->y1 / v->scal;
+    (v->DHside < v->DVside && ang > 180 && ang < 360) && (j -= 1); // up
+    printf("1- ang %f (Vdelta = %f, Hdelta = %f)  (smal_steps = %f) i == %d, j == %d iq = %d iqzab %d\n",ang,v->Vdelta,v->Hdelta, smal_steps,i,j,iq,iqtale3);
+    while ((int)v->map[j][i] != '1')
+    {
+        big_steps = (iqtale3 * fmax(v->Hdelta, v->Vdelta) + fmax(v->DHside, v->DVside));
+        v->x1 = v->x + (big_steps * cos(rad(ang))) + erreur; //translation with distace of adjacent
+        v->y1 = v->y + (big_steps * sin(rad(ang))) + erreur; //translation with distace of opposite
+        i = v->x1 / v->scal;
+        (v->DHside < v->DVside && ang > 90 && ang < 270) && (i -= 1); // left // ?
+        j = v->y1 / v->scal;
+        (v->DHside > v->DVside && ang > 180 && ang < 360) && (j -= 1); // up
+        iqtale3++;
+        printf("1- ang %f (Vdelta = %f, Hdelta = %f)  (smal_steps = %f, big_steps = %f) i == %d, j == %d iq = %d iqzab %d\n",ang,v->Vdelta,v->Hdelta, smal_steps, big_steps,i,j,iq,iqtale3);
+        if (big_steps > smal_steps || (int)v->map[j][i] == '1')
+        {
+            puts("ss");
+            break;
+        }
+    }
+    v->x1 = v->x + (fmin(smal_steps,big_steps) * cos(rad(ang))) + erreur; //translation with distace of adjacent
+    v->y1 = v->y + (fmin(smal_steps,big_steps) * sin(rad(ang))) + erreur; //translation with distace of opposite
+    i = v->x1 / v->scal;
+    (v->DHside < v->DVside && ang > 90 && ang < 270) && (i -= 1); // left // ?
+    j = v->y1 / v->scal;
+    (v->DHside > v->DVside && ang > 180 && ang < 360) && (j -= 1); // up
+    // }
+        // printf("ang %f   i == %d, j == %d iq = %d iqzab %d\n",ang,i,j,iq,iqtale3);
+        // v->x1 += (v->Hdelta * cos(rad(ang))) + erreur; //translation with distace of adjacent
+        // v->y1 += (v->Hdelta * sin(rad(ang))) + erreur; //translation with distace of opposite
+        // i = v->x1 / v->scal;
+        // j = v->y1 / v->scal;
+        // (ang > 180 && ang < 360) && (j -= 1); // up
     return 0;
 }
+// int horisontal_intersections(t_data *v, double ang)
+// {
+//     int i;
+//     int j;
+//     double erreur = 0.0001; // ??? hit the wall in the origin axis 
+
+//     v->x1 = v->x + (v->DHside * cos(rad(ang))); //translation with distace of adjacent
+//     v->y1 = v->y + (v->DHside * sin(rad(ang))); //translation with distace of opposite
+//     i = v->x1 / v->scal;
+//     j = v->y1 / v->scal;
+//     (ang > 180 && ang < 360) && (j -= 1); // up
+//     puts("----------------");
+//     int iq = 0;
+//     while (i >= 0 && j >= 0 && v->map[j][i] && (int)v->map[j][i] != '1')
+//     {
+//         v->x1 += (v->Hdelta * cos(rad(ang))) + erreur; //translation with distace of adjacent
+//         v->y1 += (v->Hdelta * sin(rad(ang))) + erreur; //translation with distace of opposite
+//         i = v->x1 / v->scal;
+//         j = v->y1 / v->scal;
+//         (ang > 180 && ang < 360) && (j -= 1); // up
+//         printf("iq = %d (i = %d iz = %f, j = %d) ang = %f cos = %f sin %f\n", iq++, i,(v->x1 / v->scal),j,ang, v->Hdelta * cos(rad(ang)), v->Hdelta * sin(rad(ang)));
+//     }
+//     return 0;
+// }
 
 void vertical_intersections(t_data *v, double ang)
 {
     int i;
     int j;
-    double erreur = 0.0001; // ???
+    double erreur = 0.001; // ???
 
     v->x1 = v->x + (v->DVside * cos(rad(ang))); //translation with distace of adjacent
     v->y1 = v->y + (v->DVside * sin(rad(ang))); //translation with distace of opposite
@@ -121,7 +209,7 @@ void vertical_intersections(t_data *v, double ang)
 
 void player(t_data *v, int color)
 {
-    int frequency = 60;
+    int frequency = 0;
     int vi = 0;
     int ang;
     
@@ -140,6 +228,7 @@ void player(t_data *v, int color)
                 // break;
             // vertical_intersections(v, normalize_angle_360(ang + vi));
             dda(v, v->x, v->y, v->x1, v->y1, color);
+            // printf("vi = %d ang  = %dng\n", vi, ang +vi);
         // }
         vi++;
         // break;

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/25 19:19:45 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:56:27 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int destroy(void)
 
 int	key(int keycode, t_data *v)
 {
-    int intcr = 10;
+    int intcr = 15;
     if (keycode == 53)
 		exit(0);
     else if (keycode == 123)
-		v->angle -= 2;
+		v->angle -= 5;
 	else if (keycode == 124)
-		v->angle += 2;
+		v->angle += 5;
     else if (keycode == 0)
         v->x -= intcr;
     else if (keycode == 2)
