@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/24 20:11:47 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:01:41 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void initialisation(t_data *v)
     v->scal = 30;
     v->x = 5 * v->scal + v->scal / 2;
     v->y = 5 * v->scal + v->scal / 2;
-    v->angle = 180;
+    v->angle = 0;
 }
+
 
 char **read_maps(char *file)
 {
@@ -56,6 +57,7 @@ int destroy(void)
 
 int	key(int keycode, t_data *v)
 {
+    int intcr = 10;
     if (keycode == 53)
 		exit(0);
     else if (keycode == 123)
@@ -63,13 +65,13 @@ int	key(int keycode, t_data *v)
 	else if (keycode == 124)
 		v->angle -= 2;
     else if (keycode == 0)
-        v->x -= 10;
+        v->x -= intcr;
     else if (keycode == 2)
-        v->x += 10;
+        v->x += intcr;
     else if (keycode == 13)
-        v->y -= 10;
+        v->y -= intcr;
     else if (keycode == 1)
-        v->y += 10;
+        v->y += intcr;
     mlx_destroy_image(v->mlx.mlx, v->mlx.img);
 	v->mlx.img = mlx_new_image(v->mlx.mlx, 1920, 1080);
 	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,

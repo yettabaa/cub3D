@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/24 03:07:46 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:56:47 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ typedef struct	s_data {
 	
 	//map
 	char **map;
-	int scal;
+	double scal;
 	//player
 	double x;
 	double y;
 	int angle;
 	//raycast
 	
-	double x_first;
-    double y_first;
+	double x1;
+    double y1;
 	
 	double x_H1stp;
 	double y_H1stp;
@@ -57,6 +57,11 @@ typedef struct	s_data {
 	double y_V1stp;
 	double x_Vstp;
 	double y_Vstp;
+	
+	double DHside;
+	double DVside;
+	double Hdelta;
+	double Vdelta;
     
 	t_mlx mlx;
 }	t_data;

@@ -18,7 +18,7 @@ int main()
     int ang = 270 - 180 - 30;
 
     printf("ang =  %f\n", Angle(359));
-    printf("cons =  %f\n", constrainAngle(360));
+    printf("cons =  %f\n", constrainAngle(150));
     // while (i <= 60)
     // {
     //     printf("i = %d calcule = %d\n", i, ang + (i));

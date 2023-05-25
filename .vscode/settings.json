@@ -3,6 +3,7 @@
         "__functional_03": "c",
         "memory_resource": "c",
         "functional": "c",
-        "memory": "c"
+        "memory": "c",
+        "math.h": "c"
     }
 }
