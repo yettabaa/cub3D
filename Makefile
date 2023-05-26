@@ -6,15 +6,15 @@
 #    By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:39:51 by yettabaa          #+#    #+#              #
-#    Updated: 2023/05/21 22:34:50 by yettabaa         ###   ########.fr        #
+#    Updated: 2023/05/26 23:46:28 by yettabaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -Ofast -fsanitize=address -g 
 
-MLXFLAGS = -lmlx -framework OpenGL -framework AppKit -fsanitize=address -g
+MLXFLAGS = -lmlx -framework OpenGL -framework AppKit -Ofast -fsanitize=address -g
 
 MAND = cub3D.c maps_2D.c shapes.c
 

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/25 23:56:27 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/26 23:46:52 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void initialisation(t_data *v)
     v->scal = 30;
     v->x = 5 * v->scal + v->scal / 2;
     v->y = 5 * v->scal + v->scal / 2;
-    v->angle = 270;
+    v->angle = 180;
 }
 
 
@@ -73,7 +73,7 @@ int	key(int keycode, t_data *v)
     else if (keycode == 1)
         v->y += intcr;
     mlx_destroy_image(v->mlx.mlx, v->mlx.img);
-	v->mlx.img = mlx_new_image(v->mlx.mlx, 1920, 1080);
+	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
 	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
 			&v->mlx.endian);
 	maps_2d(v);
@@ -87,10 +87,10 @@ int main(int ac ,char **av)
     (void)ac;
 
 	v.mlx.mlx = mlx_init();
-	v.mlx.mlx_win = mlx_new_window(v.mlx.mlx, 1920, 1080, "Hello world!");
-	v.mlx.img = mlx_new_image(v.mlx.mlx, 1920, 1080);
+	v.mlx.mlx_win = mlx_new_window(v.mlx.mlx, WIDTH, HIGHT, "Hello world!");
+	v.mlx.img = mlx_new_image(v.mlx.mlx, WIDTH, HIGHT);
 	v.mlx.addr = mlx_get_data_addr(v.mlx.img, &v.mlx.bits_per_pixel, &v.mlx.line_length,
-								&v.mlx.endian);
+								&v.mlx.endian); 
     v.map = read_maps(av[1]);
     initialisation(&v);
     maps_2d(&v);

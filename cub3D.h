@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/25 17:56:47 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/26 22:41:08 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <unistd.h>
 # include<limits.h>
 
+#ifndef WIDTH 
+#define WIDTH 960
+#endif
+#ifndef HIGHT
+#define HIGHT 540
+#endif
 typedef struct	s_mlx {
 	void	*mlx;
 	void	*mlx_win;
@@ -47,6 +53,8 @@ typedef struct	s_data {
 	
 	double x1;
     double y1;
+	
+	int var;
 	
 	double x_H1stp;
 	double y_H1stp;

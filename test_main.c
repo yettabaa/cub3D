@@ -14,11 +14,13 @@ double constrainAngle(double x){
 }
 int main()
 {
-    int i = 0;
-    int ang = 270 - 180 - 30;
-
-    printf("ang =  %f\n", Angle(359));
-    printf("cons =  %f\n", constrainAngle(150));
+    // int i = 0;
+    // int ang = 270 - 180 - 30;
+    double x = 150;
+    double y = 30;
+    // printf("ang =  %f\n", Angle(359));
+    // printf("cons =  %f\n", constrainAngle(150));
+    printf("cons =  %f\n", x / y);
     // while (i <= 60)
     // {
     //     printf("i = %d calcule = %d\n", i, ang + (i));
