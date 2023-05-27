@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/26 22:41:08 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/27 19:02:36 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,20 @@
 # include <unistd.h>
 # include<limits.h>
 
-#ifndef WIDTH 
 #define WIDTH 960
-#endif
-#ifndef HIGHT
 #define HIGHT 540
-#endif
+#define SMALL 0
+#define BIG 1
+
+#define UP 2
+#define DOWN 3
+#define LEFT 4
+#define RIGHT 5
+
+
+typedef double t_deg;
+typedef double t_rad;
+
 typedef struct	s_mlx {
 	void	*mlx;
 	void	*mlx_win;
@@ -48,11 +56,14 @@ typedef struct	s_data {
 	//player
 	double x;
 	double y;
-	int angle;
+	int orientation;
+	double error;
 	//raycast
 	
 	double x1;
     double y1;
+	double ang;
+	
 	
 	int var;
 	
@@ -70,18 +81,27 @@ typedef struct	s_data {
 	double DVside;
 	double Hdelta;
 	double Vdelta;
+	
+	double smal_sidstp;
+    double smal_stp;
+	double big_sidstp;
+    double big_stp;
     
 	t_mlx mlx;
 }	t_data;
 
 
-
+int is(t_data *v, int flag);
 void maps_2d(t_data *v);
+double normalize_angle_360(double x);
+double normalize_angle_180(double x);
 // void    maps_2d(t_mlx *img, char **map);
 void	my_mlx_pixel_put(t_data *v, int x, int y, int color);
 void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
 void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
+void horisontal_intersections(t_data *v);
+t_rad	rad(t_deg angle);
 // void	disc(t_data *v, int x, int y, int radius, int color);
 
 #endif
