@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/27 20:00:49 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/31 04:05:11 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,15 @@ void	my_mlx_pixel_put(t_data *v, int x, int y, int color)
 
 void initialisation(t_data *v)
 {
-    v->error = 0.0001; // ??? hit the wall in the origin axis  // (1,5) angle 225
-    v->scal = 30;
-    v->orientation = 250;
-    v->x = (1 * v->scal + v->scal / 2) + (1 * cos(rad(v->orientation)));
-    v->y = (5 * v->scal + v->scal / 2) + (1 * sin(rad(v->orientation)));
+    // v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
+    v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
+    v->scal = 20;
+    v->orientation = 135;
+    v->x = (1 * v->scal + v->scal / 2);
+    v->y = (9 * v->scal + v->scal / 2);
+    // v->x = (1 * v->scal + v->scal / 2) + (1 * cos(rad(v->orientation)));
+    // v->y = (5 * v->scal + v->scal / 2) + (1 * sin(rad(v->orientation)));
 }
-
 
 char **read_maps(char *file)
 {
@@ -58,26 +60,53 @@ int destroy(void)
 
 int	key(int keycode, t_data *v)
 {
-    int intcr = 15;
+    int inc = 3;
+
     if (keycode == 53)
 		exit(0);
     else if (keycode == 123)
-		v->orientation -= 5;
+		v->orientation -= 1;
 	else if (keycode == 124)
-		v->orientation += 5;
-    else if (keycode == 0)
-        v->x -= intcr;
-    else if (keycode == 2)
-        v->x += intcr;
-    else if (keycode == 13)
-        v->y -= intcr;
-    else if (keycode == 1)
-        v->y += intcr;
+		v->orientation += 1;
+    else if (keycode == 125)
+		v->orientation -= 10;
+	else if (keycode == 126)
+		v->orientation += 10;
+    else if (keycode == 84)   
+        v->y += 20; 
+    else if (keycode == 91)
+        v->y -= 20;
+    else if (keycode == 86)
+        v->x -= 20;    
+    else if (keycode == 88)
+        v->x += 20;    
+    else if (keycode == W)
+    {
+        ft_forward(v);
+        // v->x += inc * cos(rad(v->orientation));
+        // v->y += inc * sin(rad(v->orientation));
+        // v->y -= inc;
+    }
+    else if (keycode == S)
+    {
+        v->x -= inc * cos(rad(v->orientation));
+        v->y -= inc * sin(rad(v->orientation));
+        // v->y += inc;
+    }
+    else if (keycode == D)
+    {
+        // v->x -= inc;
+    }
+    else if (keycode == A)
+    {
+        // v->x += inc;
+    }
     mlx_destroy_image(v->mlx.mlx, v->mlx.img);
 	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
 	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
 			&v->mlx.endian);
 	maps_2d(v);
+    // player(v, 0xff);
 	mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
     return(0);
 }

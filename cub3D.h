@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/27 19:02:36 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/31 02:03:19 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,22 @@
 # include <unistd.h>
 # include<limits.h>
 
-#define WIDTH 960
-#define HIGHT 540
-#define SMALL 0
-#define BIG 1
+#define WIDTH 1800
+#define HIGHT 720
+// #define SMALL 0
+// #define BIG 1
 
 #define UP 2
 #define DOWN 3
 #define LEFT 4
 #define RIGHT 5
 
+#define A 0
+#define S 1
+#define D 2
+#define W 13
 
-typedef double t_deg;
-typedef double t_rad;
+
 
 typedef struct	s_mlx {
 	void	*mlx;
@@ -56,8 +59,8 @@ typedef struct	s_data {
 	//player
 	double x;
 	double y;
-	int orientation;
-	double error;
+	double orientation;
+	double epsilon;
 	//raycast
 	
 	double x1;
@@ -71,6 +74,7 @@ typedef struct	s_data {
 	double y_H1stp;
 	double x_Hstp;
 	double y_Hstp;
+	
 	
 	double x_V1stp;
 	double y_V1stp;
@@ -101,7 +105,10 @@ void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
 void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
 void horisontal_intersections(t_data *v);
-t_rad	rad(t_deg angle);
+double	rad(double angle);
+// int is_wall(t_data *v);
+int is_wall(t_data *v, int inc, int flag);
+void ft_forward(t_data *v);
 // void	disc(t_data *v, int x, int y, int radius, int color);
 
 #endif

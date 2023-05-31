@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 18:52:33 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/27 19:02:05 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/30 21:58:34 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,28 @@
 
 int is(t_data *v, int flag)
 {
-    if (flag == LEFT && v->ang > 90 && v->ang < 270)
+    int ang_nor;
+    
+    ang_nor = normalize_angle_360(v->ang);
+    if (flag == LEFT && ang_nor > 90 && ang_nor < 270)
         return (1);
-    if (flag == RIGHT && !(v->ang > 90 && v->ang < 270))
+    if (flag == RIGHT && !(ang_nor > 90 && ang_nor < 270))
         return (1);
-    else if (flag == UP && v->ang > 180 && v->ang < 360)
+    else if (flag == UP && ang_nor > 180 && ang_nor < 360)
         return (1);
-    else if (flag == DOWN && v->ang > 0 && v->ang < 0)
+    else if (flag == DOWN && ang_nor > 0 && ang_nor < 180)
         return (1);
     else
         return(0);    
 }
 
-t_rad	rad(t_deg angle)
+double	rad(double angle)
 {
 	return (angle * (M_PI / 180));
 }
 
 double normalize_angle_180(double x)
 {
-    // int tmp = x;
-
-    // if (x <= 180)
-    //     return x;
-    // x = fmod(x + 180,360);
-    // if (x < 0)
-    //     x += 360;
-    // (tmp > 180) && (x *= -1);    
-    // return x ;
     if (x <= 180)
         return x;    
     return x -360 ;

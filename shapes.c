@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/23 15:33:43 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:03:54 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void rectangle(t_data *v, int x, int y, int color)
 
 void disc(t_data *v, int color)
 {
-    int x0;
-    int y0;
-    int radius;
+    double x0;
+    double y0;
+    double radius;
 
     radius = v->scal / 5;
     y0 = -radius;

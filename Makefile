@@ -6,7 +6,7 @@
 #    By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:39:51 by yettabaa          #+#    #+#              #
-#    Updated: 2023/05/27 19:41:14 by yettabaa         ###   ########.fr        #
+#    Updated: 2023/05/31 01:56:33 by yettabaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -Ofast -fsanitize=address -g
 
 MLXFLAGS = -lmlx -framework OpenGL -framework AppKit -Ofast -fsanitize=address -g
 
-MAND = cub3D.c maps_2D.c shapes.c raycasting.c cub3D_utils.c
+MAND = cub3D.c maps_2D.c shapes.c raycasting.c cub3D_utils.c mouvements.c
 
 OMAND = $(MAND:.c=.o)
 
