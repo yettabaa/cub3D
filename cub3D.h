@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 02:08:29 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/01 04:13:24 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct	s_data {
 	
 	
 	int var;
-	int inc ;
 	// int stop;
 	
 	double x_H1stp;
@@ -107,9 +106,7 @@ void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
 void horisontal_intersections(t_data *v);
 double	rad(double angle);
-void go_forward(t_data *v);
-void go_back(t_data *v);
-
+void direction(t_data *v, int param);
 // void visualize_maps(t_data *v, int *i, int *j);
 
 #endif

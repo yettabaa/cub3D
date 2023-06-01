@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 02:22:51 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/01 04:32:47 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void initialisation(t_data *v)
     v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
     v->scal = 40;
     v->orientation = 270;
-    v->inc = 10; //scal / 8
     v->x = (1 * v->scal + v->scal / 2);
     v->y = (5 * v->scal + v->scal / 2);
     // v->x = (1 * v->scal + v->scal / 2) + (1 * cos(rad(v->orientation)));
@@ -82,27 +81,13 @@ int	key(int keycode, t_data *v)
     else if (keycode == 88)
         v->x += 20;    
     else if (keycode == W)
-    {
-        go_forward(v);
-        // v->x += inc * cos(rad(v->orientation));
-        // v->y += inc * sin(rad(v->orientation));
-        // v->y -= inc;
-    }
+        direction(v, W);
     else if (keycode == S)
-    {
-        go_back(v);
-        // v->x -= inc * cos(rad(v->orientation));
-        // v->y -= inc * sin(rad(v->orientation));
-        // v->y += inc;
-    }
+        direction(v, S);
     else if (keycode == D)
-    {
-        // v->x -= inc;
-    }
+        direction(v, D);
     else if (keycode == A)
-    {
-        // v->x += inc;
-    }
+        direction(v, A);
     mlx_destroy_image(v->mlx.mlx, v->mlx.img);
 	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
 	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
@@ -128,6 +113,7 @@ int main(int ac ,char **av)
     maps_2d(&v);
 	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);
     mlx_hook(v.mlx.mlx_win, 2, 0, key, &v);
+    // mlx_loop_hook(v.mlx.mlx, key, &v);
     mlx_hook(v.mlx.mlx_win, 17, 0, destroy, &v);
 	mlx_loop(v.mlx.mlx);
 }
