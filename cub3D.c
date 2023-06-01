@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/31 04:05:11 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/01 02:22:51 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void initialisation(t_data *v)
 {
     // v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
-    v->scal = 20;
-    v->orientation = 135;
+    v->scal = 40;
+    v->orientation = 270;
+    v->inc = 10; //scal / 8
     v->x = (1 * v->scal + v->scal / 2);
-    v->y = (9 * v->scal + v->scal / 2);
+    v->y = (5 * v->scal + v->scal / 2);
     // v->x = (1 * v->scal + v->scal / 2) + (1 * cos(rad(v->orientation)));
     // v->y = (5 * v->scal + v->scal / 2) + (1 * sin(rad(v->orientation)));
 }
@@ -60,7 +61,7 @@ int destroy(void)
 
 int	key(int keycode, t_data *v)
 {
-    int inc = 3;
+    // int inc = 3;
 
     if (keycode == 53)
 		exit(0);
@@ -82,15 +83,16 @@ int	key(int keycode, t_data *v)
         v->x += 20;    
     else if (keycode == W)
     {
-        ft_forward(v);
+        go_forward(v);
         // v->x += inc * cos(rad(v->orientation));
         // v->y += inc * sin(rad(v->orientation));
         // v->y -= inc;
     }
     else if (keycode == S)
     {
-        v->x -= inc * cos(rad(v->orientation));
-        v->y -= inc * sin(rad(v->orientation));
+        go_back(v);
+        // v->x -= inc * cos(rad(v->orientation));
+        // v->y -= inc * sin(rad(v->orientation));
         // v->y += inc;
     }
     else if (keycode == D)

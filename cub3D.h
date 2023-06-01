@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/31 02:03:19 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/01 02:08:29 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct	s_data {
 	
 	
 	int var;
+	int inc ;
+	// int stop;
 	
 	double x_H1stp;
 	double y_H1stp;
@@ -99,16 +101,15 @@ int is(t_data *v, int flag);
 void maps_2d(t_data *v);
 double normalize_angle_360(double x);
 double normalize_angle_180(double x);
-// void    maps_2d(t_mlx *img, char **map);
 void	my_mlx_pixel_put(t_data *v, int x, int y, int color);
 void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
 void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
 void horisontal_intersections(t_data *v);
 double	rad(double angle);
-// int is_wall(t_data *v);
-int is_wall(t_data *v, int inc, int flag);
-void ft_forward(t_data *v);
-// void	disc(t_data *v, int x, int y, int radius, int color);
+void go_forward(t_data *v);
+void go_back(t_data *v);
+
+// void visualize_maps(t_data *v, int *i, int *j);
 
 #endif

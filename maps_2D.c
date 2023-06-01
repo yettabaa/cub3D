@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/05/31 04:14:23 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/01 01:57:06 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@ void steps(t_data *v)
     v->x_Hstp = 0;
     (v->ang != 0 && v->ang != 180) &&  (v->x_Hstp = v->scal / tan(rad(v->ang))); //tan +/-
     v->Hdelta = sqrt(pow(v->x_Hstp, 2) + pow(v->y_Hstp, 2));
-    printf("v->ang = %f  (x = %f, y = %f)\n", v->ang , v->x, v->y);
+    // printf("v->ang = %f  (x = %f, y = %f)\n", v->ang , v->x, v->y);
     v->var = (int)(v->y / v->scal);
     v->y_H1stp = (v->y - (v->var * v->scal)); // up
     (is(v, DOWN) || !v->y_H1stp) && (v->y_H1stp = ((v->var * v->scal + v->scal) - v->y)); // down
     v->x_H1stp = 0;
     (v->ang != 0 && v->ang != 180) && (v->x_H1stp = v->y_H1stp / tan(rad(v->ang)));
     v->DHside = sqrt(pow(v->x_H1stp, 2) + pow(v->y_H1stp, 2));
+    // printf("x_H1stp = %f y_H1stp = %f x_Hstp = %f x_Hstp = %f\n", v->x_H1stp, v->y_H1stp, v->x_Hstp, v->y_Hstp);
 
 
     v->x_Vstp = v->scal;
@@ -38,7 +39,7 @@ void steps(t_data *v)
     (v->ang == 270 || v->ang == 90) && (v->x_V1stp = 0);
     v->y_V1stp = v->x_V1stp * tan(rad((v->ang)));
     v->DVside = sqrt(fabs(pow(v->x_V1stp , 2)) + fabs(pow(v->y_V1stp, 2)));
-    // printf("Vdelta = %f Hdelta = %f\nDVside = %f DHside = %f\n", v->Vdelta, v->Hdelta, v->DVside, v->DHside);
+     // printf("x_V1stp = %f y_V1stp = %f x_Vstp = %f x_Vstp = %f\n", v->x_V1stp, v->y_V1stp, v->x_Vstp, v->y_Vstp);
 }
 
 
@@ -53,11 +54,11 @@ void player(t_data *v, int color)
     vi = 0;
     while (vi <= (frequency + v->epsilon))
     {
-        puts("---------------");
+        // puts("---------------");
         // puts("---------------------------------\n");
         // printf("dda ==> (x = %f, y = %f) - (xf = %f, yf = %f\n", v->x, v->y, v->x_first, v->y_first);
         // if (vi == 0 || vi == 60)
-        v->ang = normalize_angle_360(v->orientation -30+ vi);
+        v->ang = normalize_angle_360(v->orientation -30 + vi);
         // {
         steps(v);
         horisontal_intersections(v);
