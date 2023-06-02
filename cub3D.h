@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 04:13:24 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/02 00:43:53 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <unistd.h>
 # include<limits.h>
 
-#define WIDTH 1800
-#define HIGHT 720
+#define WIDTH 1920
+#define HIGHT 1080
 // #define SMALL 0
 // #define BIG 1
 
@@ -39,8 +39,6 @@
 #define D 2
 #define W 13
 
-
-
 typedef struct	s_mlx {
 	void	*mlx;
 	void	*mlx_win;
@@ -51,31 +49,17 @@ typedef struct	s_mlx {
 	int		endian;
 }				t_mlx;
 
-typedef struct	s_data {
-	
-	//map
-	char **map;
-	double scal;
-	//player
-	double x;
-	double y;
-	double orientation;
-	double epsilon;
-	//raycast
-	
+typedef struct	s_rycast {
 	double x1;
     double y1;
 	double ang;
 	
-	
 	int var;
-	// int stop;
 	
 	double x_H1stp;
 	double y_H1stp;
 	double x_Hstp;
 	double y_Hstp;
-	
 	
 	double x_V1stp;
 	double y_V1stp;
@@ -91,7 +75,28 @@ typedef struct	s_data {
     double smal_stp;
 	double big_sidstp;
     double big_stp;
-    
+
+} t_rycast;
+
+typedef struct	s_data {
+	
+	//map
+	char **map;
+	double scal;
+	//player
+	double x;
+	double y;
+	double orientation;
+	double epsilon;
+	double raydis;
+	// 3D
+	double disProj;
+	double x0;
+	double y0;
+	// double x1;
+	double y1;
+	
+    t_rycast ryc;
 	t_mlx mlx;
 }	t_data;
 
@@ -108,5 +113,6 @@ void horisontal_intersections(t_data *v);
 double	rad(double angle);
 void direction(t_data *v, int param);
 // void visualize_maps(t_data *v, int *i, int *j);
+void rendering_wall(t_data *v);
 
 #endif

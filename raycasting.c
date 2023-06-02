@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 02:14:42 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/02 02:47:19 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 void visualize_maps(t_data *v, int *i, int *j)
 {
-    int ang_nor;
-    
-    ang_nor = v->ang; // important
-    // ang_nor = normalize_angle_360(v->ang);
-    // *i = v->x1 / v->scal;
-    // *j = v->y1 / v->scal;
-    (is(v, LEFT)) && (*i = (v->x1 - 1) / v->scal);
-    (is(v, RIGHT)) && (*i = (v->x1 + 1) / v->scal);
-    (is(v, UP) || ang_nor == 180) && (*j = (v->y1 - 1) / v->scal);
-    (is(v, DOWN) || !ang_nor) && (*j = (v->y1 + 1) / v->scal);
+    (is(v, LEFT)) && (*i = (v->ryc.x1 - 1) / v->scal);
+    (is(v, RIGHT)) && (*i = (v->ryc.x1 + 1) / v->scal);
+    (is(v, UP) || (int)v->ryc.ang == 180) && (*j = (v->ryc.y1 - 1) / v->scal);
+    (is(v, DOWN) || !(int)v->ryc.ang) && (*j = (v->ryc.y1 + 1) / v->scal);
 }
 
 void inc_smal_steps(t_data *v)
@@ -32,27 +26,21 @@ void inc_smal_steps(t_data *v)
     int j;
     int iq;
 
-    // puts("----------------");
-    if (v->Vdelta <= v->Hdelta)
-        v->smal_sidstp = v->DVside;
-    else
-        v->smal_sidstp = v->DHside;
-    v->x1 = v->x + (v->smal_sidstp * cos(rad(v->ang))); // (1,5) angle 225
-    v->y1 = v->y + (v->smal_sidstp * sin(rad(v->ang)));
-    // printf("(x_p = %f ,y_p = %f) (x_ry = %f, y_ry = %f) DVside = %f DHside %f\n",v->x, v->y, v->x1, v->y1,v->DVside, v->DHside);
+    (v->ryc.Vdelta <= v->ryc.Hdelta) && (v->ryc.smal_sidstp = v->ryc.DVside);
+    (v->ryc.Vdelta > v->ryc.Hdelta) && (v->ryc.smal_sidstp = v->ryc.DHside);
+    v->ryc.x1 = v->x + (v->ryc.smal_sidstp * cos(rad(v->ryc.ang)));
+    v->ryc.y1 = v->y + (v->ryc.smal_sidstp * sin(rad(v->ryc.ang)));
     visualize_maps(v, &i, &j);
-    v->smal_stp = v->smal_sidstp;
+    v->ryc.smal_stp = v->ryc.smal_sidstp;
     iq = 1;
-    // printf("v->ang = %f v->Smal_sidstp %f  (x = %f, y = %f) (i = %d, j = %d)\n",v->ang, v->smal_sidstp,v->x1,v->y1,i,j);
     while ((int)v->map[j][i] != '1')
     {
-        // printf("(smal_steps = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->smal_stp,i,j,v->x1 / v->scal, v->y1 / v->scal,iq, v->x1, v->y1);
-        v->smal_stp = (iq * fmin(v->Hdelta, v->Vdelta) + v->smal_sidstp);
-        v->x1 = v->x + (v->smal_stp * cos(rad(v->ang))); //translation with distace of adjacent
-        v->y1 = v->y + (v->smal_stp * sin(rad(v->ang))); //translation with distace of opposite
+        v->ryc.smal_stp = (iq * fmin(v->ryc.Hdelta, v->ryc.Vdelta) + v->ryc.smal_sidstp);
+        v->ryc.x1 = (v->x + (v->ryc.smal_stp * cos(rad(v->ryc.ang)))); //translation with distace of adjacent
+        v->ryc.y1 = (v->y + (v->ryc.smal_stp * sin(rad(v->ryc.ang)))); //translation with distace of opposite
         visualize_maps(v, &i, &j);
+        // printf("(smal_steps = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.smal_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
         iq++;
-        // printf("(smal_steps = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->smal_stp,i,j,v->x1 / v->scal, v->y1 / v->scal,iq, v->x1, v->y1);
     }
     
 }
@@ -63,28 +51,22 @@ void inc_big_steps(t_data *v)
     int j;
     int iq;
     
-    if (v->Vdelta <= v->Hdelta)
-        v->big_sidstp = v->DHside;
-    else
-        v->big_sidstp = v->DVside;
-    // printf("(i = %d iz = %f, j = %d) \n",i, (v->y / v->scal), j);
-    v->x1 = v->x + (v->big_sidstp * cos(rad(v->ang))); //translation with distace of adjacent
-    v->y1 = v->y + (v->big_sidstp * sin(rad(v->ang))); //translation with distace of opposite
+    (v->ryc.Vdelta <= v->ryc.Hdelta) && (v->ryc.big_sidstp = v->ryc.DHside);
+    (v->ryc.Vdelta > v->ryc.Hdelta) && (v->ryc.big_sidstp = v->ryc.DVside);
+    v->ryc.x1 = v->x + (v->ryc.big_sidstp * cos(rad(v->ryc.ang))); //translation with distace of adjacent
+    v->ryc.y1 = v->y + (v->ryc.big_sidstp * sin(rad(v->ryc.ang))); //translation with distace of opposite
     visualize_maps(v, &i, &j);
-    // printf("1- v->ang %f (Vdelta = %f, Hdelta = %f)  (smal_steps = %f) i == %d, j == %d iq = %d iqzab %d\n",v->ang,v->Vdelta,v->Hdelta, smal_steps,i,j,iq,iq);
-    // printf("(i = %d iz = %f, j = %d) \n",i, (v->y / v->scal), j);
-    v->big_stp = v->big_sidstp;
+    v->ryc.big_stp = v->ryc.big_sidstp;
     iq = 1;
-    while (v->big_sidstp < v->smal_stp && (int)v->map[j][i] != '1')
+    while (v->ryc.big_sidstp < v->ryc.smal_stp && (int)v->map[j][i] != '1')
     {
-        // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->big_stp,i,j,v->x1 / v->scal, v->y1 / v->scal,iq, v->x1, v->y1);
-        v->big_stp = (iq * fmax(v->Hdelta, v->Vdelta) + v->big_sidstp);
-        v->x1 = v->x + (v->big_stp * cos(rad(v->ang))); //translation with distace of adjacent
-        v->y1 = v->y + (v->big_stp * sin(rad(v->ang))); //translation with distace of opposite
+        v->ryc.big_stp = (iq * fmax(v->ryc.Hdelta, v->ryc.Vdelta) + v->ryc.big_sidstp);
+        v->ryc.x1 = (v->x + (v->ryc.big_stp * cos(rad(v->ryc.ang)))); //translation with distace of adjacent
+        v->ryc.y1 = (v->y + (v->ryc.big_stp * sin(rad(v->ryc.ang)))); //translation with distace of opposite
         visualize_maps(v, &i, &j);
         iq++;
-        // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->big_stp,i,j,v->x1 / v->scal, v->y1 / v->scal,iq, v->x1, v->y1);
-        if (v->big_stp > v->smal_stp || (int)v->map[j][i] == '1')
+        // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.big_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
+        if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->map[j][i] == '1')
             break;
     }
 }
@@ -92,11 +74,13 @@ void inc_big_steps(t_data *v)
 void horisontal_intersections(t_data *v)
 {
     // printf(" cos = %f sin = %f\n",   3 * cos(rad(v->orientation)),  3 * sin(rad(v->orientation)));
-    // printf("(DVside = %f, DHside = %f)\n",v->DVside,v->DHside);
-    // printf("(Vdelta = %f, Hdelta = %f)\n",v->Vdelta,v->Hdelta);
+    // printf("(DVside = %f, DHside = %f)\n",v->ryc.DVside,v->ryc.DHside);
+    // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
     inc_smal_steps(v);
     inc_big_steps(v);
-    // printf("big %f small %f\n", v->big_stp, v->smal_stp);
-    v->x1 = v->x + (fmin(v->smal_stp, v->big_stp) * cos(rad(v->ang))); //translation with distace of adjacent
-    v->y1 = v->y + (fmin(v->smal_stp, v->big_stp) * sin(rad(v->ang))); //translation with distace of opposite
+    // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
+    v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp);
+    v->ryc.x1 = (v->x + (v->raydis * cos(rad(v->ryc.ang)))); //translation with distace of adjacent
+    v->ryc.y1 = (v->y + (v->raydis * sin(rad(v->ryc.ang)))); //translation with distace of opposite
+    dda(v, v->x, v->y, v->ryc.x1, v->ryc.y1, 0xff);
 }

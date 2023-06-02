@@ -23,12 +23,10 @@ double	rad(double angle)
 }
 int main()
 {
-    int inc = 10;
-    while (inc-- > 0)
-    {
-        // inc--;
-        printf("%d\n", inc);
-    }
+    double vi;
+
+    vi = (double)60 / (double)1920;
+    printf("%f\n", vi);
     
     
 }

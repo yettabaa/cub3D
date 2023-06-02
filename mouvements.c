@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 04:13:13 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:53:32 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void direction(t_data *v, int param)
     int inc;
     double dir;
     
-    inc = 5; // scal / 8
+    inc = 3; // scal / 8
     dir = v->orientation;
     (param == S) && (dir = v->orientation - 180);
     (param == A) && (dir = v->orientation - 90);
