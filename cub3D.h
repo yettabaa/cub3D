@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/02 00:43:53 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/03 00:43:25 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <unistd.h>
 # include<limits.h>
 
-#define WIDTH 1920
-#define HIGHT 1080
+#define WIDTH 2300
+#define HIGHT 1300
 // #define SMALL 0
 // #define BIG 1
 
@@ -54,7 +54,7 @@ typedef struct	s_rycast {
     double y1;
 	double ang;
 	
-	int var;
+	double var;
 	
 	double x_H1stp;
 	double y_H1stp;

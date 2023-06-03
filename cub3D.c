@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/02 02:47:37 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/03 01:19:09 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	my_mlx_pixel_put(t_data *v, int x, int y, int color)
 void initialisation(t_data *v)
 {
     // v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
-    v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
+    v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     v->scal = 15;
-    v->orientation = 270;
-    v->x = (3 * v->scal + v->scal / 2);
-    v->y = (11 * v->scal + v->scal / 2);
+    v->orientation = 0;
+    v->x = (1 * v->scal + v->scal / 2);
+    v->y = (5 * v->scal + v->scal / 2);
     // v->x = (1 * v->scal + v->scal / 2) + (1 * cos(rad(v->orientation)));
     // v->y = (5 * v->scal + v->scal / 2) + (1 * sin(rad(v->orientation)));
 }
@@ -65,9 +65,9 @@ int	key(int keycode, t_data *v)
     if (keycode == 53)
 		exit(0);
     else if (keycode == 123)
-		v->orientation -= 1;
+		v->orientation -= 0.1;
 	else if (keycode == 124)
-		v->orientation += 1;
+		v->orientation += 0.1;
     else if (keycode == 125)
 		v->orientation -= 10;
 	else if (keycode == 126)
@@ -98,6 +98,20 @@ int	key(int keycode, t_data *v)
     return(0);
 }
 
+int func(void *ptr)
+{
+    t_data *v;
+    
+    v = ptr;
+	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
+	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
+			&v->mlx.endian);
+	maps_2d(v);
+	mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
+    mlx_destroy_image(v->mlx.mlx, v->mlx.img);
+    return (0);
+}
+
 int main(int ac ,char **av)
 {
 	t_data v;
@@ -112,8 +126,8 @@ int main(int ac ,char **av)
     initialisation(&v);
     maps_2d(&v);
 	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);
+    // mlx_loop_hook(v.mlx.mlx, func, &v);
     mlx_hook(v.mlx.mlx_win, 2, 0, key, &v);
-    // mlx_loop_hook(v.mlx.mlx, key, &v);
     mlx_hook(v.mlx.mlx_win, 17, 0, destroy, &v);
 	mlx_loop(v.mlx.mlx);
 }

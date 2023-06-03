@@ -23,10 +23,9 @@ double	rad(double angle)
 }
 int main()
 {
-    double vi;
-
-    vi = (double)60 / (double)1920;
-    printf("%f\n", vi);
+   double i = 310.01;
+   double j = 30;
+    printf("%f\n", ceil(i));
     
     
 }

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/02 02:47:28 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/03 01:14:05 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ void steps(t_data *v)
     v->ryc.y_Hstp = v->scal;
     v->ryc.x_Hstp = 0;
     (v->ryc.ang != 0 && v->ryc.ang != 180) &&  (v->ryc.x_Hstp = v->scal / tan(rad(v->ryc.ang))); //tan +/-
-    v->ryc.Hdelta = sqrt(pow(v->ryc.x_Hstp, 2) + pow(v->ryc.y_Hstp, 2));
+    v->ryc.Hdelta = (sqrt(pow(v->ryc.x_Hstp, 2) + pow(v->ryc.y_Hstp, 2)));
     // printf("v->ryc.ang = %f  (x = %f, y = %f)\n", v->ryc.ang , v->x, v->y);
-    v->ryc.var = (int)(v->y / v->scal);
+    
+    v->ryc.var = floor(v->y / v->scal);
     v->ryc.y_H1stp = (v->y - (v->ryc.var * v->scal)); // up
     (is(v, DOWN) || !v->ryc.y_H1stp) && (v->ryc.y_H1stp = ((v->ryc.var * v->scal + v->scal) - v->y)); // down
     v->ryc.x_H1stp = 0;
     (v->ryc.ang != 0 && v->ryc.ang != 180) && (v->ryc.x_H1stp = v->ryc.y_H1stp / tan(rad(v->ryc.ang)));
-    v->ryc.DHside = sqrt(pow(v->ryc.x_H1stp, 2) + pow(v->ryc.y_H1stp, 2));
+    v->ryc.DHside = (sqrt(pow(v->ryc.x_H1stp, 2) + pow(v->ryc.y_H1stp, 2)));
     // printf("x_H1stp = %f y_H1stp = %f x_Hstp = %f x_Hstp = %f\n", v->ryc.x_H1stp, v->ryc.y_H1stp, v->ryc.x_Hstp, v->ryc.y_Hstp);
 
 
@@ -32,14 +33,14 @@ void steps(t_data *v)
     v->ryc.y_Vstp = v->scal * tan(rad(v->ryc.ang)); // tan vari +/-
     (v->ryc.ang == 90 || v->ryc.ang == 270) && (v->ryc.y_Vstp = 0);
     v->ryc.Vdelta = (sqrt(pow(v->ryc.x_Vstp, 2) + pow(v->ryc.y_Vstp, 2)));
-    v->ryc.var = (v->x / v->scal); // can be in a varible // can initialized
 
-    v->ryc.x_V1stp = v->x - v->ryc.var * v->scal; // left
-    (is(v, RIGHT)) && (v->ryc.x_V1stp = (v->ryc.var * v->scal + v->scal) - v->x);
+    v->ryc.var = floor(v->x / v->scal); // can be in a varible // can initialized
+    v->ryc.x_V1stp = (v->x - v->ryc.var * v->scal); // left
+    (is(v, RIGHT)) && (v->ryc.x_V1stp = ((v->ryc.var * v->scal + v->scal) - v->x));
     (v->ryc.ang == 270 || v->ryc.ang == 90) && (v->ryc.x_V1stp = 0);
-    v->ryc.y_V1stp = v->ryc.x_V1stp * tan(rad((v->ryc.ang)));
+    v->ryc.y_V1stp = (v->ryc.x_V1stp * tan(rad((v->ryc.ang))));
     v->ryc.DVside = (sqrt(fabs(pow(v->ryc.x_V1stp , 2)) + fabs(pow(v->ryc.y_V1stp, 2))));
-     // printf("x_V1stp = %f y_V1stp = %f x_Vstp = %f x_Vstp = %f\n", v->x_V1stp, v->y_V1stp, v->x_Vstp, v->y_Vstp);
+    //  printf("x_V1stp = %f y_V1stp = %f x_Vstp = %f x_Vstp = %f\n", v->ryc.x_V1stp, v->ryc.y_V1stp, v->ryc.x_Vstp, v->ryc.y_Vstp);
 }
 
 
@@ -74,7 +75,7 @@ void player(t_data *v, int color)
         v->x0 += 1;
         // break;
     }
-    // dda(v,0,100 ,100,30,0xffffff);
+    // dda(v,331,331 ,55,55,0xff);
 }
 
 void maps_2d(t_data *v)

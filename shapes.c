@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 02:06:49 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/02 21:46:10 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void disc(t_data *v, int color)
     double y0;
     double radius;
 
-    radius = v->scal / 100;
+    radius = v->scal / 10;
     y0 = -radius;
     while (y0 <= radius)
     {
