@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/03 01:14:05 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:07:58 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,27 @@ void steps(t_data *v)
 
 
 
-void player(t_data *v, int color)
+void player(t_data *v)
+{
+    double vi;
+    double frequency;
+    
+    frequency = 60;
+    vi = 0;
+    v->x0 = 0;
+    while (vi <= (frequency + v->epsilon))
+    {
+        // puts("---------------------------------\n");
+        v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
+        steps(v);
+        horisontal_intersections(v); // rename
+        rendering_wall(v);
+        vi += (double)60 / (double)WIDTH;
+        v->x0 += 1;
+    }
+}
+
+void mini_maps(t_data *v, int color)
 {
     double vi;
     double frequency;
@@ -53,29 +73,16 @@ void player(t_data *v, int color)
     disc(v, color);
     frequency = 60;
     vi = 0;
-    v->x0 = 0;
     while (vi <= (frequency + v->epsilon))
     {
-        // puts("---------------");
         // puts("---------------------------------\n");
-        // printf("dda ==> (x = %f, y = %f) - (xf = %f, yf = %f\n", v->x, v->y, v->x_first, v->y_first);
-        // if (vi == 0 || vi == 60)
         v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
         steps(v);
-        
-        // {
-            // break;
-        // vertical_intersections(v, normalize_angle_360(ang + vi));
-        // printf("vi = %f ang  = %fng\n", vi, v->ang);
-        // }
-        // printf("x0 = %f vi = %f\n", v->x0, vi);
         horisontal_intersections(v); // rename
-        rendering_wall(v);
-        vi += (double)60 / (double)WIDTH;
-        v->x0 += 1;
-        // break;
+        dda(v, v->x, v->y, (v->ryc.x1), (v->ryc.y1), 0xff);  // round to int for handle the corner in 2d
+        vi += 0.1;
+        // vi += (double)60 / (double)WIDTH;
     }
-    // dda(v,331,331 ,55,55,0xff);
 }
 
 void maps_2d(t_data *v)
@@ -83,6 +90,7 @@ void maps_2d(t_data *v)
     int i;
     int j;
     
+    player(v);
     j = -1;
     while (v->map[++j])
     {
@@ -90,14 +98,14 @@ void maps_2d(t_data *v)
         while (v->map[j][++i])
         {
             if ((int)v->map[j][i] == '1')
-                rectangle(v, i * v->scal, j * v->scal, 0x0fff00ff);
+                rectangle(v, i * v->scal, j * v->scal, 0x00ab00);
             else if ((int)v->map[j][i] == 32)
                 rectangle(v, i * v->scal, j * v->scal, 0);
             else
-                rectangle(v, i * v->scal, j * v->scal, 0xffff00);
-            dda(v, i * v->scal, j * v->scal, (i + 1) * v->scal, j * v->scal, 0xffffff);
-            dda(v, i * v->scal, j * v->scal, i * v->scal, (j + 1) * v->scal, 0xffffff);      
+                rectangle(v, i * v->scal, j * v->scal, 0xffab00);
+            // dda(v, i * v->scal, j * v->scal, (i + 1) * v->scal, j * v->scal, 0xffffff);
+            // dda(v, i * v->scal, j * v->scal, i * v->scal, (j + 1) * v->scal, 0xffffff);      
         } 
     }
-    player(v, 0xff);
+    mini_maps(v, 0xff);
 }

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 18:52:33 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/01 17:15:06 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:04:57 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int is(t_data *v, int flag)
     int ang_nor;
     
     ang_nor = normalize_angle_360(v->ryc.ang);
-    if (flag == LEFT && ang_nor > 90 && ang_nor < 270)
+    if (flag == LEFT && ang_nor >= 90 && ang_nor < 270)
         return (1);
-    if (flag == RIGHT && !(ang_nor > 90 && ang_nor < 270))
+    if (flag == RIGHT && !(ang_nor >= 90 && ang_nor < 270))
         return (1);
     else if (flag == UP && ang_nor > 180 && ang_nor < 360)
         return (1);
-    else if (flag == DOWN && ang_nor > 0 && ang_nor < 180)
+    else if (flag == DOWN && ang_nor >= 0 && ang_nor < 180)
         return (1);
     else
         return(0);    

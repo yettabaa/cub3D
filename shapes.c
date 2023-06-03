@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/02 21:46:10 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/03 02:17:00 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	dda(t_data *v, double x0, double y0, double x1, double y1, int color)
 	i = 0;
 	while (i <= steps)
 	{
-		if (round(x0) >= 0 && round(x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
-			my_mlx_pixel_put(v ,round(x0), round(y0), color);
+		if (floor(x0) >= 0 && floor(x0) < WIDTH && floor(y0) >= 0 && floor(y0) < HIGHT)
+			my_mlx_pixel_put(v ,floor(x0), floor(y0), color);
 		x0 = x0 + xinc;
 		y0 = y0 + yinc;
 		i++;
@@ -53,7 +53,7 @@ void disc(t_data *v, int color)
     double y0;
     double radius;
 
-    radius = v->scal / 10;
+    radius = v->scal / 5;
     y0 = -radius;
     while (y0 <= radius)
     {

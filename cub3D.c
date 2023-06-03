@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/03 01:19:09 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:06:32 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ void	my_mlx_pixel_put(t_data *v, int x, int y, int color)
 
 void initialisation(t_data *v)
 {
-    // v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
-    v->scal = 15;
+    // v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
+    // v->scal = 69; // 19
+    v->scal = 19; // 19
     v->orientation = 0;
     v->x = (1 * v->scal + v->scal / 2);
     v->y = (5 * v->scal + v->scal / 2);
