@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/03 00:43:25 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/05 02:11:04 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,15 @@ typedef struct	s_data {
 	double orientation;
 	double epsilon;
 	double raydis;
+	// mouv
+	int angle_dir;
+	int angle_speed;
+	int walk_dir;
+	int walk_speed;
 	// 3D
 	double disProj;
 	double x0;
 	double y0;
-	// double x1;
 	double y1;
 	
     t_rycast ryc;
@@ -114,5 +118,5 @@ double	rad(double angle);
 void direction(t_data *v, int param);
 // void visualize_maps(t_data *v, int *i, int *j);
 void rendering_wall(t_data *v);
-
+void update(t_data *v);
 #endif

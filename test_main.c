@@ -25,7 +25,7 @@ int main()
 {
    double i = 310.01;
    double j = 30;
-    printf("%f\n", ceil(i));
+    printf("%f\n", const_Angle(-10));
     
     
 }

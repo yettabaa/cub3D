@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/03 16:07:12 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/05 02:56:42 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,20 @@ void direction(t_data *v, int param)
         v->x += (steps) * cos(rad(dir));
         v->y += (steps) * sin(rad(dir));
     }
+}
+
+void update(t_data *v)
+{
+    int walk_step;
+    int i;
+    int j;
+    
+    v->orientation += v->angle_dir * v->angle_speed;
+    walk_step = v->walk_dir * v->walk_speed;
+    i = (v->x + (v->walk_dir * (v->walk_speed + 1)) * cos(rad(v->orientation))) / v->scal;
+    j = (v->y + (v->walk_dir * (v->walk_speed + 1)) * sin(rad(v->orientation))) / v->scal;
+    if ((int)v->map[j][i] == '1')
+        return ;
+    v->x += walk_step * cos(rad(v->orientation));
+    v->y += walk_step * sin(rad(v->orientation));
 }

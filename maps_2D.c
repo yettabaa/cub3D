@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/04 00:07:58 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/05 02:59:25 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void steps(t_data *v)
     (v->ryc.ang != 0 && v->ryc.ang != 180) && (v->ryc.x_H1stp = v->ryc.y_H1stp / tan(rad(v->ryc.ang)));
     v->ryc.DHside = (sqrt(pow(v->ryc.x_H1stp, 2) + pow(v->ryc.y_H1stp, 2)));
     // printf("x_H1stp = %f y_H1stp = %f x_Hstp = %f x_Hstp = %f\n", v->ryc.x_H1stp, v->ryc.y_H1stp, v->ryc.x_Hstp, v->ryc.y_Hstp);
-
 
     v->ryc.x_Vstp = v->scal;
     v->ryc.y_Vstp = v->scal * tan(rad(v->ryc.ang)); // tan vari +/-
@@ -90,6 +89,7 @@ void maps_2d(t_data *v)
     int i;
     int j;
     
+    update(v);
     player(v);
     j = -1;
     while (v->map[++j])
@@ -97,12 +97,12 @@ void maps_2d(t_data *v)
         i = -1;
         while (v->map[j][++i])
         {
-            if ((int)v->map[j][i] == '1')
-                rectangle(v, i * v->scal, j * v->scal, 0x00ab00);
-            else if ((int)v->map[j][i] == 32)
-                rectangle(v, i * v->scal, j * v->scal, 0);
-            else
+            if ((int)v->map[j][i] == '0')
                 rectangle(v, i * v->scal, j * v->scal, 0xffab00);
+            // else if ((int)v->map[j][i] == 32)
+            //     rectangle(v, i * v->scal, j * v->scal, 0);
+            else if ((int)v->map[j][i] == '1')
+                rectangle(v, i * v->scal, j * v->scal, 0x00ab00);
             // dda(v, i * v->scal, j * v->scal, (i + 1) * v->scal, j * v->scal, 0xffffff);
             // dda(v, i * v->scal, j * v->scal, i * v->scal, (j + 1) * v->scal, 0xffffff);      
         } 
