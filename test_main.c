@@ -1,4 +1,4 @@
-#include"cub3D.h"
+#include"include/cub3D.h"
 
 double Angle(double x){
 
@@ -25,7 +25,9 @@ int main()
 {
    double i = 310.01;
    double j = 30;
-    printf("%f\n", const_Angle(-10));
+   t_steps v;
+   v.var = 10;
+    printf("%f\n", v.var);
     
     
 }

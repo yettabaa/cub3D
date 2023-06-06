@@ -6,71 +6,11 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/05 02:56:42 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/06 05:09:12 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-// void direction(t_data *v, int param)
-// {
-//     int i;
-//     int j;
-//     int inc;
-//     double dir;
-    
-//     inc = 4; // scal / 8
-//     dir = v->orientation;
-//     (param == S) && (dir = v->orientation - 180);
-//     (param == A) && (dir = v->orientation - 90);
-//     (param == D) && (dir = v->orientation + 90);
-//     i = (inc * cos(rad(dir)) + v->x) / v->scal;
-//     j = (inc * sin(rad(dir)) + v->y) / v->scal;
-//     while (inc-- > 1 && (int)v->map[j][i] == '1')
-//     {
-//         i = (inc * cos(rad(dir)) + v->x) / v->scal; 
-//         j = (inc * sin(rad(dir)) + v->y) / v->scal;
-//     }
-//     v->x += (inc - 1) * cos(rad(dir));
-//     v->y += (inc - 1) * sin(rad(dir));
-// }
-void direction(t_data *v, int param)
-{
-    int i;
-    int j;
-    int inc;
-    int steps;
-    double dir;
-    
-    steps = 1;
-    inc = 4; // scal / 8
-    dir = v->orientation;
-    (param == S) && (dir = v->orientation - 180);
-    (param == A) && (dir = v->orientation - 90);
-    (param == D) && (dir = v->orientation + 90);
-    i = (steps * cos(rad(dir)) + v->x) / v->scal;
-    j = (steps * sin(rad(dir)) + v->y) / v->scal;
-    // puts("----");
-    while (inc > steps && (int)v->map[j][i] != '1')
-    {
-        steps++;
-        i = (steps * cos(rad(dir)) + v->x) / v->scal; 
-        j = (steps * sin(rad(dir)) + v->y) / v->scal;
-        // printf("%d\n", steps);
-    }
-    if ((int)v->map[j][i] == '1')
-        return ;
-    if (steps != inc)
-    {
-        v->x += (steps - 4) * cos(rad(dir));
-        v->y += (steps - 4) * sin(rad(dir));
-    }
-    else
-    {
-        v->x += (steps) * cos(rad(dir));
-        v->y += (steps) * sin(rad(dir));
-    }
-}
 
 void update(t_data *v)
 {
@@ -78,12 +18,87 @@ void update(t_data *v)
     int i;
     int j;
     
-    v->orientation += v->angle_dir * v->angle_speed;
-    walk_step = v->walk_dir * v->walk_speed;
-    i = (v->x + (v->walk_dir * (v->walk_speed + 1)) * cos(rad(v->orientation))) / v->scal;
-    j = (v->y + (v->walk_dir * (v->walk_speed + 1)) * sin(rad(v->orientation))) / v->scal;
-    if ((int)v->map[j][i] == '1')
+    v->orientation += v->hook.angle_dir * v->hook.angle_speed;
+    walk_step = v->hook.walk_dir * v->hook.walk_speed;
+    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    if ((int)v->pars.map[j][i] == '1')
         return ;
-    v->x += walk_step * cos(rad(v->orientation));
-    v->y += walk_step * sin(rad(v->orientation));
+    v->x += walk_step * cos(rad(v->orientation + v->hook.angleOr));
+    v->y += walk_step * sin(rad(v->orientation + v->hook.angleOr));
+}
+
+int destroy(void)
+{
+    exit(0);
+    return (0);
+}
+
+int	key_press(int keycode, t_data *v)
+{
+    if (keycode == 53)
+		exit(0);
+    else if (keycode == 123)
+		v->hook.angle_dir = -1;
+	else if (keycode == 124)
+		v->hook.angle_dir = 1;
+    else if (keycode == W)
+        v->hook.walk_dir = 1;
+    else if (keycode == S )
+        v->hook.walk_dir = -1;
+    else if (keycode == A)
+    {
+        v->hook.walk_dir = 1;
+        v->hook.angleOr = -90;    
+    }
+    else if (keycode == D)
+    {
+        v->hook.walk_dir = 1;
+        v->hook.angleOr = 90; 
+    }  
+    // mlx_destroy_image(v->mlx.mlx, v->mlx.img);
+	// v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
+	// v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
+	// 		&v->mlx.endian);
+	// maps_2d(v);
+    // // player(v, 0xff);
+	// mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
+    return(0);
+}
+
+int key_release(int keycode, t_data *v)
+{
+    if (keycode == 123)
+		v->hook.angle_dir = 0;
+	else if (keycode == 124)
+		v->hook.angle_dir = 0;
+    else if (keycode == W)
+        v->hook.walk_dir = 0;
+    else if (keycode == S)
+        v->hook.walk_dir = 0;
+    else if (keycode == A)
+    {
+        v->hook.walk_dir = 0;
+        v->hook.angleOr = 0;    
+    }
+    else if (keycode == D)    
+    {
+        v->hook.walk_dir = 0;
+        v->hook.angleOr = 0;    
+    }
+    return 0;    
+}
+
+int loop_hook(void *ptr)
+{
+    t_data *v;
+    
+    v = ptr;
+	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
+	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
+			&v->mlx.endian);
+	cube3D(v);
+	mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
+    mlx_destroy_image(v->mlx.mlx, v->mlx.img);
+    return (0);
 }

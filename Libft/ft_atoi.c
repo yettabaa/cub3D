@@ -3,31 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 21:20:48 by yettabaa          #+#    #+#             */
-/*   Updated: 2022/10/24 00:44:14 by yettabaa         ###   ########.fr       */
+/*   Created: 2022/10/19 14:25:49 by nfoughal          #+#    #+#             */
+/*   Updated: 2023/06/02 15:50:27 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+static long	ft_nb(const char *str, long nb, long i)
 {
-	int	sign;
-	int	result;
-
-	sign = 1;
-	result = 0;
-	while (*str == ' ' || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '-' || *str == '+')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
+		nb = (nb * 10) + (str[i] - '0');
+		i++;
 	}
-	while (*str >= '0' && *str <= '9')
-		result = (result * 10) + (*str++ - 48);
-	return (result * sign);
+	return (nb);
+}
+
+long	ft_atoi(const char *str)
+{
+	long		i;
+	long		nb;
+	long		s;
+
+	nb = 0;
+	i = 0;
+	s = 1;
+	while (str[i] == '\t' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r'
+		|| str[i] == '\n' || str[i] == ' ')
+	i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-' )
+			s = -1;
+		i++;
+	}
+	if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
+		return (0);
+	nb = ft_nb(str, nb, i);
+	return (s * nb);
 }

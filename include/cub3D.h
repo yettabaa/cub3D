@@ -6,16 +6,17 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/05 02:11:04 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/06 05:10:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CUB3D_H
 # define CUB3D_H
-# ifndef BUFFER_SIZE
-# define BUFFER_SIZE 2147483646
+# ifndef BUFFER_
+# define BUFFER_ 2147483646
 # endif
-# include "Libft/libft.h"
+# include "../Libft/libft.h"
+# include "parsing.h"
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
@@ -49,74 +50,81 @@ typedef struct	s_mlx {
 	int		endian;
 }				t_mlx;
 
-typedef struct	s_rycast {
-	double x1;
-    double y1;
-	double ang;
-	
+typedef struct	s_steps {
 	double var;
-	
 	double x_H1stp;
 	double y_H1stp;
 	double x_Hstp;
 	double y_Hstp;
-	
 	double x_V1stp;
 	double y_V1stp;
 	double x_Vstp;
 	double y_Vstp;
-	
+}t_steps;
+
+typedef struct	s_rycast {
+	double x1;
+    double y1;
+	double ang;
+
 	double DHside;
 	double DVside;
 	double Hdelta;
 	double Vdelta;
 	
-	double smal_sidstp;
     double smal_stp;
-	double big_sidstp;
     double big_stp;
 
 } t_rycast;
 
-typedef struct	s_data {
+typedef struct s_hook{
 	
-	//map
-	char **map;
-	double scal;
-	//player
-	double x;
-	double y;
-	double orientation;
-	double epsilon;
-	double raydis;
-	// mouv
 	int angle_dir;
 	int angle_speed;
 	int walk_dir;
 	int walk_speed;
+	double angleOr;
+	
+}	t_hook;
+
+typedef struct	s_data {
+	
+	//player
+	double x;
+	double y;
+	double scal;
+	double orientation;
+	double epsilon;
+	double raydis;
 	// 3D
 	double disProj;
 	double x0;
 	double y0;
 	double y1;
-	
+	t_hook hook;
+	t_map_result pars;
     t_rycast ryc;
 	t_mlx mlx;
 }	t_data;
 
 
-int is(t_data *v, int flag);
-void maps_2d(t_data *v);
-double normalize_angle_360(double x);
-double normalize_angle_180(double x);
 void	my_mlx_pixel_put(t_data *v, int x, int y, int color);
 void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
 void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
-void horisontal_intersections(t_data *v);
+
 double	rad(double angle);
-void direction(t_data *v, int param);
-// void visualize_maps(t_data *v, int *i, int *j);
+double normalize_angle_360(double x);
+double normalize_angle_180(double x);
+int is(t_data *v, int flag);
+void steps(t_data *v);
+void raycasting(t_data *v);
+void cube3D(t_data *v);
 void rendering_wall(t_data *v);
 void update(t_data *v);
+
+int loop_hook(void *ptr);
+int	key_press(int keycode, t_data *v);
+int key_release(int keycode, t_data *v);
+int destroy(void);
 #endif

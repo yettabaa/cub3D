@@ -6,11 +6,19 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/03 02:17:00 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/06 04:25:05 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	my_mlx_pixel_put(t_data *v, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = v->mlx.addr + (y * v->mlx.line_length + x * (v->mlx.bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
 
 void	dda(t_data *v, double x0, double y0, double x1, double y1, int color)
 {

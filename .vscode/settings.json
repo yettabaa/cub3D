@@ -4,6 +4,7 @@
         "memory_resource": "c",
         "functional": "c",
         "memory": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "libft.h": "c"
     }
 }
