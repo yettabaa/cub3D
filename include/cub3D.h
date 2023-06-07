@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/06 05:10:44 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/07 05:16:36 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 #define S 1
 #define D 2
 #define W 13
+
+#define HORI 7
+#define VER 8
 
 typedef struct	s_mlx {
 	void	*mlx;
@@ -101,6 +104,16 @@ typedef struct	s_data {
 	double x0;
 	double y0;
 	double y1;
+	// texture
+	int hitWall;
+	void *no_img;
+	unsigned int *no_buff;
+	int no_width;
+	int no_height;
+	int no_bitspp;
+	int no_line;
+	int no_endian;
+
 	t_hook hook;
 	t_map_result pars;
     t_rycast ryc;
@@ -108,8 +121,8 @@ typedef struct	s_data {
 }	t_data;
 
 
-void	my_mlx_pixel_put(t_data *v, int x, int y, int color);
-void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
+void	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
+void	dda(t_data *v, double x0, double y0, unsigned int color);
 void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
 
@@ -127,4 +140,8 @@ int loop_hook(void *ptr);
 int	key_press(int keycode, t_data *v);
 int key_release(int keycode, t_data *v);
 int destroy(void);
+// textures
+void fill_textures(t_data *v);
+void	dda_textures(t_data *v, double x0, double y0, double x1, double y1);
+
 #endif

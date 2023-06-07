@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/06 05:07:36 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/07 03:54:31 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void initialisation(t_data *v)
     v->hook.angleOr = 0;
     v->x = (1 * v->scal + v->scal / 2);
     v->y = (5 * v->scal + v->scal / 2);
+    fill_textures(v);
 }
 
 int main(int ac ,char **av)
 {
 	t_data v;
-    (void)ac;
 
 	v.mlx.mlx = mlx_init();
 	v.mlx.mlx_win = mlx_new_window(v.mlx.mlx, WIDTH, HIGHT, "Hello world!");
@@ -48,3 +48,25 @@ int main(int ac ,char **av)
     mlx_hook(v.mlx.mlx_win, 17, 0, destroy, &v);
 	mlx_loop(v.mlx.mlx);
 }
+
+// int main()
+// {
+//     int h;
+//     int w;
+//     int bitp;
+//     int line;
+//     int end;
+//     void *mlx = mlx_init();
+//     void *img =  mlx_xpm_file_to_image(mlx, "./textures/greystone.xpm", &w, &h);
+
+//     unsigned int *no_buff = (unsigned int *)mlx_get_data_addr(img, &bitp, &line, &end);
+//     // str = malloc(10);
+//     printf("line = %d\n", line);
+//     int x = 3;
+//     int y = 4;
+//     int i = y * 64 + x;
+//     // unsigned int c = no_buff[i + 0] << 16 | no_buff[i + 1] << 8 | no_buff[i + 2] | no_buff[i + 3] << 24;
+//     unsigned int c = no_buff[i];
+//     printf("%u\n", c);
+    
+// }

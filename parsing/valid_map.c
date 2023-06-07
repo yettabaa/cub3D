@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:04:20 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:27:28 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:42:55 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	split_and_check(char *str, t_map_result *res)
 	}
 	else
 		if_args_true(split, res);
-	free_array(split);
+	// free_array(split);
  }
 
 void	wall_check(char **map, char **array)

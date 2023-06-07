@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/06 04:59:35 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/07 05:16:43 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void mini_maps(t_data *v, int color)
         // puts("---------------------------------\n");
         v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
         raycasting(v);
-        dda(v, v->x, v->y, (v->ryc.x1), (v->ryc.y1), 0xff);  // round to int for handle the corner in 2d
+        dda(v, v->x, v->y, 0xff);  // round to int for handle the corner in 2d
         vi += 0.1;
     }
 }

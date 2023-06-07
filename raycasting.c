@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/06 04:58:09 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/07 04:12:46 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,15 @@ void raycasting(t_data *v)
     // // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
     // // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
     v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(rad(v->orientation - v->ryc.ang)); // fixing fishbowl
+    if (v->ryc.big_stp >= v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta)
+        v->hitWall = VER;
+    else if (v->ryc.big_stp >= v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta)
+        v->hitWall = HORI;
+    else if (v->ryc.big_stp <= v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta)
+        v->hitWall = VER;
+    else if (v->ryc.big_stp <= v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta)
+        v->hitWall = HORI;
+    
     v->ryc.x1 = v->x + (v->raydis * cos(rad(v->ryc.ang))); //translation with distace of adjacent
     v->ryc.y1 = v->y + (v->raydis * sin(rad(v->ryc.ang))); //translation with distace of opposite
 }
