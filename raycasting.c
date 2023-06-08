@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/07 04:12:46 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 03:15:34 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void steps(t_data *v)
     step.x_Hstp = 0;
     (v->ryc.ang != 0 && v->ryc.ang != 180) &&  (step.x_Hstp = v->scal / tan(rad(v->ryc.ang))); //tan +/-
     v->ryc.Hdelta = (sqrt(pow(step.x_Hstp, 2) + pow(step.y_Hstp, 2)));
-    // printf("v-v->ryc.ang = %f  (x = %f, y = %f)\n", v-v->ryc.ang , v->x, v->y);
+    // printf("v-v->ryc.ang = %f  (x = %f, y = %f)\n", v->ryc.ang , v->x, v->y);
     
     step.var = floor(v->y / v->scal);
     step.y_H1stp = (v->y - (step.var * v->scal)); // up
@@ -28,7 +28,7 @@ void steps(t_data *v)
     step.x_H1stp = 0;
     (v->ryc.ang != 0 && v->ryc.ang != 180) && (step.x_H1stp = step.y_H1stp / tan(rad(v->ryc.ang)));
     v->ryc.DHside = (sqrt(pow(step.x_H1stp, 2) + pow(step.y_H1stp, 2)));
-    // printf("x_H1stp = %f y_H1stp = %f x_Hstp = %f x_Hstp = %f\n", step.x_H1stp, step.y_H1stp, step.x_Hstp, step.y_Hstp);
+    
 
     step.x_Vstp = v->scal;
     step.y_Vstp = v->scal * tan(rad(v->ryc.ang)); // tan vari +/-
@@ -41,7 +41,7 @@ void steps(t_data *v)
     (v->ryc.ang == 270 || v->ryc.ang == 90) && (step.x_V1stp = 0);
     step.y_V1stp = (step.x_V1stp * tan(rad((v->ryc.ang))));
     v->ryc.DVside = (sqrt(fabs(pow(step.x_V1stp , 2)) + fabs(pow(step.y_V1stp, 2))));
-    //  printf("x_V1stp = %f y_V1stp = %f x_Vstp = %f x_Vstp = %f\n", v->ryc.x_V1stp, v->ryc.y_V1stp, v->ryc.x_Vstp, v->ryc.y_Vstp);
+    
 }
 
 void visualize_maps_1(t_data *v, int *i, int *j)
@@ -113,18 +113,24 @@ void raycasting(t_data *v)
     steps(v);
     inc_smal_steps(v);
     inc_big_steps(v);
-    // // printf("(DVside = %f, DHside = %f)\n",v->ryc.DVside,v->ryc.DHside);
-    // // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
-    // // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
-    v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(rad(v->orientation - v->ryc.ang)); // fixing fishbowl
-    if (v->ryc.big_stp >= v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta)
+    // printf("(DVside = %f, DHside = %f)\n",v->ryc.DVside,v->ryc.DHside);
+    // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
+    // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
+    v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp);// * cos(rad(v->orientation - v->ryc.ang)); // fixing fishbowl
+    // ((fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta) || (fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.big_stp && v->ryc.Hdelta <= v->ryc.Vdelta)) && (v->hitWall = VER);
+    // ((fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta) || (fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.big_stp && v->ryc.Hdelta >= v->ryc.Vdelta)) &&  (v->hitWall = HORI);
+    if (v->ryc.big_stp > v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta + v->epsilon)
         v->hitWall = VER;
-    else if (v->ryc.big_stp >= v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta)
-        v->hitWall = HORI;
-    else if (v->ryc.big_stp <= v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta)
+    else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta + v->epsilon < v->ryc.Vdelta)
         v->hitWall = VER;
-    else if (v->ryc.big_stp <= v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta)
+    else if (v->ryc.big_stp > v->ryc.smal_stp && v->ryc.Hdelta + v->epsilon < v->ryc.Vdelta)
         v->hitWall = HORI;
+    else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta+ v->epsilon)
+        v->hitWall = HORI;
+    // else 
+    //     v->hitWall = 40;    
+    // else if (v->ryc.big_stp == v->ryc.smal_stp && v->ryc.Hdelta == v->ryc.Vdelta)
+    //     v->hitWall = VER;
     
     v->ryc.x1 = v->x + (v->raydis * cos(rad(v->ryc.ang))); //translation with distace of adjacent
     v->ryc.y1 = v->y + (v->raydis * sin(rad(v->ryc.ang))); //translation with distace of opposite

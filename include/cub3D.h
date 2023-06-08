@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/07 05:16:36 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 01:18:19 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,9 @@
 # include <unistd.h>
 # include<limits.h>
 
-#define WIDTH 2300
-#define HIGHT 1300
-// #define SMALL 0
-// #define BIG 1
+#define WIDTH 1600
+#define HIGHT 1000
+
 
 #define UP 2
 #define DOWN 3
@@ -39,6 +38,15 @@
 #define S 1
 #define D 2
 #define W 13
+//text
+#define NO 15
+#define SO 16
+#define WE 17
+#define EA 18
+
+#define TEXT 19
+#define CEIL 20
+#define FLOOR 21
 
 #define HORI 7
 #define VER 8
@@ -82,7 +90,7 @@ typedef struct	s_rycast {
 
 typedef struct s_hook{
 	
-	int angle_dir;
+	double angle_dir;
 	int angle_speed;
 	int walk_dir;
 	int walk_speed;
@@ -99,20 +107,38 @@ typedef struct	s_data {
 	double orientation;
 	double epsilon;
 	double raydis;
-	// 3D
+	// reder_WALL
 	double disProj;
 	double x0;
 	double y0;
 	double y1;
 	// texture
 	int hitWall;
-	void *no_img;
-	unsigned int *no_buff;
-	int no_width;
-	int no_height;
-	int no_bitspp;
-	int no_line;
-	int no_endian;
+	
+	unsigned int *NO_buff; // 270
+	int NO_width;
+	int NO_height;
+	int NO_line;
+
+	unsigned int *SO_buff; // 90
+	int SO_width;
+	int SO_height;
+	int SO_line;
+	
+	unsigned int *WE_buff; //0
+	int WE_width;
+	int WE_height;
+	int WE_line;
+	
+	unsigned int *EA_buff; //180
+	int EA_width;
+	int EA_height;
+	int EA_line;
+	
+	unsigned int *buff;
+	int width;
+	int height;
+	int line;
 
 	t_hook hook;
 	t_map_result pars;
@@ -121,8 +147,10 @@ typedef struct	s_data {
 }	t_data;
 
 
-void	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
+// void	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
+int	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
 void	dda(t_data *v, double x0, double y0, unsigned int color);
+// void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
 void rectangle(t_data *v, int x, int y, int color);
 void disc(t_data *v, int color);
 
@@ -141,7 +169,8 @@ int	key_press(int keycode, t_data *v);
 int key_release(int keycode, t_data *v);
 int destroy(void);
 // textures
-void fill_textures(t_data *v);
-void	dda_textures(t_data *v, double x0, double y0, double x1, double y1);
-
+void init_textures(t_data *v);
+// void	dda_textures(t_data *v, double y0, double y1);
+void	dda_textures(t_data *v, double y0, double y1, int flag);
+void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color);
 #endif

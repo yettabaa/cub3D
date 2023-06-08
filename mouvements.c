@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/06 05:09:12 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 03:04:25 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void update(t_data *v)
     
     v->orientation += v->hook.angle_dir * v->hook.angle_speed;
     walk_step = v->hook.walk_dir * v->hook.walk_speed;
-    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
-    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 4)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 4)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
     if ((int)v->pars.map[j][i] == '1')
         return ;
     v->x += walk_step * cos(rad(v->orientation + v->hook.angleOr));
@@ -42,6 +42,10 @@ int	key_press(int keycode, t_data *v)
 		v->hook.angle_dir = -1;
 	else if (keycode == 124)
 		v->hook.angle_dir = 1;
+    else if (keycode == 125)
+		v->hook.angle_dir = -0.1;
+	else if (keycode == 126)
+		v->hook.angle_dir = 0.1;
     else if (keycode == W)
         v->hook.walk_dir = 1;
     else if (keycode == S )
@@ -60,8 +64,7 @@ int	key_press(int keycode, t_data *v)
 	// v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
 	// v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
 	// 		&v->mlx.endian);
-	// maps_2d(v);
-    // // player(v, 0xff);
+	// cube3D(v);
 	// mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
     return(0);
 }
@@ -71,6 +74,10 @@ int key_release(int keycode, t_data *v)
     if (keycode == 123)
 		v->hook.angle_dir = 0;
 	else if (keycode == 124)
+		v->hook.angle_dir = 0;
+    if (keycode == 125)
+		v->hook.angle_dir = 0;
+	else if (keycode == 126)
 		v->hook.angle_dir = 0;
     else if (keycode == W)
         v->hook.walk_dir = 0;

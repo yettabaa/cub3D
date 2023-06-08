@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/07 05:16:43 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 02:23:38 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void maps_2d(t_data *v)
                 rectangle(v, i * v->scal, j * v->scal, 0xffab00);
             else if ((int)v->pars.map[j][i] == '1')
                 rectangle(v, i * v->scal, j * v->scal, 0x00ab00);
-            // dda(v, i * v->scal, j * v->scal, (i + 1) * v->scal, j * v->scal, 0xffffff);
-            // dda(v, i * v->scal, j * v->scal, i * v->scal, (j + 1) * v->scal, 0xffffff);      
+            dda_old(v, i * v->scal, j * v->scal, (i + 1) * v->scal, j * v->scal, 0xffffff);
+            dda_old(v, i * v->scal, j * v->scal, i * v->scal, (j + 1) * v->scal, 0xffffff);      
         } 
     }
 }
@@ -57,8 +57,8 @@ void cube3D(t_data *v)
     double vi;
     double frequency;
     
-    vi = 0;
     v->x0 = 0;
+    vi = 0;
     frequency = 60;
     update(v);
     while (vi <= (frequency + v->epsilon))
