@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 00:27:41 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 03:04:08 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:26:47 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void rendering_wall(t_data *v)
     wall_hight = (v->scal / v->raydis) * disProj;
     v->y0 = ((HIGHT) / 2) - (wall_hight / 2);
     v->y1 = v->y0 + wall_hight; 
-    if (is(v, UP) && v->hitWall == HORI) 
+    if ((is(v, UP) || (int)v->ryc.ang == 180) && v->hitWall == HORI) 
         fill_textures(v, NO);
-    else if (is(v, DOWN) && v->hitWall == HORI) 
+    else if ((is(v, DOWN) ) && v->hitWall == HORI) 
         fill_textures(v, SO);
     else if (is(v, LEFT) && v->hitWall == VER) 
         fill_textures(v, EA);
-    else if (is(v, RIGHT) && v->hitWall == VER) 
+    else if ((is(v, RIGHT)) && v->hitWall == VER) 
         fill_textures(v, WE);
     dda_textures(v, 0, v->y0, CEIL);
     dda_textures(v, v->y0, v->y1, TEXT);

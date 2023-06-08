@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 03:12:36 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:31:13 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void initialisation(t_data *v)
     v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     // v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
     // v->scal = 27; // 19
-    v->scal = 10; // 19
+    v->scal = 9; // 19
     v->orientation = 270;
     v->hook.angle_dir = 0;
     v->hook.angle_speed = 3;

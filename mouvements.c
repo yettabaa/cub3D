@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 03:04:25 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:30:54 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void update(t_data *v)
     
     v->orientation += v->hook.angle_dir * v->hook.angle_speed;
     walk_step = v->hook.walk_dir * v->hook.walk_speed;
-    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 4)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
-    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 4)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    // if (v->x < v->scal && v->x > WIDTH &&  v->y < v->scal && v->y > HIGHT)
+    //     return ;
+    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
     if ((int)v->pars.map[j][i] == '1')
         return ;
     v->x += walk_step * cos(rad(v->orientation + v->hook.angleOr));

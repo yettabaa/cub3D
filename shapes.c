@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 02:37:29 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/08 04:34:04 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	dda_textures(t_data *v, double y0, double y1, int flag)
 	double	steps;
    
 
-	(y0 < 0) && (y0 = 0);
-	(y1 > HIGHT) && (y1 = HIGHT);
+	(y0 + v->epsilon< 0) && (y0 = 0);
+	(y1 + v->epsilon> HIGHT) && (y1 = HIGHT);
 	steps = fabs(y0 - y1);
 	yinc = (y1 - y0) / steps;
 	i = 0;
