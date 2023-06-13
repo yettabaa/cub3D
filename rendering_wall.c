@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 00:27:41 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/13 02:38:16 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/13 02:54:45 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void rendering_wall(t_data *v)
         fill_textures(v, WE);
     dda_textures(v, 0, v->y0, CEIL);
     dda_textures(v, v->y0, v->y1, TEXT);
-    // else
     if (v->hit == DOOR)
     {
         fill_textures(v, DOOR);
