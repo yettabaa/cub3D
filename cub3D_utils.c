@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 18:52:33 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/04 00:04:57 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/13 00:30:49 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,16 @@ double	rad(double angle)
 	return (angle * (M_PI / 180));
 }
 
-double normalize_angle_180(double x)
-{
-    if (x <= 180)
-        return x;    
-    return x -360 ;
-}
-
 double normalize_angle_360(double x)
 {
     x = fmod(x,360);
     if (x < 0)
         x += 360;
     return x;
+}
+
+void	ft_error(const char *str)
+{
+	perror(str);
+	exit(1);
 }

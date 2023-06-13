@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 01:18:19 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/13 01:05:45 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@
 
 #define HORI 7
 #define VER 8
+
+#define WALL 22
+#define DOOR 23
 
 typedef struct	s_mlx {
 	void	*mlx;
@@ -107,12 +110,14 @@ typedef struct	s_data {
 	double orientation;
 	double epsilon;
 	double raydis;
+	double raydis_fishbowl;
 	// reder_WALL
 	double disProj;
 	double x0;
 	double y0;
 	double y1;
 	// texture
+	int hit;
 	int hitWall;
 	
 	unsigned int *NO_buff; // 270
@@ -135,6 +140,14 @@ typedef struct	s_data {
 	int EA_height;
 	int EA_line;
 	
+	//door
+	
+	unsigned int *DOOR_buff; //180
+	int DOOR_width;
+	int DOOR_height;
+	int DOOR_line;
+	
+	
 	unsigned int *buff;
 	int width;
 	int height;
@@ -156,8 +169,9 @@ void disc(t_data *v, int color);
 
 double	rad(double angle);
 double normalize_angle_360(double x);
-double normalize_angle_180(double x);
 int is(t_data *v, int flag);
+void	ft_error(const char *str);
+
 void steps(t_data *v);
 void raycasting(t_data *v);
 void cube3D(t_data *v);

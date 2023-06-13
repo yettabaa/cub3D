@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 04:34:04 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/13 02:24:43 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,28 @@ void	dda_textures(t_data *v, double y0, double y1, int flag)
 	double	yinc;
 	double	steps;
    
-
-	(y0 + v->epsilon< 0) && (y0 = 0);
-	(y1 + v->epsilon> HIGHT) && (y1 = HIGHT);
+	(flag == CEIL && y1 < 0) && (y1 = 0); // in case if we so cloose of the wall
+	(flag == TEXT && y0 < 0) && (y0 = 0);
+	(flag == TEXT && y1 > HIGHT) && (y1 = HIGHT);
+	(flag == FLOOR && y0 > HIGHT) && (y0 = HIGHT);
 	steps = fabs(y0 - y1);
 	yinc = (y1 - y0) / steps;
 	i = 0;
-    // (v->hitWall == VER) && (x_texel = fmod(v->ryc.y1 , 64));
-    // (v->hitWall == HORI) && (x_texel = fmod(v->ryc.x1 , 64));
+	// printf("DDA y0 = %f y1 = %f\n", y0, y1);
     (v->hitWall == VER) && (x_texel = v->width * fmod(v->ryc.y1 , v->scal) / v->scal);
     (v->hitWall == HORI) && (x_texel = v->width * fmod(v->ryc.x1 , v->scal) / v->scal);
-	while (i < steps )
+	
+	// printf("x = %f y = %f\n",fmod(v->ryc.x1 , v->scal) / v->scal, fmod(v->ryc.y1 , v->scal) / v->scal);
+	while (i < steps)
 	{
         y_texel = v->height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
+		// if (!i)
+			// printf("%f\n",(i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0));
 		if (round(v->x0) >= 0 && round(v->x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
 		{
 			(flag == TEXT) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->buff[y_texel * (v->line / 4) + x_texel]));
-			(flag == CEIL) && (my_mlx_pixel_put(v ,v->x0, y0, v->pars.c));
-			(flag == FLOOR) && (my_mlx_pixel_put(v ,v->x0, y0, v->pars.f));
+			(flag == CEIL) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->pars.c));
+			(flag == FLOOR) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->pars.f));
 		}
 		y0 = y0 + yinc;
 		i++;

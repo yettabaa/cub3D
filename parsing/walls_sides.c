@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:54 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:27:34 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/13 00:45:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	check_sides(char **map, char **array)
 	{
 		str = ft_strtrim(map[i], " ");
 		if_different_1(str, array, map);
-		if_allow(str, array, map);
+		// if_allow(str, array, map);
 		free(str);
 		i++;
 	}

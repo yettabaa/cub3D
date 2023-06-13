@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 04:17:44 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/13 02:39:36 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void inc_smal_steps(t_data *v)
     v->ryc.smal_stp = smal_sidstp;
     iq = 1;
     // printf("(smal_steps = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.smal_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
-    while ((int)v->pars.map[j][i] != '1')
+    while ((int)v->pars.map[j][i] == '0')
     {
         v->ryc.smal_stp = iq * fmin(v->ryc.Hdelta, v->ryc.Vdelta) + smal_sidstp;
         v->ryc.x1 = v->x + (v->ryc.smal_stp * cos(rad(v->ryc.ang)));
@@ -95,7 +95,7 @@ void inc_big_steps(t_data *v)
     v->ryc.big_stp = (big_sidstp);
     iq = 1;
     // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.big_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
-    while (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] != '1')
+    while (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] == '0')
     {
         v->ryc.big_stp = iq * fmax(v->ryc.Hdelta, v->ryc.Vdelta) + big_sidstp;
         v->ryc.x1 = v->x + (v->ryc.big_stp * cos(rad(v->ryc.ang)));
@@ -103,20 +103,24 @@ void inc_big_steps(t_data *v)
         visualize_maps_1(v, &i, &j);
         iq++;
         // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.big_stp, i, j, v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
-        if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->pars.map[j][i] == '1')
+        if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->pars.map[j][i] != '0')
             break;
     }
 }
 
 void raycasting(t_data *v)
 {
+    int i;
+    int j;
+    
     steps(v);
     inc_smal_steps(v);
     inc_big_steps(v);
     // printf("(DVside = %f, DHside = %f)\n",v->ryc.DVside,v->ryc.DHside);
     // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
     // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
-    v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp);// * cos(rad(v->orientation - v->ryc.ang)); // fixing fishbowl
+    v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp); // fixing fishbowl
+    v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(rad(v->orientation - v->ryc.ang)); // fixing fishbowl
     // ((fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta) || (fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.big_stp && v->ryc.Hdelta <= v->ryc.Vdelta)) && (v->hitWall = VER);
     // ((fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta) || (fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.big_stp && v->ryc.Hdelta >= v->ryc.Vdelta)) &&  (v->hitWall = HORI);
     if (v->ryc.big_stp > v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta + v->epsilon)
@@ -127,11 +131,11 @@ void raycasting(t_data *v)
         v->hitWall = HORI;
     else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta+ v->epsilon)
         v->hitWall = HORI;
-    // else 
-    //     v->hitWall = 40;    
-    // else if (v->ryc.big_stp == v->ryc.smal_stp && v->ryc.Hdelta == v->ryc.Vdelta)
-    //     v->hitWall = VER;
-    
     v->ryc.x1 = v->x + (v->raydis * cos(rad(v->ryc.ang))); //translation with distace of adjacent
     v->ryc.y1 = v->y + (v->raydis * sin(rad(v->ryc.ang))); //translation with distace of opposite
+    visualize_maps_1(v, &i, &j);
+    ((int)v->pars.map[j][i] == '1') && (v->hit = WALL);
+    ((int)v->pars.map[j][i] == '2') && (v->hit = DOOR);
+    v->ryc.x1 = v->x + (v->raydis_fishbowl * cos(rad(v->ryc.ang))); //translation with distace of adjacent
+    v->ryc.y1 = v->y + (v->raydis_fishbowl * sin(rad(v->ryc.ang))); //translation with distace of opposite
 }

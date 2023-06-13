@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/08 04:32:23 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/12 23:39:07 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void maps_2d(t_data *v)
         while (v->pars.map[j][++i])
         {
             if ((int)v->pars.map[j][i] == '0')
-                rectangle(v, i * v->scal, j * v->scal, 0xffab00);
+                rectangle(v, i * v->scal, j * v->scal, 0xffffff);
             else if ((int)v->pars.map[j][i] == '1')
-                rectangle(v, i * v->scal, j * v->scal, 0x00ab00);
+                rectangle(v, i * v->scal, j * v->scal, 0);
             // dda_old(v, i * v->scal, j * v->scal, (i + 1) * v->scal, j * v->scal, 0xffffff);
             // dda_old(v, i * v->scal, j * v->scal, i * v->scal, (j + 1) * v->scal, 0xffffff);      
         } 

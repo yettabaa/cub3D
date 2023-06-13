@@ -1,12 +1,12 @@
-NO	./textures/wood.xpm
-SO	./textures/redbrick.xpm
-WE	./textures/greystone.xpm
-EA	./textures/purplestone.xpm
+NO	./textures/wall/redbrick.xpm
+SO	./textures/wall/wood.xpm
+WE	./textures/wall/greystone.xpm
+EA	./textures/wall/purplestone.xpm
 F 220,100,0
 C 225,30,0
 
 1111111111111111111111111
-1000000000110000000000001
+1000020000110000000000001
 1111111001110000000000001
 100100000000000000000000111111111
 101111111011000001110000000000001

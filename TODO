@@ -1,3 +1,4 @@
 -libft dlete functions 
 -ADD oriotation of player N/S/E/W
 - heap-use-after-free ==> valide_map.c line 65
+- frames of the door
