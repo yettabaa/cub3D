@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/13 02:22:58 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:26:24 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ void update(t_data *v)
     
     v->orientation += v->hook.angle_dir * v->hook.angle_speed;
     walk_step = v->hook.walk_dir * v->hook.walk_speed;
-    // if (v->x < v->scal && v->x > WIDTH &&  v->y < v->scal && v->y > HIGHT)
-    //     return ;
-    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
-    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 5)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 2)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
+    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 2)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
     if ((int)v->pars.map[j][i] == '1')
         return ;
     v->x += walk_step * cos(rad(v->orientation + v->hook.angleOr));
@@ -96,18 +94,4 @@ int key_release(int keycode, t_data *v)
         v->hook.angleOr = 0;    
     }
     return 0;    
-}
-
-int loop_hook(void *ptr)
-{
-    t_data *v;
-    
-    v = ptr;
-	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
-	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
-			&v->mlx.endian);
-	cube3D(v);
-	mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
-    mlx_destroy_image(v->mlx.mlx, v->mlx.img);
-    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/13 02:39:36 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:26:43 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void steps(t_data *v)
     
 }
 
-void visualize_maps_1(t_data *v, int *i, int *j)
+void visualize_maps(t_data *v, int *i, int *j)
 {
     *i = v->ryc.x1 / v->scal;
     *j = v->ryc.y1 / v->scal;
@@ -54,7 +54,7 @@ void visualize_maps_1(t_data *v, int *i, int *j)
     ((is(v, DOWN) || !(int)v->ryc.ang)) && (*j = ((v->ryc.y1) + v->epsilon) / v->scal);
 }
 
-void inc_smal_steps(t_data *v)
+static void inc_smal_steps(t_data *v)
 {
     int i;
     int j;
@@ -65,22 +65,20 @@ void inc_smal_steps(t_data *v)
     (v->ryc.Vdelta > v->ryc.Hdelta) && (smal_sidstp = v->ryc.DHside);
     v->ryc.x1 = v->x + (smal_sidstp * cos(rad(v->ryc.ang)));
     v->ryc.y1 = v->y + (smal_sidstp * sin(rad(v->ryc.ang)));
-    visualize_maps_1(v, &i, &j);
+    visualize_maps(v, &i, &j);
     v->ryc.smal_stp = smal_sidstp;
     iq = 1;
-    // printf("(smal_steps = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.smal_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
-    while ((int)v->pars.map[j][i] == '0')
+    while ((int)v->pars.map[j][i] != '1')
     {
         v->ryc.smal_stp = iq * fmin(v->ryc.Hdelta, v->ryc.Vdelta) + smal_sidstp;
         v->ryc.x1 = v->x + (v->ryc.smal_stp * cos(rad(v->ryc.ang)));
         v->ryc.y1 = v->y + (v->ryc.smal_stp * sin(rad(v->ryc.ang)));
-        visualize_maps_1(v, &i, &j);
+        visualize_maps(v, &i, &j);
         iq++;
-        // printf("(smal_steps = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.smal_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal, iq, v->ryc.x1, v->ryc.y1);
     }
 }
 
-void inc_big_steps(t_data *v)
+static void inc_big_steps(t_data *v)
 {
     int i;
     int j;
@@ -91,28 +89,23 @@ void inc_big_steps(t_data *v)
     (v->ryc.Vdelta > v->ryc.Hdelta) && (big_sidstp = v->ryc.DVside);
     v->ryc.x1 = v->x + (big_sidstp * cos(rad(v->ryc.ang)));
     v->ryc.y1 = v->y + (big_sidstp * sin(rad(v->ryc.ang)));
-    visualize_maps_1(v, &i, &j);
+    visualize_maps(v, &i, &j);
     v->ryc.big_stp = (big_sidstp);
     iq = 1;
-    // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.big_stp,i,j,v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
-    while (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] == '0')
+    while (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] != '1')
     {
         v->ryc.big_stp = iq * fmax(v->ryc.Hdelta, v->ryc.Vdelta) + big_sidstp;
         v->ryc.x1 = v->x + (v->ryc.big_stp * cos(rad(v->ryc.ang)));
         v->ryc.y1 = v->y + (v->ryc.big_stp * sin(rad(v->ryc.ang)));
-        visualize_maps_1(v, &i, &j);
+        visualize_maps(v, &i, &j);
         iq++;
-        // printf("(big_step = %f) (i = %d, j = %d) (x/s = %f, y/s = %f) iq = %d (x = %f, y = %f) \n",v->ryc.big_stp, i, j, v->ryc.x1 / v->scal, v->ryc.y1 / v->scal,iq, v->ryc.x1, v->ryc.y1);
-        if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->pars.map[j][i] != '0')
+        if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->pars.map[j][i] == '1')
             break;
     }
 }
 
 void raycasting(t_data *v)
 {
-    int i;
-    int j;
-    
     steps(v);
     inc_smal_steps(v);
     inc_big_steps(v);
@@ -120,9 +113,7 @@ void raycasting(t_data *v)
     // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
     // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
     v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp); // fixing fishbowl
-    v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(rad(v->orientation - v->ryc.ang)); // fixing fishbowl
-    // ((fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.smal_stp && v->ryc.Hdelta >= v->ryc.Vdelta) || (fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.big_stp && v->ryc.Hdelta <= v->ryc.Vdelta)) && (v->hitWall = VER);
-    // ((fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.smal_stp && v->ryc.Hdelta <= v->ryc.Vdelta) || (fmin(v->ryc.smal_stp, v->ryc.big_stp) == v->ryc.big_stp && v->ryc.Hdelta >= v->ryc.Vdelta)) &&  (v->hitWall = HORI);
+    v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(rad(v->orientation - v->ryc.ang));
     if (v->ryc.big_stp > v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta + v->epsilon)
         v->hitWall = VER;
     else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta + v->epsilon < v->ryc.Vdelta)
@@ -131,11 +122,6 @@ void raycasting(t_data *v)
         v->hitWall = HORI;
     else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta+ v->epsilon)
         v->hitWall = HORI;
-    v->ryc.x1 = v->x + (v->raydis * cos(rad(v->ryc.ang))); //translation with distace of adjacent
-    v->ryc.y1 = v->y + (v->raydis * sin(rad(v->ryc.ang))); //translation with distace of opposite
-    visualize_maps_1(v, &i, &j);
-    ((int)v->pars.map[j][i] == '1') && (v->hit = WALL);
-    ((int)v->pars.map[j][i] == '2') && (v->hit = DOOR);
     v->ryc.x1 = v->x + (v->raydis_fishbowl * cos(rad(v->ryc.ang))); //translation with distace of adjacent
     v->ryc.y1 = v->y + (v->raydis_fishbowl * sin(rad(v->ryc.ang))); //translation with distace of opposite
 }

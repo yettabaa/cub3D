@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 01:50:02 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/12 23:39:07 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 00:36:34 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,3 @@ void mini_maps(t_data *v, int color)
     }
 }
 
-void cube3D(t_data *v)
-{
-    double vi;
-    double frequency;
-    
-    v->x0 = 0;
-    vi = 0;
-    frequency = 60;
-    update(v);
-    while (vi <= (frequency + v->epsilon))
-    {
-        // puts("---------------------------------\n");
-        v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
-        raycasting(v);
-        rendering_wall(v);
-        vi += (double)60 / (double)WIDTH;
-        v->x0 += 1;
-    }
-    mini_maps(v, 0xff);
-}

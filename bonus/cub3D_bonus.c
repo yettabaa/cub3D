@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/13 02:41:14 by yettabaa         ###   ########.fr       */
+/*   Created: 2023/06/14 00:26:29 by yettabaa          #+#    #+#             */
+/*   Updated: 2023/06/14 05:14:12 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void initialisation(t_data *v)
+void init_bonus(t_data *v)
 {
     v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     // v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
@@ -25,7 +25,45 @@ void initialisation(t_data *v)
     v->hook.angleOr = 0;
     v->x = (4 * v->scal + v->scal / 2);
     v->y = (1 * v->scal + v->scal / 2);
-    init_textures(v);
+    get_textures(v);
+    get_text_door(v);
+    v->door = NULL;
+    v->x0_door = 0;
+}
+
+void cube3D_bonus(t_data *v)
+{
+    double vi;
+    double frequency;
+    
+    v->x0 = 0;
+    vi = 0;
+    frequency = 60;
+    update(v);
+    while (vi <= (frequency + v->epsilon))
+    {
+        // puts("---------------------------------\n");
+        v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
+        raycasting_bonus(v);
+        render_wall_bonus(v);
+        vi += (double)60 / (double)WIDTH;
+        v->x0 += 1;
+    }
+    mini_maps(v, 0xff);
+}
+
+int loop_hook_bonus(void *ptr)
+{
+    t_data *v;
+    
+    v = ptr;
+	v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
+	v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
+			&v->mlx.endian);
+	cube3D_bonus(v);
+	mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
+    mlx_destroy_image(v->mlx.mlx, v->mlx.img);
+    return (0);
 }
 
 int main(int ac ,char **av)
@@ -38,34 +76,12 @@ int main(int ac ,char **av)
 	v.mlx.addr = mlx_get_data_addr(v.mlx.img, &v.mlx.bits_per_pixel, &v.mlx.line_length,
 								&v.mlx.endian); 
     if_map_is_valid(ac, av, &v.pars); // rename
-    initialisation(&v);
-    cube3D(&v);
+    init_bonus(&v);
+    cube3D_bonus(&v);
 	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);
-    mlx_loop_hook(v.mlx.mlx, loop_hook, &v);
+    mlx_loop_hook(v.mlx.mlx, loop_hook_bonus, &v);
     mlx_hook(v.mlx.mlx_win, 2, 0, key_press, &v);
     mlx_hook(v.mlx.mlx_win, 3, 0, key_release, &v);
     mlx_hook(v.mlx.mlx_win, 17, 0, destroy, &v);
 	mlx_loop(v.mlx.mlx);
 }
-
-// int main()
-// {
-//     int h;
-//     int w;
-//     int bitp;
-//     int line;
-//     int end;
-//     void *mlx = mlx_init();
-//     void *img =  mlx_xpm_file_to_image(mlx, "./textures/greystone.xpm", &w, &h);
-
-//     unsigned int *no_buff = (unsigned int *)mlx_get_data_addr(img, &bitp, &line, &end);
-//     // str = malloc(10);
-//     printf("line = %d\n", line);
-//     int x = 3;
-//     int y = 4;
-//     int i = y * 64 + x;
-//     // unsigned int c = no_buff[i + 0] << 16 | no_buff[i + 1] << 8 | no_buff[i + 2] | no_buff[i + 3] << 24;
-//     unsigned int c = no_buff[i];
-//     printf("%u\n", c);
-    
-// }

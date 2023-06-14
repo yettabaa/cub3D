@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/13 01:05:45 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 05:51:45 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@
 #define HORI 7
 #define VER 8
 
-#define WALL 22
-#define DOOR 23
 
 typedef struct	s_mlx {
 	void	*mlx;
@@ -101,6 +99,15 @@ typedef struct s_hook{
 	
 }	t_hook;
 
+typedef struct s_door{
+	int type;
+	int hitw;
+    double raydis_door;
+	double xd;
+	double yd;
+    struct s_door *next;
+} t_door;
+
 typedef struct	s_data {
 	
 	//player
@@ -117,7 +124,6 @@ typedef struct	s_data {
 	double y0;
 	double y1;
 	// texture
-	int hit;
 	int hitWall;
 	
 	unsigned int *NO_buff; // 270
@@ -141,12 +147,15 @@ typedef struct	s_data {
 	int EA_line;
 	
 	//door
+	double raydis_door;
+	double x0_door;
+
 	
 	unsigned int *DOOR_buff; //180
 	int DOOR_width;
 	int DOOR_height;
 	int DOOR_line;
-	
+	t_door *door;
 	
 	unsigned int *buff;
 	int width;
@@ -172,19 +181,40 @@ double normalize_angle_360(double x);
 int is(t_data *v, int flag);
 void	ft_error(const char *str);
 
-void steps(t_data *v);
-void raycasting(t_data *v);
 void cube3D(t_data *v);
 void rendering_wall(t_data *v);
 void update(t_data *v);
+//rycast
+void steps(t_data *v);
+void raycasting(t_data *v);
+void visualize_maps(t_data *v, int *i, int *j);
+//minimap
 
+// hook
 int loop_hook(void *ptr);
 int	key_press(int keycode, t_data *v);
 int key_release(int keycode, t_data *v);
 int destroy(void);
+void update(t_data *v);
 // textures
-void init_textures(t_data *v);
-// void	dda_textures(t_data *v, double y0, double y1);
+void get_textures(t_data *v);
 void	dda_textures(t_data *v, double y0, double y1, int flag);
-void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color);
+void fill_textures(t_data *v, int flag);
+// void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color);
+// bonus
+// door
+#define SMALL 30
+#define BIG 31
+#define WALL 22
+#define DOOR 23
+t_door *newdoor(t_data *v, double ryd, int flag);
+void	addoor(t_door **lst, t_door *new);
+void cube3D_bonus(t_data *v);
+void raycasting_bonus(t_data *v);
+void mini_maps(t_data *v, int color);
+int loop_hook_bonus(void *ptr);
+void render_wall_bonus(t_data *v);
+void render_door(t_data *v);
+void fill_door(t_data *v);
+void get_text_door(t_data *v);
 #endif

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/13 02:24:43 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:27:13 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,11 @@ void	dda_textures(t_data *v, double y0, double y1, int flag)
 	steps = fabs(y0 - y1);
 	yinc = (y1 - y0) / steps;
 	i = 0;
-	// printf("DDA y0 = %f y1 = %f\n", y0, y1);
     (v->hitWall == VER) && (x_texel = v->width * fmod(v->ryc.y1 , v->scal) / v->scal);
     (v->hitWall == HORI) && (x_texel = v->width * fmod(v->ryc.x1 , v->scal) / v->scal);
-	
-	// printf("x = %f y = %f\n",fmod(v->ryc.x1 , v->scal) / v->scal, fmod(v->ryc.y1 , v->scal) / v->scal);
 	while (i < steps)
 	{
         y_texel = v->height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
-		// if (!i)
-			// printf("%f\n",(i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0));
 		if (round(v->x0) >= 0 && round(v->x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
 		{
 			(flag == TEXT) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->buff[y_texel * (v->line / 4) + x_texel]));
@@ -77,26 +72,26 @@ void	dda(t_data *v, double x0, double y0, unsigned int color)
 		i++;
 	}
 }
-void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color)
-{
-	int		i;
-	double	xinc;
-	double	yinc;
-	double	steps;
+// void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color)
+// {
+// 	int		i;
+// 	double	xinc;
+// 	double	yinc;
+// 	double	steps;
 
-	steps = fmax(fabs(x0 - x1), fabs(y0 - y1));
-	xinc = (x1 - x0) / steps;
-	yinc = (y1 - y0) / steps;
-	i = 0;
-	while (i <= steps)
-	{
-		if (floor(x0) >= 0 && floor(x0) < WIDTH && floor(y0) >= 0 && floor(y0) < HIGHT)
-			my_mlx_pixel_put(v ,floor(x0), floor(y0), color);
-		x0 = x0 + xinc;
-		y0 = y0 + yinc;
-		i++;
-	}
-}
+// 	steps = fmax(fabs(x0 - x1), fabs(y0 - y1));
+// 	xinc = (x1 - x0) / steps;
+// 	yinc = (y1 - y0) / steps;
+// 	i = 0;
+// 	while (i <= steps)
+// 	{
+// 		if (floor(x0) >= 0 && floor(x0) < WIDTH && floor(y0) >= 0 && floor(y0) < HIGHT)
+// 			my_mlx_pixel_put(v ,floor(x0), floor(y0), color);
+// 		x0 = x0 + xinc;
+// 		y0 = y0 + yinc;
+// 		i++;
+// 	}
+// }
 void rectangle(t_data *v, int x, int y, int color)
 {
     int i;
