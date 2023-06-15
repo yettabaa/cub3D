@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:26:29 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 05:14:12 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/15 04:27:07 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void init_bonus(t_data *v)
     v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     // v->epsilon = 0.01; // ??? hit the wall in the origin axis  // (1,5) angle 225
     v->scal = 8; // 19
-    v->orientation = 90;
+    v->orientation = 0;
     v->hook.angle_dir = 0;
     v->hook.angle_speed = 3;
     v->hook.walk_dir = 0;
@@ -28,7 +28,7 @@ void init_bonus(t_data *v)
     get_textures(v);
     get_text_door(v);
     v->door = NULL;
-    v->x0_door = 0;
+    // v->x0_door = 0;
 }
 
 void cube3D_bonus(t_data *v)

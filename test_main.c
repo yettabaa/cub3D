@@ -38,7 +38,7 @@ int main()
     int line;
     int end;
     void *mlx = mlx_init();
-    void *img =  mlx_xpm_file_to_image(mlx, "./textures/greystone.xpm", &w, &h);
+    void *img =  mlx_xpm_file_to_image(mlx, "/Users/yettabaa/Desktop/cub3D/textures/door/door_44.xpm", &w, &h);
 
     char *no_buff = mlx_get_data_addr(img, &bitp, &line, &end);
     // str = malloc(10);

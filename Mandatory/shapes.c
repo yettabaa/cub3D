@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 01:27:13 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:48:03 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,26 @@ void	dda(t_data *v, double x0, double y0, unsigned int color)
 		i++;
 	}
 }
-// void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color)
-// {
-// 	int		i;
-// 	double	xinc;
-// 	double	yinc;
-// 	double	steps;
+void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color)
+{
+	int		i;
+	double	xinc;
+	double	yinc;
+	double	steps;
 
-// 	steps = fmax(fabs(x0 - x1), fabs(y0 - y1));
-// 	xinc = (x1 - x0) / steps;
-// 	yinc = (y1 - y0) / steps;
-// 	i = 0;
-// 	while (i <= steps)
-// 	{
-// 		if (floor(x0) >= 0 && floor(x0) < WIDTH && floor(y0) >= 0 && floor(y0) < HIGHT)
-// 			my_mlx_pixel_put(v ,floor(x0), floor(y0), color);
-// 		x0 = x0 + xinc;
-// 		y0 = y0 + yinc;
-// 		i++;
-// 	}
-// }
+	steps = fmax(fabs(x0 - x1), fabs(y0 - y1));
+	xinc = (x1 - x0) / steps;
+	yinc = (y1 - y0) / steps;
+	i = 0;
+	while (i <= steps)
+	{
+		if (floor(x0) >= 0 && floor(x0) < WIDTH && floor(y0) >= 0 && floor(y0) < HIGHT)
+			my_mlx_pixel_put(v ,floor(x0), floor(y0), color);
+		x0 = x0 + xinc;
+		y0 = y0 + yinc;
+		i++;
+	}
+}
 void rectangle(t_data *v, int x, int y, int color)
 {
     int i;

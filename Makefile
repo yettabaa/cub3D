@@ -6,13 +6,13 @@
 #    By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:39:51 by yettabaa          #+#    #+#              #
-#    Updated: 2023/06/14 03:46:15 by yettabaa         ###   ########.fr        #
+#    Updated: 2023/06/15 04:27:14 by yettabaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -fsanitize=address -g -O3
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Ofast -fsanitize=address -g
 
 MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit -Iinclude -fsanitize=address -g 
 
@@ -57,6 +57,6 @@ clean:
 	rm -rf $(OMAND) $(OBONUS)
 
 fclean:clean
-	rm -rf $(NAME) $(LIBFT)
+	rm -rf $(NAME) $(LIBFT) cub3D_bonus
 
 re:fclean all

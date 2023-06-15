@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 01:26:43 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:47:27 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ void raycasting(t_data *v)
         v->hitWall = HORI;
     else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta+ v->epsilon)
         v->hitWall = HORI;
-    v->ryc.x1 = v->x + (v->raydis_fishbowl * cos(rad(v->ryc.ang))); //translation with distace of adjacent
-    v->ryc.y1 = v->y + (v->raydis_fishbowl * sin(rad(v->ryc.ang))); //translation with distace of opposite
+    v->ryc.x1 = v->x + (v->raydis * cos(rad(v->ryc.ang))); //translation with distace of adjacent
+    v->ryc.y1 = v->y + (v->raydis * sin(rad(v->ryc.ang))); //translation with distace of opposite
 }

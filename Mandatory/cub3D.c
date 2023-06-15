@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 01:26:01 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:49:39 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void cube3D(t_data *v)
         vi += (double)60 / (double)WIDTH;
         v->x0 += 1;
     }
-    mini_maps(v, 0xff);
+    // mini_maps(v, 0xff);
 }
 
 int loop_hook(void *ptr)
@@ -90,16 +90,18 @@ int main(int ac ,char **av)
 //     int line;
 //     int end;
 //     void *mlx = mlx_init();
-//     void *img =  mlx_xpm_file_to_image(mlx, "./textures/greystone.xpm", &w, &h);
+//     void *img =  mlx_xpm_file_to_image(mlx, "/Users/yettabaa/Desktop/cub3D/textures/door/door_44.xpm", &w, &h);
 
 //     unsigned int *no_buff = (unsigned int *)mlx_get_data_addr(img, &bitp, &line, &end);
 //     // str = malloc(10);
 //     printf("line = %d\n", line);
-//     int x = 3;
-//     int y = 4;
+//     int x = 10;
+//     int y = 10;
 //     int i = y * 64 + x;
 //     // unsigned int c = no_buff[i + 0] << 16 | no_buff[i + 1] << 8 | no_buff[i + 2] | no_buff[i + 3] << 24;
 //     unsigned int c = no_buff[i];
+    
+//     printf("%u\n", c >> 24 & 0x000000ff);
 //     printf("%u\n", c);
     
 // }

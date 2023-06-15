@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 01:26:24 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/15 01:13:15 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	key_press(int keycode, t_data *v)
 	// v->mlx.img = mlx_new_image(v->mlx.mlx, WIDTH, HIGHT);
 	// v->mlx.addr = mlx_get_data_addr(v->mlx.img, &v->mlx.bits_per_pixel, &v->mlx.line_length,
 	// 		&v->mlx.endian);
-	// cube3D(v);
+	// cube3D_bonus(v);
 	// mlx_put_image_to_window(v->mlx.mlx, v->mlx.mlx_win, v->mlx.img, 0, 0);
     return(0);
 }
