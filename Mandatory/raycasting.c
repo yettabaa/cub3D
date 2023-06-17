@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/16 00:50:31 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:05:13 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void steps(t_data *v, double ang)
     
     step.y_Hstp = v->scal;
     step.x_Hstp = 0;
-    (ang != 0 && ang != 180) &&  (step.x_Hstp = v->scal / tan(rad(ang))); //tan +/-
+    (ang != 0 && ang != 180) &&  (step.x_Hstp = v->scal / tan(Rad(ang))); //tan +/-
     v->ryc.Hdelta = (sqrt(pow(step.x_Hstp, 2) + pow(step.y_Hstp, 2)));
     // printf("v-ang = %f  (x = %f, y = %f)\n", ang , v->x, v->y);
     
@@ -26,12 +26,12 @@ void steps(t_data *v, double ang)
     step.y_H1stp = (v->y - (step.var * v->scal)); // up
     (is(v,ang, DOWN) || !step.y_H1stp) && (step.y_H1stp = ((step.var * v->scal + v->scal) - v->y)); // down
     step.x_H1stp = 0;
-    (ang != 0 && ang != 180) && (step.x_H1stp = step.y_H1stp / tan(rad(ang)));
+    (ang != 0 && ang != 180) && (step.x_H1stp = step.y_H1stp / tan(Rad(ang)));
     v->ryc.DHside = (sqrt(pow(step.x_H1stp, 2) + pow(step.y_H1stp, 2)));
     
 
     step.x_Vstp = v->scal;
-    step.y_Vstp = v->scal * tan(rad(ang)); // tan vari +/-
+    step.y_Vstp = v->scal * tan(Rad(ang)); // tan vari +/-
     (ang == 90 || ang == 270) && (step.y_Vstp = 0);
     v->ryc.Vdelta = (sqrt(pow(step.x_Vstp, 2) + pow(step.y_Vstp, 2)));
 
@@ -39,7 +39,7 @@ void steps(t_data *v, double ang)
     step.x_V1stp = (v->x - step.var * v->scal); // left
     (is(v,ang, RIGHT)) && (step.x_V1stp = ((step.var * v->scal + v->scal) - v->x));
     (ang == 270 || ang == 90) && (step.x_V1stp = 0);
-    step.y_V1stp = (step.x_V1stp * tan(rad((ang))));
+    step.y_V1stp = (step.x_V1stp * tan(Rad((ang))));
     v->ryc.DVside = (sqrt(fabs(pow(step.x_V1stp , 2)) + fabs(pow(step.y_V1stp, 2))));
     
 }
@@ -63,16 +63,16 @@ static void inc_smal_steps(t_data *v, double ang, int hit)
 
     (v->ryc.Vdelta <= v->ryc.Hdelta) && (smal_sidstp = v->ryc.DVside);
     (v->ryc.Vdelta > v->ryc.Hdelta) && (smal_sidstp = v->ryc.DHside);
-    v->ryc.x = v->x + (smal_sidstp * cos(rad(ang)));
-    v->ryc.y = v->y + (smal_sidstp * sin(rad(ang)));
+    v->ryc.x = v->x + (smal_sidstp * cos(Rad(ang)));
+    v->ryc.y = v->y + (smal_sidstp * sin(Rad(ang)));
     visualize_maps(v, ang, &i, &j);
     v->ryc.smal_stp = smal_sidstp;
     iq = 1;
     while ((int)v->pars.map[j][i] != hit)
     {
         v->ryc.smal_stp = iq * fmin(v->ryc.Hdelta, v->ryc.Vdelta) + smal_sidstp;
-        v->ryc.x = v->x + (v->ryc.smal_stp * cos(rad(ang)));
-        v->ryc.y = v->y + (v->ryc.smal_stp * sin(rad(ang)));
+        v->ryc.x = v->x + (v->ryc.smal_stp * cos(Rad(ang)));
+        v->ryc.y = v->y + (v->ryc.smal_stp * sin(Rad(ang)));
         visualize_maps(v, ang, &i, &j);
         iq++;
     }
@@ -87,16 +87,16 @@ static void inc_big_steps(t_data *v, double ang, int hit)
     
     (v->ryc.Vdelta <= v->ryc.Hdelta) && (big_sidstp = v->ryc.DHside);
     (v->ryc.Vdelta > v->ryc.Hdelta) && (big_sidstp = v->ryc.DVside);
-    v->ryc.x = v->x + (big_sidstp * cos(rad(ang)));
-    v->ryc.y = v->y + (big_sidstp * sin(rad(ang)));
+    v->ryc.x = v->x + (big_sidstp * cos(Rad(ang)));
+    v->ryc.y = v->y + (big_sidstp * sin(Rad(ang)));
     visualize_maps(v,ang, &i, &j);
     v->ryc.big_stp = (big_sidstp);
     iq = 1;
     while (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] != hit)
     {
         v->ryc.big_stp = iq * fmax(v->ryc.Hdelta, v->ryc.Vdelta) + big_sidstp;
-        v->ryc.x = v->x + (v->ryc.big_stp * cos(rad(ang)));
-        v->ryc.y = v->y + (v->ryc.big_stp * sin(rad(ang)));
+        v->ryc.x = v->x + (v->ryc.big_stp * cos(Rad(ang)));
+        v->ryc.y = v->y + (v->ryc.big_stp * sin(Rad(ang)));
         visualize_maps(v,ang, &i, &j);
         iq++;
         if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->pars.map[j][i] == hit)
@@ -115,7 +115,7 @@ double raycasting(t_data *v, double ang, int hit)
     v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp); // fixing fishbowl
     if (hit == '2')
         return (v->raydis);
-    v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(rad(v->orientation - ang));
+    v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(Rad(v->orientation - ang));
     if (v->ryc.big_stp > v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta + v->epsilon)
         v->txt.hitWall = VER;
     else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta + v->epsilon < v->ryc.Vdelta)
@@ -124,7 +124,7 @@ double raycasting(t_data *v, double ang, int hit)
         v->txt.hitWall = HORI;
     else if (v->ryc.big_stp < v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta+ v->epsilon)
         v->txt.hitWall = HORI;
-    v->xw = v->x + (v->raydis * cos(rad(ang))); //translation with distace of adjacent
-    v->yw = v->y + (v->raydis * sin(rad(ang))); //translation with distace of opposite
+    v->xw = v->x + (v->raydis * cos(Rad(ang))); //translation with distace of adjacent
+    v->yw = v->y + (v->raydis * sin(Rad(ang))); //translation with distace of opposite
     return(v->raydis);
 }

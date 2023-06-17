@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:24:45 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 02:37:47 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:05:13 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ t_list_door *newdoor(t_data *v, double ryd, int flag)
 	nd->type = DOOR;
 	(flag == WALL) && (nd->type = WALL);
 	nd->rydis = ryd;
-    nd->rydis_fbw = ryd * cos(rad(v->orientation - v->ryc.ang));
+    nd->rydis_fbw = ryd * cos(Rad(v->orientation - v->ryc.ang));
 	(flag == HORI || flag == VER) && (nd->hitw = flag);
-	nd->x = v->x + ryd * cos(rad(v->ryc.ang));
-	nd->y = v->y + ryd * sin(rad(v->ryc.ang));
+	nd->x = v->x + ryd * cos(Rad(v->ryc.ang));
+	nd->y = v->y + ryd * sin(Rad(v->ryc.ang));
 	nd->next = NULL;
     return(nd);
 }

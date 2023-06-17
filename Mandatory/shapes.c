@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/16 19:53:31 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:56:43 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void rectangle(t_data *v, int x, int y, int color)
     }
 }
 
-void disc(t_data *v, int color)
+void disc(t_data *v, double x, double y, int color)
 {
     double x0;
     double y0;
@@ -120,7 +120,7 @@ void disc(t_data *v, int color)
         while (x0 <= radius)
         {
             if (x0 * x0 + y0 * y0 <= radius * radius)
-                my_mlx_pixel_put(v, x0 + v->x, y0 + v->y, color);
+                my_mlx_pixel_put(v, x0 + x, y0 + y, color);
             x0++;
         }
         y0++;

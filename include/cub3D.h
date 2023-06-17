@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 05:01:01 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 23:27:23 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,12 @@ typedef struct s_door{
 	int DOOR_height;
 	int DOOR_line;
 } t_door;
-// typedef struct s_object{    casting
-// 	int type;
-// } t_object;
+
+typedef struct s_object{   // casting
+	int type;
+	double rydis;
+} t_object;
+
 typedef struct s_list_door{ //linked list door
 	int type;
 	int hitw;
@@ -142,10 +145,23 @@ typedef struct s_list_door{ //linked list door
     struct s_list_door *next;
 } t_list_door;
 
-typedef struct s_sprites{
+typedef struct s_sprite{
+	int i;
+	int j;
 	double xs;
 	double ys;
 	double rydis;
+	double visible;
+	struct s_object *next;
+}t_sprite;
+
+typedef struct s_sprites{
+	int i;
+	int j;
+	double xs;
+	double ys;
+	double rydis;
+	double visible;
 }t_sprites;
 
 typedef struct	s_data {
@@ -159,9 +175,10 @@ typedef struct	s_data {
 	double raydis;
 	double raydis_fishbowl;
 	// reder_WALL
+	double disProj;
 	double xw;
 	double yw;
-	double disProj;
+	// double disProj;
 	double x_wind;
 	double y0;
 	double y1;
@@ -173,6 +190,9 @@ typedef struct	s_data {
 	int count_sprites;
 	double xs0;
 	double xs1;
+	double spriteDimension;
+	int frames;
+	int ind_sprite_text;
 	t_sprites *sprite;
 
 	t_door door;
@@ -190,9 +210,11 @@ int	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
 void	dda(t_data *v, double x0, double y0, unsigned int color);
 // void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
 void rectangle(t_data *v, int x, int y, int color);
-void disc(t_data *v, int color);
+// void disc(t_data *v, int color);
+void disc(t_data *v, double x, double y, int color);
 
-double	rad(double angle);
+double	Rad(double angle);
+double Deg(double radians); 
 double normalize_angle_360(double x);
 int is(t_data *v, double ang, int flag);
 void	ft_error(const char *str);
@@ -240,6 +262,7 @@ void get_text_sprites(t_data *v);
 // void	dda_sprite(t_data *v, double y0, double y1);
 void	dda_sprite(t_data *v, double y0, double y1, double x);
 void fill_sprite(t_data *v, int ind);
+void render_ssprite(t_data *v);
 //utils
 double des_betw_2pt(double x0, double y0, double x1, double y1);
 #endif

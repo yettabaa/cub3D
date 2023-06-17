@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:40:09 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/17 02:48:30 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:03:58 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,26 @@ void	duplicate_error(t_map_result *res)
 
 int	player_position(t_data *v)
 {
-	int	i;
 	int	j;
+	int	i;
 	int k;
 
-	i = 0;
+	j = 0;
 	k = 0;
-	while (v->pars.map[i])
+	while (v->pars.map[j])
 	{
-		j = 0;
-		while (v->pars.map[i][j])
+		i = 0;
+		while (v->pars.map[j][i])
 		{
-			if ((v->pars.map[i][j] == '2' && (v->pars.map[i + 1][j] != '1' || v->pars.map[i - 1][j] != '1')) && (v->pars.map[i][j] == '2' && (v->pars.map[i][j + 1] != '1' || v->pars.map[i][j - 1] != '1')))
+			if ((v->pars.map[j][i] == '2' && (v->pars.map[j + 1][i] != '1' || v->pars.map[j - 1][i] != '1')) && (v->pars.map[j][i] == '2' && (v->pars.map[j][i + 1] != '1' || v->pars.map[j][i - 1] != '1')))
 				duplicate_error(&v->pars); // erro
-			// else if (v->pars.map[i][j] == '2' && v->pars.map[i][j + 1] != '1' && v->pars.map[i][j - 1] != '1')
+			// else if (v->pars.map[j][i] == '2' && v->pars.map[j][i + 1] != '1' && v->pars.map[j][i - 1] != '1')
 			// 	duplicate_error(&v->pars);
-			if (v->pars.map[i][j] == '3')
+			if (v->pars.map[j][i] == '3')
 				_sprites(v, k++, i, j);
-			j++;
+			i++;
 		}
-		i++;
+		j++;
 	}
 	return (1);
 }
@@ -56,27 +56,27 @@ void	if_duplicate(t_data *v)
 	int	count;
 	// int count_sprites;
 
-	i = 0;
+	j = 0;
 	count = 0;
 	v->count_sprites = 0;
-	while (v->pars.map[i])
+	while (v->pars.map[j])
 	{
-		j = 0;
-		while (v->pars.map[i][j])
+		i = 0;
+		while (v->pars.map[j][i])
 		{
-			(v->pars.map[i][j] == '3') && (v->count_sprites++);
-			// if (v->pars.map[i][j] == 'S' || v->pars.map[i][j] == 'N'
-			// || v->pars.map[i][j] == 'E' || v->pars.map[i][j] == 'W')
-			if(ft_strchr("WSEN", v->pars.map[i][j]))
+			(v->pars.map[j][i] == '3') && (v->count_sprites++);
+			// if (v->pars.map[j][i] == 'S' || v->pars.map[j][i] == 'N'
+			// || v->pars.map[j][i] == 'E' || v->pars.map[j][i] == 'W')
+			if(ft_strchr("WSEN", v->pars.map[j][i]))
 			{
-				v->pars.y = i;
-				v->pars.x = j;
-				v->pars.palayer_dir = v->pars.map[i][j];
+				v->pars.y = j;
+				v->pars.x = i;
+				v->pars.palayer_dir = v->pars.map[j][i];
 				count++;
 			}
-			j++;
+			i++;
 		}
-		i++;
+		j++;
 	}
 	if (count > 1)
 		duplicate_error(&v->pars);

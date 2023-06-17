@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:26:29 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 05:43:14 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 22:04:02 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,17 @@ void init_bonus(t_data *v)
     v->hook.walk_dir = 0;
     v->hook.walk_speed = 1.5;
     v->hook.angleOr = 0;
+    v->disProj = (WIDTH / 2) / tan(Rad(30));
     v->x = (v->pars.x * v->scal + v->scal / 2);
     v->y = (v->pars.y * v->scal + v->scal / 2);
+    v->frames = 0;
+    v->ind_sprite_text = 0;
     get_textures(v);
     get_text_door(v);
     get_text_sprites(v);
     v->list_door = NULL;
 }
-double radiansToDegrees(double radians) {
-    return radians * (180.0 / M_PI);
-}
+
 void cube3D_bonus(t_data *v)
 {
     double vi;
@@ -51,38 +52,39 @@ void cube3D_bonus(t_data *v)
         vi += (double)60 / (double)WIDTH;
         v->x_wind += 1;
     }
-    fill_sprite(v, 0);	
-	int i = -1;
-	double sprtHeight;
-	double ang_sp;
-	double proj_sp;
-    double disProj = (WIDTH / 2) / tan(rad(30));
-    double xxx;
-	while (++i < v->count_sprites)
-	{
-        double spriteDis = des_betw_2pt(v->sprite[i].xs, v->sprite[i].ys, v->x, v->y);
-		sprtHeight = (v->scal / spriteDis) * disProj;
-		v->y0 = (HIGHT / 2) - (sprtHeight / 2);
-		v->y1 = v->y0 + sprtHeight;
-		ang_sp = normalize_angle_360(radiansToDegrees(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x))- v->orientation);
-        // ang_sp -= v->orientation;
-        printf("ang = %f ang 3ajiba  = %f (xs = %f, ys= %f)  (x = %f, y = %f)\n",v->orientation, (ang_sp), v->sprite[i].xs ,v->sprite[i].ys, v->x,v->y);
-		proj_sp = tan((rad(ang_sp))) * disProj;
-		v->xs0 = (WIDTH / 2) + proj_sp - (sprtHeight / 2);
-		v->xs1 = v->xs0 + sprtHeight;
-        (v->xs0 < 0) && (v->xs0 = 0);
-	    (v->xs1 > WIDTH) && (v->xs1 = WIDTH);
+    // fill_sprite(v, 0);	
+	// int i = -1;
+	// double sprtHeight;
+	// double ang_sp;
+	// double proj_sp;
+    // double disProj = (WIDTH / 2) / tan(rad(30));
+    // double xxx;
+	// while (++i < v->count_sprites)
+	// {
+    //     double spriteDis = des_betw_2pt(v->sprite[i].xs, v->sprite[i].ys, v->x, v->y);
+	// 	sprtHeight = (v->scal / spriteDis) * disProj;
+	// 	v->y0 = (HIGHT / 2) - (sprtHeight / 2);
+	// 	v->y1 = v->y0 + sprtHeight;
+	// 	ang_sp = normalize_angle_360(radiansToDegrees(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x))- v->orientation);
+    //     // ang_sp -= v->orientation;
+    //     printf("ang = %f ang 3ajiba  = %f (xs = %f, ys= %f)  (x = %f, y = %f)\n",v->orientation, (ang_sp), v->sprite[i].xs ,v->sprite[i].ys, v->x,v->y);
+	// 	proj_sp = tan((rad(ang_sp))) * disProj;
+	// 	v->xs0 = (WIDTH / 2) + proj_sp - (sprtHeight / 2);
+	// 	v->xs1 = v->xs0 + sprtHeight;
+    //     (v->xs0 < 0) && (v->xs0 = 0);
+	//     (v->xs1 > WIDTH) && (v->xs1 = WIDTH);
         
-        xxx = v->xs0;
-		// printf("= >%f wall \n", v->xrs);
-		while (xxx < v->xs1)
-		{
-			dda_sprite(v, v->y0, v->y1, xxx);
-			xxx++;
-		}
+    //     xxx = v->xs0;
+	// 	// printf("= >%f wall \n", v->xrs);
+	// 	while (xxx < v->xs1)
+	// 	{
+	// 		dda_sprite(v, v->y0, v->y1, xxx);
+	// 		xxx++;
+	// 	}
 		
-	}
+	// }
     mini_maps(v, 0x00ff00);
+    render_ssprite(v);
 }
 
 int loop_hook_bonus(void *ptr)
@@ -111,8 +113,8 @@ int main(int ac ,char **av)
     parsing_bonus(&v, ac, av); // rename// parsing bonus
     init_bonus(&v);
     player_position(&v);
-    if (v.sprite)
-        printf("x = %f y = %f\n",  v.sprite[0].xs,  v.sprite[0].ys);
+    // if (v.sprite)
+    //     printf("x = %f y = %f\n",  v.sprite[0].xs,  v.sprite[0].ys);
     cube3D_bonus(&v);
 	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);
     mlx_loop_hook(v.mlx.mlx, loop_hook_bonus, &v);

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:47:25 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 04:31:26 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:10:19 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	dda_door(t_data *v, double y0, double y1) // opti
 
 void text_door(t_data *v) //raname and rplace to file of rendring
 {
-	double disProj;
+	// double disProj;
     double wall_hight;
 	double ration;
 
-    disProj = (WIDTH / 2) / tan(rad(30));
-    wall_hight = (v->scal / v->list_door->rydis_fbw) * disProj; // indersta
+    // disProj = (WIDTH / 2) / tan(Rad(30));
+    wall_hight = (v->scal / v->list_door->rydis_fbw) * v->disProj; // indersta
     v->y0 = ((HIGHT) / 2) - (wall_hight / 2);
     v->y1 = v->y0 + wall_hight;
 	if (v->list_door->type == DOOR && v->list_door->rydis_fbw < v->raydis_fishbowl)
@@ -63,31 +63,6 @@ void text_door(t_data *v) //raname and rplace to file of rendring
 	}
 	else
 		dda_textures(v, v->y0, v->y1, TEXT);
-		
-	// fill_sprite(v, 0);	
-	// int i = -1;
-	// double wall_sprite;
-	// double ang_sp;
-	// double proj_sp;
-	// while (++i < v->count_sprites)
-	// {
-	// 	wall_sprite = (v->scal / v->sprite[i].rydis) * disProj;
-	// 	v->y0 = (HIGHT / 2) - (wall_sprite / 2);
-	// 	v->y1 = v->y0 + wall_sprite;
-	// 	ang_sp = atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x);
-	// 	proj_sp = tan(ang_sp) * disProj;
-	// 	v->xrs = (WIDTH / 2) + proj_sp;
-	// 	v->yrs = v->xrs + wall_sprite;
-	// 	// printf("= >%f wall \n", v->xrs);
-	// 	while (v->xrs < v->yrs)
-	// 	{
-	// 		dda_sprite(v, v->y0, v->y1);
-	// 		v->xrs++;
-	// 	}
-		
-	// }
-	
-
 }
 
 void render_door(t_data *v) //raname and rplace to file of rendring

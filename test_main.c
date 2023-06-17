@@ -17,7 +17,7 @@ double const_Angle(double x){
         x += 360;
     return x;
 }
-double	rad(double angle)
+double	Rad(double angle)
 {
 	return (angle * (M_PI / 180));
 }

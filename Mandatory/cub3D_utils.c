@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 18:52:33 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/15 22:52:48 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:05:13 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ int is(t_data *v, double ang, int flag)
         return(0);    
 }
 
-double	rad(double angle)
+double	Rad(double angle)
 {
 	return (angle * (M_PI / 180));
+}
+
+double Deg(double radians) 
+{
+    return radians * (180.0 / M_PI);
 }
 
 double normalize_angle_360(double x)

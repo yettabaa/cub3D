@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/16 03:53:42 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 21:37:07 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void update(t_data *v)
     walk_step = v->hook.walk_dir * v->hook.walk_speed;
     if (raycasting(v, v->orientation + v->hook.angleOr, '1') <= 2)
         return ;
-    v->x += walk_step * cos(rad(v->orientation + v->hook.angleOr));
-    v->y += walk_step * sin(rad(v->orientation + v->hook.angleOr));
+    v->x += walk_step * cos(Rad(v->orientation + v->hook.angleOr));
+    v->y += walk_step * sin(Rad(v->orientation + v->hook.angleOr));
 }
 
 int destroy(void)
