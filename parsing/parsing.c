@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/15 19:12:39 by nfoughal          #+#    #+#             */
+/*   Updated: 2023/06/15 19:12:40 by nfoughal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
 void	check_arg(int ac, char **av)
@@ -56,11 +68,12 @@ char	**fill_array_map(char **av)
 	int		count;
 
 	fd = open(av[1], O_RDONLY);
-	// if(fd == -1)
-	// 	ft_error();
+	if (fd == -1)
+	{
+		write(2, "Error fd\n", 10);
+		exit(1);
+	}
 	line = get_next_line(fd);
-	// if(line == NULL)
-	// 	ft_map_error();
 	count = map_line_count(fd, line);
 	close(fd);
 	fd = open(av[1], O_RDONLY);

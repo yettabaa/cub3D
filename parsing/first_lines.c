@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_lines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:06:30 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:26:50 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/15 18:38:11 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	coma_split(char *str, int value, t_map_result *res)
 		res->f = create_trgb(0, ft_atoi(split[0]),
 				ft_atoi(split[1]), ft_atoi(split[2]));
 	free_array(split);
+	free(str);
 }
 
 void	check_f_and_c(char *str, t_map_result *res, int value, char **split)

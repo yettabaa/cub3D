@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 19:48:03 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:53:31 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ void	dda_textures(t_data *v, double y0, double y1, int flag)
 	steps = fabs(y0 - y1);
 	yinc = (y1 - y0) / steps;
 	i = 0;
-    (v->hitWall == VER) && (x_texel = v->width * fmod(v->ryc.y1 , v->scal) / v->scal);
-    (v->hitWall == HORI) && (x_texel = v->width * fmod(v->ryc.x1 , v->scal) / v->scal);
+    (v->txt.hitWall == VER) && (x_texel = v->txt.width * fmod(v->yw , v->scal) / v->scal);
+    (v->txt.hitWall == HORI) && (x_texel = v->txt.width * fmod(v->xw , v->scal) / v->scal);
 	while (i < steps)
 	{
-        y_texel = v->height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
-		if (round(v->x0) >= 0 && round(v->x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
+        y_texel = v->txt.height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
+		if (round(v->x_wind) >= 0 && round(v->x_wind) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
 		{
-			(flag == TEXT) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->buff[y_texel * (v->line / 4) + x_texel]));
-			(flag == CEIL) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->pars.c));
-			(flag == FLOOR) && (my_mlx_pixel_put(v ,round(v->x0), round(y0), v->pars.f));
+			(flag == TEXT) && (my_mlx_pixel_put(v ,round(v->x_wind), round(y0), v->txt.buff[y_texel * (v->txt.line / 4) + x_texel]));
+			(flag == CEIL) && (my_mlx_pixel_put(v ,round(v->x_wind), round(y0), v->pars.c));
+			(flag == FLOOR) && (my_mlx_pixel_put(v ,round(v->x_wind), round(y0), v->pars.f));
 		}
 		y0 = y0 + yinc;
 		i++;
@@ -59,9 +59,9 @@ void	dda(t_data *v, double x0, double y0, unsigned int color)
 	double	yinc;
 	double	steps;
 
-	steps = fmax(fabs(x0 - v->ryc.x1), fabs(y0 - v->ryc.y1));
-	xinc = (v->ryc.x1 - x0) / steps;
-	yinc = (v->ryc.y1 - y0) / steps;
+	steps = fmax(fabs(x0 - v->xw), fabs(y0 - v->yw));
+	xinc = (v->xw - x0) / steps;
+	yinc = (v->yw - y0) / steps;
 	i = 0;
 	while (i <= steps + v->epsilon)
 	{
@@ -112,7 +112,7 @@ void disc(t_data *v, int color)
     double y0;
     double radius;
 
-    radius = v->scal / 5;
+    radius = v->scal / 3;
     y0 = -radius;
     while (y0 <= radius)
     {

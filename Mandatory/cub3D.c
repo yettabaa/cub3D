@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/14 18:49:39 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:00:14 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 void initialisation(t_data *v)
 {
     v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
-    v->scal = 8; // 19
-    v->orientation = 90;
+    v->scal = 12; // 19
+    v->orientation = strchr_c("WSEN", v->pars.palayer_dir) * 90;
+    // v->orientation = 90;
     v->hook.angle_dir = 0;
     v->hook.angle_speed = 3;
     v->hook.walk_dir = 0;
     v->hook.walk_speed = 1;
     v->hook.angleOr = 0;
-    v->x = (4 * v->scal + v->scal / 2);
-    v->y = (1 * v->scal + v->scal / 2);
+    v->x = (v->pars.x * v->scal + v->scal / 2);
+    v->y = (v->pars.y * v->scal + v->scal / 2);
     get_textures(v);
 }
 
@@ -32,7 +33,7 @@ void cube3D(t_data *v)
     double vi;
     double frequency;
     
-    v->x0 = 0;
+    v->x_wind = 0;
     vi = 0;
     frequency = 60;
     update(v);
@@ -40,12 +41,11 @@ void cube3D(t_data *v)
     {
         // puts("---------------------------------\n");
         v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
-        raycasting(v);
-        rendering_wall(v);
+        raycasting(v, v->ryc.ang, '1');
+        rendering_wall(v, v->ryc.ang);
         vi += (double)60 / (double)WIDTH;
-        v->x0 += 1;
+        v->x_wind += 1;
     }
-    // mini_maps(v, 0xff);
 }
 
 int loop_hook(void *ptr)
@@ -71,7 +71,7 @@ int main(int ac ,char **av)
 	v.mlx.img = mlx_new_image(v.mlx.mlx, WIDTH, HIGHT);
 	v.mlx.addr = mlx_get_data_addr(v.mlx.img, &v.mlx.bits_per_pixel, &v.mlx.line_length,
 								&v.mlx.endian); 
-    if_map_is_valid(ac, av, &v.pars); // rename
+    if_map_is_valid(ac, av, &v.pars); // rename //parsing
     initialisation(&v);
     cube3D(&v);
 	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);

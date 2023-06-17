@@ -6,7 +6,7 @@
 #    By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:39:51 by yettabaa          #+#    #+#              #
-#    Updated: 2023/06/15 04:27:14 by yettabaa         ###   ########.fr        #
+#    Updated: 2023/06/16 23:35:29 by yettabaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MAND =	Mandatory/cub3D.c Mandatory/shapes.c Mandatory/raycasting.c Mandatory/cub
 		parsing/parsing.c parsing/split.c parsing/utils.c parsing/get_next_line/get_next_line.c \
 		parsing/get_next_line/get_next_line_utils.c parsing/valid_map.c parsing/first_lines.c \
 		parsing/walls_first_last.c parsing/walls_sides.c parsing/space_valid.c parsing/up_down.c \
-		bonus/maps_2D.c
+		parsing/player_position.c 
 
 OMAND = $(MAND:.c=.o)
 
@@ -31,7 +31,7 @@ BONUS = bonus/cub3D_bonus.c bonus/maps_2D.c Mandatory/shapes.c Mandatory/raycast
 		parsing/parsing.c parsing/split.c parsing/utils.c parsing/get_next_line/get_next_line.c \
 		parsing/get_next_line/get_next_line_utils.c parsing/valid_map.c parsing/first_lines.c \
 		parsing/walls_first_last.c parsing/walls_sides.c parsing/space_valid.c parsing/up_down.c \
-		bonus/render_door.c
+		bonus/door_render.c bonus/door_utils.c parsing/player_position.c bonus/sprites.c
 
 OBONUS = $(BONUS:.c=.o)
 

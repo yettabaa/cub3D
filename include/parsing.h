@@ -6,13 +6,14 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/13 16:12:59 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/16 23:32:59 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+// #include "cub3D.h"
 # include<stdio.h>
 # include<unistd.h>
 # include<stdlib.h>
@@ -20,7 +21,7 @@
 # include "../parsing/get_next_line/get_next_line.h"
 # include <mlx.h>
 #include <math.h>
-
+typedef struct s_data t_data;
 typedef struct s_map_result
 {
 	int		f;
@@ -30,8 +31,9 @@ typedef struct s_map_result
 	char	*we;
 	char	*ea;
 	char	**map;
-	int row;
-	int col;
+	int		y;
+	int		x;
+	char	palayer_dir;
 }t_map_result;
 
 int		ft_strcmp(const char *s1, const char *s2);
@@ -67,5 +69,12 @@ void	fill_spaces(char **p, int row, char **map);
 void	map_copy(char **p, char **map);
 void	if_valid(char **map, char **array);
 int		check_directions(char **map, int y, int x);
+// void	if_duplicate(t_map_result *res, int *count_sprites);
+// int		player_position(t_map_result *res, int count_sprites);
+void	parsing_bonus(t_data *v, int ac, char **av);
+void	if_duplicate(t_data *v);
+int	player_position(t_data *v);
+// void fill_sprites(t_data *v ,int k, int i, int j);
+int tab_spaces_checker(char *str);
 
 #endif

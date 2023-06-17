@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:14 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:26:45 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/15 19:14:54 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,16 @@ int	check_directions(char **map, int y, int x)
 	return (1);
 }
 
+int	tab_spaces_checker(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		if (str[i] != ' ' && str[i] != '	')
+			return (0);
+		i++;
+	}
+	return (1);
+}

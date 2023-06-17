@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   up_down.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/15 19:14:10 by nfoughal          #+#    #+#             */
+/*   Updated: 2023/06/15 19:14:34 by nfoughal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-void    if_empty(char **map)
+void	if_empty(char **map)
 {
-    int i;
+	int	i;
 
 	i = 0;
 	while (map[i])
@@ -17,8 +29,8 @@ void    if_empty(char **map)
 
 void	fill_down_map(char **map, char **new, char **array)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map[i] && ft_strlen(map[i]) != 1)
@@ -43,10 +55,10 @@ void	fill_down_map(char **map, char **new, char **array)
 	}
 }
 
-void    go_down(char **map, int i, t_map_result	*res)
+void	go_down(char **map, int i, t_map_result	*res)
 {
-	int     j;
-	char    **down_map;
+	int		j;
+	char	**down_map;
 
 	j = 0;
 	while ((map + i)[j])
@@ -56,7 +68,6 @@ void    go_down(char **map, int i, t_map_result	*res)
 	res->map = down_map;
 	wall_check(down_map, map);
 	if_valid(map + i, map);
-	//free_array(down_map);
 }
 
 int	up_and_down(char **map, int *i, int *count, t_map_result	*res)

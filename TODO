@@ -1,4 +1,10 @@
 -libft dlete functions 
 -ADD oriotation of player N/S/E/W
 - heap-use-after-free ==> valide_map.c line 65
-- frames of the door
+-add mause
+-add collision
+=== >modif parsing;
+-if_maps_is_valid
+-if_duplicate
+-player_position
+

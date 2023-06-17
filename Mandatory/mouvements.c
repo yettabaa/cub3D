@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 01:55:51 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/15 01:13:15 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/16 03:53:42 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,10 @@
 void update(t_data *v)
 {
     int walk_step;
-    int i;
-    int j;
     
     v->orientation += v->hook.angle_dir * v->hook.angle_speed;
     walk_step = v->hook.walk_dir * v->hook.walk_speed;
-    i = (v->x + (v->hook.walk_dir * (v->hook.walk_speed + 2)) * cos(rad(v->orientation + v->hook.angleOr))) / v->scal;
-    j = (v->y + (v->hook.walk_dir * (v->hook.walk_speed + 2)) * sin(rad(v->orientation + v->hook.angleOr))) / v->scal;
-    if ((int)v->pars.map[j][i] == '1')
+    if (raycasting(v, v->orientation + v->hook.angleOr, '1') <= 2)
         return ;
     v->x += walk_step * cos(rad(v->orientation + v->hook.angleOr));
     v->y += walk_step * sin(rad(v->orientation + v->hook.angleOr));
@@ -49,7 +45,10 @@ int	key_press(int keycode, t_data *v)
     else if (keycode == W)
         v->hook.walk_dir = 1;
     else if (keycode == S )
-        v->hook.walk_dir = -1;
+    {
+        v->hook.walk_dir = 1;
+        v->hook.angleOr = -180;
+    }
     else if (keycode == A)
     {
         v->hook.walk_dir = 1;
@@ -82,7 +81,11 @@ int key_release(int keycode, t_data *v)
     else if (keycode == W)
         v->hook.walk_dir = 0;
     else if (keycode == S)
+    {
         v->hook.walk_dir = 0;
+        v->hook.angleOr = 0;    
+        
+    }
     else if (keycode == A)
     {
         v->hook.walk_dir = 0;

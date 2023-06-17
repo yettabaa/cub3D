@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls_first_last.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:12 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:27:31 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:30:57 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	last_line(char **map, int last, char **array)
 	str = ft_strtrim(map[last], " ");
 	while (str[i] != '\n' && str[i] != '\0')
 	{
-		if (str[i] != ' ' && str[i] != '1')
+		if (str[i] != '1')
 		{
 			free(str);
 			free_array(map);
@@ -43,7 +43,7 @@ void	first_line(char **map, char **array)
 	str = ft_strtrim(map[0], " ");
 	while (str[i] != '\n' && str[i] != '\0')
 	{
-		if (str[i] != ' ' && str[i] != '1')
+		if (str[i] != '1')
 		{
 			free(str);
 			free_array(map);

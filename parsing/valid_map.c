@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:04:20 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/06 22:42:55 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 00:33:33 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	if_args_true(char **split, t_map_result *res)
 	{
 		free_array(split);
 		write(2, "Error formula is incorrect\n", 28);
-		write(2, "write one side and tow diffrent colors name  : North, South, East or West and C , F for colors\n", 96);
 		exit(1);
 	}
 }
@@ -62,8 +61,9 @@ void	split_and_check(char *str, t_map_result *res)
 	}
 	else
 		if_args_true(split, res);
-	// free_array(split);
- }
+	free(split[0]);
+	free(split);
+}
 
 void	wall_check(char **map, char **array)
 {
@@ -94,7 +94,7 @@ void	if_map_is_valid(int ac, char **av, t_map_result *res)
 	char			**map;
 	int				i;
 	int				count;
-	
+
 	init_map(res);
 	check_arg(ac, av);
 	map = fill_array_map(av);
@@ -103,10 +103,38 @@ void	if_map_is_valid(int ac, char **av, t_map_result *res)
 	if_empty(map);
 	while (map[i])
 	{
-		while (map[i] && ft_strlen(map[i]) == 1)
+		while (map[i] && (ft_strlen(map[i]) == 1
+				|| tab_spaces_checker(map[i]) == 1))
 			i++;
 		if (up_and_down(map, &i, &count, res))
 			break ;
 	}
-	free_array(map);
+	// free_array(map);
+	// if_duplicate(res);
+	// player_position(res);
+}
+
+void	parsing_bonus(t_data *v, int ac, char **av)
+{
+	char			**map;
+	int				i;
+	int				count;
+
+	init_map(&v->pars);
+	check_arg(ac, av);
+	map = fill_array_map(av);
+	i = 0;
+	count = 0;
+	if_empty(map);
+	while (map[i])
+	{
+		while (map[i] && (ft_strlen(map[i]) == 1
+				|| tab_spaces_checker(map[i]) == 1))
+			i++;
+		if (up_and_down(map, &i, &count, &v->pars))
+			break ;
+	}
+	// free_array(map);
+	if_duplicate(v);
+	// player_position(v);
 }

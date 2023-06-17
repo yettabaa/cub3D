@@ -6,15 +6,12 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/15 02:58:32 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/17 05:01:01 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CUB3D_H
 # define CUB3D_H
-# ifndef BUFFER_
-# define BUFFER_ 2147483646
-# endif
 # include "../Libft/libft.h"
 # include "parsing.h"
 # include <fcntl.h>
@@ -75,8 +72,8 @@ typedef struct	s_steps {
 }t_steps;
 
 typedef struct	s_rycast {
-	double x1;
-    double y1;
+	double x;
+    double y;
 	double ang;
 
 	double DHside;
@@ -93,21 +90,63 @@ typedef struct s_hook{
 	
 	double angle_dir;
 	int angle_speed;
-	int walk_dir;
-	int walk_speed;
+	double walk_dir;
+	double walk_speed;
 	double angleOr;
 	
 }	t_hook;
 
+
+typedef struct s_textures{
+	
+	int hitWall;
+	unsigned int *NO_buff; // 270
+	int NO_width;
+	int NO_height;
+	int NO_line;
+	unsigned int *SO_buff; // 90
+	int SO_width;
+	int SO_height;
+	int SO_line;
+	unsigned int *WE_buff; //0
+	int WE_width;
+	int WE_height;
+	int WE_line;
+	unsigned int *EA_buff; //180
+	int EA_width;
+	int EA_height;
+	int EA_line;
+	unsigned int *buff;
+	int width;
+	int height;
+	int line;
+	
+} t_textures;
+
 typedef struct s_door{
+	unsigned int **DOOR_buff; //180
+	int DOOR_width;
+	int DOOR_height;
+	int DOOR_line;
+} t_door;
+// typedef struct s_object{    casting
+// 	int type;
+// } t_object;
+typedef struct s_list_door{ //linked list door
 	int type;
 	int hitw;
 	double rydis;
     double rydis_fbw;
-	double xd;
-	double yd;
-    struct s_door *next;
-} t_door;
+	double x;
+	double y;
+    struct s_list_door *next;
+} t_list_door;
+
+typedef struct s_sprites{
+	double xs;
+	double ys;
+	double rydis;
+}t_sprites;
 
 typedef struct	s_data {
 	
@@ -120,49 +159,25 @@ typedef struct	s_data {
 	double raydis;
 	double raydis_fishbowl;
 	// reder_WALL
+	double xw;
+	double yw;
 	double disProj;
-	double x0;
+	double x_wind;
 	double y0;
 	double y1;
-	// texture
-	int hitWall;
-	
-	unsigned int *NO_buff; // 270
-	int NO_width;
-	int NO_height;
-	int NO_line;
+	//sptites
+	unsigned int **sprite_buff; //180
+	int sprite_width;
+	int sprite_height;
+	int sprite_line;
+	int count_sprites;
+	double xs0;
+	double xs1;
+	t_sprites *sprite;
 
-	unsigned int *SO_buff; // 90
-	int SO_width;
-	int SO_height;
-	int SO_line;
-	
-	unsigned int *WE_buff; //0
-	int WE_width;
-	int WE_height;
-	int WE_line;
-	
-	unsigned int *EA_buff; //180
-	int EA_width;
-	int EA_height;
-	int EA_line;
-	
-	//door
-	// double raydis_door;
-	// double x0_door;
-
-	
-	unsigned int **DOOR_buff; //180
-	int DOOR_width;
-	int DOOR_height;
-	int DOOR_line;
-	t_door *door;
-	
-	unsigned int *buff;
-	int width;
-	int height;
-	int line;
-
+	t_door door;
+	t_list_door *list_door;
+	t_textures txt;
 	t_hook hook;
 	t_map_result pars;
     t_rycast ryc;
@@ -179,16 +194,16 @@ void disc(t_data *v, int color);
 
 double	rad(double angle);
 double normalize_angle_360(double x);
-int is(t_data *v, int flag);
+int is(t_data *v, double ang, int flag);
 void	ft_error(const char *str);
-
+//wall
 void cube3D(t_data *v);
-void rendering_wall(t_data *v);
+void rendering_wall(t_data *v, double ang);
 void update(t_data *v);
 //rycast
-void steps(t_data *v);
-void raycasting(t_data *v);
-void visualize_maps(t_data *v, int *i, int *j);
+void steps(t_data *v, double ang);
+double raycasting(t_data *v, double ang, int hit);
+void visualize_maps(t_data *v, double ang, int *i, int *j);
 //minimap
 
 // hook
@@ -208,14 +223,23 @@ void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color);
 #define BIG 31
 #define WALL 22
 #define DOOR 23
-t_door *newdoor(t_data *v, double ryd, int flag);
-void	addoor(t_door **lst, t_door *new);
+t_list_door *newdoor(t_data *v, double ryd, int flag);
+void	addoor(t_list_door **lst, t_list_door *new);
+void	clear_door(t_list_door **lst);
 void cube3D_bonus(t_data *v);
-void raycasting_bonus(t_data *v);
+double raycasting_bonus(t_data *v, double ang);
 void mini_maps(t_data *v, int color);
 int loop_hook_bonus(void *ptr);
-void render_wall_bonus(t_data *v);
+void render_wall_bonus(t_data *v, double ang);
 void render_door(t_data *v);
 void fill_door(t_data *v, int ind);
 void get_text_door(t_data *v);
+// sprites
+void _sprites(t_data *v ,int k, int i, int j);
+void get_text_sprites(t_data *v);
+// void	dda_sprite(t_data *v, double y0, double y1);
+void	dda_sprite(t_data *v, double y0, double y1, double x);
+void fill_sprite(t_data *v, int ind);
+//utils
+double des_betw_2pt(double x0, double y0, double x1, double y1);
 #endif

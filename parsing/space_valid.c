@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_valid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:08:27 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:27:19 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/15 19:13:24 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	check_0_pos(char *str, char **array, int y, char **map)
 
 int	re_long_line(char **map)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	size_t	len;
 
 	j = 0;
