@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 16:05:13 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 04:50:03 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void inc_smal_steps(t_data *v, double ang)
     visualize_maps(v, ang, &i, &j);
     v->ryc.smal_stp = smal_sidstp;
     if ((int)v->pars.map[j][i] == '2') 
-        addoor(&v->list_door, newdoor(v, smal_sidstp, txw));
+        addobjt(&v->object, newdoor(v, smal_sidstp, txw));
     iq = 1;
     while ((int)v->pars.map[j][i] != '1')
     {
@@ -44,7 +44,7 @@ void inc_smal_steps(t_data *v, double ang)
         v->ryc.y = v->y + (v->ryc.smal_stp * sin(Rad(ang)));
         visualize_maps(v, ang, &i, &j);
         if ((int)v->pars.map[j][i] == '2') 
-            addoor(&v->list_door, newdoor(v, v->ryc.smal_stp, txw));
+            addobjt(&v->object, newdoor(v, v->ryc.smal_stp, txw));
     }
 }
 
@@ -70,7 +70,7 @@ void inc_big_steps(t_data *v, double ang)
     visualize_maps(v, ang, &i, &j);
     v->ryc.big_stp = big_sidstp;
     if (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] == '2') 
-        addoor(&v->list_door, newdoor(v, big_sidstp, txw));
+        addobjt(&v->object, newdoor(v, big_sidstp, txw));
     iq = 1;
     while (big_sidstp < v->ryc.smal_stp && (int)v->pars.map[j][i] != '1')
     {
@@ -79,7 +79,7 @@ void inc_big_steps(t_data *v, double ang)
         v->ryc.y = v->y + (v->ryc.big_stp * sin(Rad(ang)));
         visualize_maps(v, ang, &i, &j);
         if (v->ryc.big_stp < v->ryc.smal_stp && (int)v->pars.map[j][i] == '2') 
-            addoor(&v->list_door, newdoor(v, v->ryc.big_stp, txw));
+            addobjt(&v->object, newdoor(v, v->ryc.big_stp, txw));
         if (v->ryc.big_stp > v->ryc.smal_stp || (int)v->pars.map[j][i] == '1')
             break;
     }
@@ -90,10 +90,9 @@ double raycasting_bonus(t_data *v, double ang)
     steps(v, ang);
     inc_smal_steps(v, ang);
     inc_big_steps(v, ang);
-    // printf("(DVside = %f, DHside = %f)\n",v->ryc.DVside,v->ryc.DHside);
-    // printf("(Vdelta = %f, Hdelta = %f)\n",v->ryc.Vdelta,v->ryc.Hdelta);
-    // printf("big %f small %f\n", v->ryc.big_stp, v->ryc.smal_stp);
+    // printf("ryd = %d\n", v->x_wind);
     v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp); // fixing fishbowl
+    // v->ryd[v->x_wind] = v->raydis;
     v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(Rad(v->orientation - ang)); // fixing fishbowl
     if (v->ryc.big_stp > v->ryc.smal_stp && v->ryc.Hdelta > v->ryc.Vdelta + v->epsilon)
         v->txt.hitWall = VER;
@@ -105,6 +104,6 @@ double raycasting_bonus(t_data *v, double ang)
         v->txt.hitWall = HORI;
     v->xw = v->x + (v->raydis * cos(Rad(ang))); //translation with distace of adjacent
     v->yw = v->y + (v->raydis * sin(Rad(ang))); //translation with distace of opposite
-    addoor(&v->list_door, newdoor(v, v->raydis, WALL));
+    addobjt(&v->object, newdoor(v, v->raydis, WALL));
     return(v->raydis);
 }

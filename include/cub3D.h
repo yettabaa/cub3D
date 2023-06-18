@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 23:27:23 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 05:07:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,16 @@ typedef struct s_door{
 
 typedef struct s_object{   // casting
 	int type;
-	double rydis;
+	int hitw; // door wall
+	int i; // sprite
+	int j; // sprite
+	double rendered; //sprite
+	double angle;
+	double x;
+	double y;
+	double rydis; // ??
+    double rydis_fbw;
+    struct s_object *next;
 } t_object;
 
 typedef struct s_list_door{ //linked list door
@@ -145,15 +154,6 @@ typedef struct s_list_door{ //linked list door
     struct s_list_door *next;
 } t_list_door;
 
-typedef struct s_sprite{
-	int i;
-	int j;
-	double xs;
-	double ys;
-	double rydis;
-	double visible;
-	struct s_object *next;
-}t_sprite;
 
 typedef struct s_sprites{
 	int i;
@@ -161,7 +161,7 @@ typedef struct s_sprites{
 	double xs;
 	double ys;
 	double rydis;
-	double visible;
+	// double visible;
 }t_sprites;
 
 typedef struct	s_data {
@@ -172,6 +172,7 @@ typedef struct	s_data {
 	double scal;
 	double orientation;
 	double epsilon;
+	// double *ryd;
 	double raydis;
 	double raydis_fishbowl;
 	// reder_WALL
@@ -179,7 +180,7 @@ typedef struct	s_data {
 	double xw;
 	double yw;
 	// double disProj;
-	double x_wind;
+	int x_wind;
 	double y0;
 	double y1;
 	//sptites
@@ -194,9 +195,12 @@ typedef struct	s_data {
 	int frames;
 	int ind_sprite_text;
 	t_sprites *sprite;
+	// t_object *sprt;
+	//objct
+	t_object *object;
 
 	t_door door;
-	t_list_door *list_door;
+	// t_list_door *list_door;
 	t_textures txt;
 	t_hook hook;
 	t_map_result pars;
@@ -240,29 +244,36 @@ void	dda_textures(t_data *v, double y0, double y1, int flag);
 void fill_textures(t_data *v, int flag);
 void	dda_old(t_data *v, double x0, double y0, double x1, double y1, int color);
 // bonus
-// door
 #define SMALL 30
 #define BIG 31
 #define WALL 22
+#define SPRITE 33
 #define DOOR 23
-t_list_door *newdoor(t_data *v, double ryd, int flag);
-void	addoor(t_list_door **lst, t_list_door *new);
-void	clear_door(t_list_door **lst);
+// door
 void cube3D_bonus(t_data *v);
 double raycasting_bonus(t_data *v, double ang);
 void mini_maps(t_data *v, int color);
 int loop_hook_bonus(void *ptr);
 void render_wall_bonus(t_data *v, double ang);
-void render_door(t_data *v);
+void render_object(t_data *v);
 void fill_door(t_data *v, int ind);
 void get_text_door(t_data *v);
 // sprites
-void _sprites(t_data *v ,int k, int i, int j);
+// void _sprites(t_data *v ,int k, int i, int j);
 void get_text_sprites(t_data *v);
+void visible_sprite(t_data *v);
 // void	dda_sprite(t_data *v, double y0, double y1);
 void	dda_sprite(t_data *v, double y0, double y1, double x);
 void fill_sprite(t_data *v, int ind);
 void render_ssprite(t_data *v);
 //utils
 double des_betw_2pt(double x0, double y0, double x1, double y1);
+//object
+t_object *newsprite(t_data *v, t_sprites s);
+t_object *newdoor(t_data *v, double ryd, int flag);
+
+
+void	addobjt(t_object **lst, t_object *new);
+void	clear_objt(t_object **lst);
+
 #endif

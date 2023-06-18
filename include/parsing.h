@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/16 23:32:59 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 02:23:51 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	if_duplicate(t_data *v);
 int	player_position(t_data *v);
 // void fill_sprites(t_data *v ,int k, int i, int j);
 int tab_spaces_checker(char *str);
+void _sprites(t_data *v ,int k, int i, int j);
 
 #endif

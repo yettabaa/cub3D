@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 00:27:41 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 16:09:39 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 05:07:27 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void render_wall_bonus(t_data *v, double ang)
         fill_textures(v, WE);
     dda_textures(v, v->y1, HIGHT, FLOOR);
     dda_textures(v, 0, v->y0, CEIL);
-    render_door(v); // rename
-    clear_door(&v->list_door); //rename 
-    // dda_textures(v, v->y1, HIGHT, FLOOR);
-    // dda_textures(v, 0, v->y0, CEIL);
+    render_object(v); // rename
+    // clear_door(&v->list_door); //rename 
 }

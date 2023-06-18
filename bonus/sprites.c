@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 22:58:38 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 23:27:49 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 04:43:57 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,54 +92,63 @@ void	dda_sprite(t_data *v, double y0, double y1, double x) // opti
 	}
 }
 
+void visible_sprite(t_data *v)
+{
+    int i = -1;
+
+    while (++i < v->count_sprites)
+    {
+        if (fabs((normalize_angle_360(v->orientation) - normalize_angle_360(Deg(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x))))) <= 30)
+        {
+            addobjt(&v->object, newsprite(v, v->sprite[i]));
+        }
+    }
+    
+}
+
 void render_ssprite(t_data *v)
 {
-	int i = -1;
-	double ang_sp;
 	double proj_sp;
-    double xxx;
-    double spriteDis;
+    int xxx;
     
-    // (v->frames == 11) && (v->frames = 0);
-    // (v->frames == 10) && (v->ind_sprite_text += 1);
-    // (v->ind_sprite_text == 4) && (v->ind_sprite_text = 0);
-    // fill_sprite(v, v->ind_sprite_text % 4);
-    
-    // v->frames += 1;
-    fill_sprite(v, 0);
-	while (++i < v->count_sprites)
-	{
-        disc(v, v->sprite[i].i * v->scal + v->scal / 2, v->sprite[i].j * v->scal + v->scal / 2, 0xff0000);
-		ang_sp = (Deg(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x))) - (v->orientation);
-        // spriteDis = des_betw_2pt(v->sprite[i].xs, v->sprite[i].ys, v->x, v->y);
-        spriteDis = des_betw_2pt(v->sprite[i].xs, v->sprite[i].ys, v->x, v->y) * cos(Rad(fabs(ang_sp)));
-		v->spriteDimension = (v->scal / spriteDis) * v->disProj;
-		v->y0 = (HIGHT / 2) - (v->spriteDimension / 2);
-		v->y1 = v->y0 + v->spriteDimension;
-        // ang_sp -= v->orientation;
-        
-        // printf("orien = %f atan2 = %f sng_sp  = %f (xs = %f, ys= %f)  (x = %f, y = %f)\n",v->orientation, Deg(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x)),normalize_angle_360(v->orientation - Deg(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x))), v->sprite[i].xs ,v->sprite[i].ys, v->x,v->y);
-		// printf("%f\n", (Deg(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x))) - (v->orientation));
-        proj_sp = tan(Rad(ang_sp)) * v->disProj;
-		v->xs0 = (WIDTH / 2) + proj_sp - (v->spriteDimension / 2);
-		v->xs1 = v->xs0 + v->spriteDimension;
-        // printf("xs0 = %f xs1 = %f demension = %f\n", v->xs0, v->xs1, v->spriteDimension);
-        // (v->xs0 < 0) && (v->xs0 = 0);
-	    // (v->xs1 > WIDTH) && (v->xs1 = WIDTH);
-        
+    (v->frames == 10001) && (v->frames = 0);
+    (v->frames == 10000) && (v->ind_sprite_text += 1);
+    (v->ind_sprite_text == 4) && (v->ind_sprite_text = 0);
+    fill_sprite(v, v->ind_sprite_text % 4);
+    v->frames += 1;
+    // fill_sprite(v, 0);
+    // disc(v, v->sprite[i].i * v->scal + v->scal / 2, v->sprite[i].j * v->scal + v->scal / 2, 0xff0000);
+    // while (v->sprt)
+    // {
+	    v->spriteDimension = (v->scal / v->object->rydis) * v->disProj;
+	    v->y0 = (HIGHT / 2) - (v->spriteDimension / 2);
+	    v->y1 = v->y0 + v->spriteDimension;
+        	// printf("%f\n", (Deg(atan2(v->object->y - v->y, v->object->x - v->x))) - (v->orientation));
+        proj_sp = tan(Rad(v->object->angle)) * v->disProj;
+	    v->xs0 = (WIDTH / 2) + proj_sp - (v->spriteDimension / 2);
+	    v->xs1 = v->xs0 + v->spriteDimension;
         xxx = v->xs0;
-		
-		while (xxx < v->xs1)
-		{
-			dda_sprite(v, v->y0, v->y1, xxx);
-			xxx++;
-		}
-        // for (int x = v->xs0; x < v->xs1; x++)
-        //     for(int y = v->y0; y < v->y1; y++)
-        //     {
-        //         if (x >= 0 && x < WIDTH && y >= 0 && y < HIGHT)
-        //             my_mlx_pixel_put(v, x, y, 0xff);
-        //     } 
-		
-	}
+	    // while (xxx < v->xs1)
+	    // {
+            // if ((xxx >= 0  && xxx <= 1600))
+                // printf("xxx = %d rydxxx = %f ryd_o = %f\n",xxx, v->ryd[xxx], v->object->rydis);
+                
+            if(v->x_wind >= v->xs0  && v->x_wind <= v->xs1)
+	    	    dda_sprite(v, v->y0, v->y1, v->x_wind);
+	    // 	xxx++;
+	    // }
+        // v->object->rendered = 1;
+        // v->sprt = v->sprt->next;
+    // }
+    
+    // printf("xs0 = %f xs1 = %f demension = %f\n", v->xs0, v->xs1, v->spriteDimension);
+    // (v->xs0 < 0) && (v->xs0 = 0);
+	// (v->xs1 > WIDTH) && (v->xs1 = WIDTH);
+    
+    // for (int x = v->xs0; x < v->xs1; x++)
+    //     for(int y = v->y0; y < v->y1; y++)
+    //     {
+    //         if (x >= 0 && x < WIDTH && y >= 0 && y < HIGHT)
+    //             my_mlx_pixel_put(v, x, y, 0xff);
+    //     } 
 }
