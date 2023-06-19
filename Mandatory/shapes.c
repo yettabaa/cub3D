@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:39:14 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 16:56:43 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/19 05:48:35 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,15 @@ void	dda(t_data *v, double x0, double y0, unsigned int color)
 	double	yinc;
 	double	steps;
 
-	steps = fmax(fabs(x0 - v->xw), fabs(y0 - v->yw));
-	xinc = (v->xw - x0) / steps;
-	yinc = (v->yw - y0) / steps;
+	steps = fmax(fabs(x0 - v->xw + v->MiniMap.trans_x), fabs(y0 - v->yw + v->MiniMap.trans_y));
+	xinc = (v->xw + v->MiniMap.trans_x - x0) / steps;
+	yinc = (v->yw + v->MiniMap.trans_y - y0) / steps;
 	i = 0;
 	while (i <= steps + v->epsilon)
 	{
 		if (round(x0) >= 0 && round(x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
-			my_mlx_pixel_put(v ,round(x0), round(y0), color);
+			if ((i * xinc) * (i * xinc) + (i * yinc) * (i * yinc) < v->MiniMap.raduis * v->MiniMap.raduis)
+				my_mlx_pixel_put(v ,(x0), (y0), color);
 		x0 = x0 + xinc;
 		y0 = y0 + yinc;
 		i++;
@@ -102,7 +103,9 @@ void rectangle(t_data *v, int x, int y, int color)
     {
         i = -1;
         while (++i < v->scal)
-            my_mlx_pixel_put(v, x + i, y + j, color);
+			if ((x + i) >= 0 && (x + i) < WIDTH && (y + j) >= 0 && (y + j) < HIGHT)
+        	    	my_mlx_pixel_put(v, x + i, y + j, color);
+				// if (((i) * (i)) + ((j ) * (j )) <= 10 * 10)
     }
 }
 
@@ -119,10 +122,11 @@ void disc(t_data *v, double x, double y, int color)
         x0 = -radius;
         while (x0 <= radius)
         {
-            if (x0 * x0 + y0 * y0 <= radius * radius)
+            if ((x0 * x0) + y0 * y0 <= radius * radius)
                 my_mlx_pixel_put(v, x0 + x, y0 + y, color);
             x0++;
         }
         y0++;
     }
 }
+

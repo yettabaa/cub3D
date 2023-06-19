@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_valid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:08:27 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/15 19:13:24 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:29:20 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	if_valid(char **map, char **array)
 	while (i < row)
 	{
 		check_0_pos(map[i], array, i, p);
+		
 		i++;
 	}
 	free_array(p);

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/18 02:23:51 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/19 03:49:47 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include<unistd.h>
 # include<stdlib.h>
 # include<fcntl.h>
-# include "../parsing/get_next_line/get_next_line.h"
+# include "../Parsing/get_next_line/get_next_line.h"
 # include <mlx.h>
 #include <math.h>
-typedef struct s_data t_data;
+// typedef struct s_data t_data;
 typedef struct s_map_result
 {
 	int		f;
@@ -33,6 +33,8 @@ typedef struct s_map_result
 	char	**map;
 	int		y;
 	int		x;
+	int		i;
+	int		j;
 	char	palayer_dir;
 }t_map_result;
 
@@ -40,7 +42,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	**split_spc_tab(char *str);
 void	check_arg(int ac, char **av);
 char	**fill_array_map(char **av);
-void	if_map_is_valid(int ac, char **av, t_map_result *res);
 void	init_map(t_map_result *res);
 void	free_array(char **array);
 void	split_and_check(char *str, t_map_result *res);
@@ -69,13 +70,15 @@ void	fill_spaces(char **p, int row, char **map);
 void	map_copy(char **p, char **map);
 void	if_valid(char **map, char **array);
 int		check_directions(char **map, int y, int x);
+// void	parsing(t_data *v ,int ac, char **av);
 // void	if_duplicate(t_map_result *res, int *count_sprites);
 // int		player_position(t_map_result *res, int count_sprites);
-void	parsing_bonus(t_data *v, int ac, char **av);
-void	if_duplicate(t_data *v);
-int	player_position(t_data *v);
 // void fill_sprites(t_data *v ,int k, int i, int j);
-int tab_spaces_checker(char *str);
-void _sprites(t_data *v ,int k, int i, int j);
+void	duplicate_error(t_map_result *res);
+// void	parsing_bonus(t_data *v, int ac, char **av);
+// void	if_duplicate(t_data *v);
+// int	player_position(t_data *v);
+// int tab_spaces_checker(char *str);
+// void _sprites(t_data *v ,int k, int i, int j);
 
 #endif

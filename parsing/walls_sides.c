@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:54 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/16 19:29:46 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:27:14 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	if_allow(char *str, char **array, char **map)
 	i = 0;
 	while (str[i] && str[i] != '\n')
 	{
-		if (str[i] != '0' && str[i] != '1' && str[i] != 'N' && str[i] != 'S'
+		if (str[i] != '0' && str[i] != '1' && str[i] != '2' && str[i] != '3' && str[i] != 'N' && str[i] != 'S'
 			&& str[i] != 'E' && str[i] != 'W' && str[i] != ' ')
 		{
 			free_array(map);
@@ -61,7 +61,7 @@ void	check_sides(char **map, char **array)
 	{
 		str = ft_strtrim(map[i], " ");
 		if_different_1(str, array, map);
-		// if_allow(str, array, map);
+		if_allow(str, array, map);
 		free(str);
 		i++;
 	}

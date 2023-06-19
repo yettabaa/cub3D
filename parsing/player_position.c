@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:40:09 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/17 17:03:58 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/18 19:20:31 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,13 @@ void	duplicate_error(t_map_result *res)
 	exit (1);
 }
 
-int	player_position(t_data *v)
-{
-	int	j;
-	int	i;
-	int k;
 
-	j = 0;
-	k = 0;
-	while (v->pars.map[j])
-	{
-		i = 0;
-		while (v->pars.map[j][i])
-		{
-			if ((v->pars.map[j][i] == '2' && (v->pars.map[j + 1][i] != '1' || v->pars.map[j - 1][i] != '1')) && (v->pars.map[j][i] == '2' && (v->pars.map[j][i + 1] != '1' || v->pars.map[j][i - 1] != '1')))
-				duplicate_error(&v->pars); // erro
-			// else if (v->pars.map[j][i] == '2' && v->pars.map[j][i + 1] != '1' && v->pars.map[j][i - 1] != '1')
-			// 	duplicate_error(&v->pars);
-			if (v->pars.map[j][i] == '3')
-				_sprites(v, k++, i, j);
-			i++;
-		}
-		j++;
-	}
-	return (1);
-}
 
 void	if_duplicate(t_data *v)
 {
 	int	i;
 	int	j;
 	int	count;
-	// int count_sprites;
 
 	j = 0;
 	count = 0;
@@ -65,8 +40,6 @@ void	if_duplicate(t_data *v)
 		while (v->pars.map[j][i])
 		{
 			(v->pars.map[j][i] == '3') && (v->count_sprites++);
-			// if (v->pars.map[j][i] == 'S' || v->pars.map[j][i] == 'N'
-			// || v->pars.map[j][i] == 'E' || v->pars.map[j][i] == 'W')
 			if(ft_strchr("WSEN", v->pars.map[j][i]))
 			{
 				v->pars.y = j;
