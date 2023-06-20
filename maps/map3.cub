@@ -1,0 +1,14 @@
+NO	./textures/wall/redbrick.xpm
+SO	./textures/wall/wood.xpm
+WE	./textures/wall/greystone.xpm
+EA	./textures/wall/purplestone.xpm
+F 220,100,0
+C 225,30,0
+
+
+11111111111111111
+10000000010000001
+10000030020000001
+1000000001N000001
+10000000000000001
+11111111111111111

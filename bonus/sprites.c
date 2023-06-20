@@ -6,44 +6,35 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 22:58:38 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/19 01:39:09 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 03:58:35 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void get_text_sprites(t_data *v)
+t_object *newsprite(t_data *v, t_GetSprites sprite)
 {
-    int i;
-    int endian;
-    char *itoa;
-    char *path;
-    void *tx_img;
-
-    i = 0;
-    v->sprite_buff = malloc(sizeof(unsigned int *) * 4);
-    if(!v->sprite_buff)
-        ft_error("Allocate sprite buff failed");
-    while (i <= 3)
-    {
-        itoa = ft_itoa(i);
-        path = ft_strjoin3("./textures/kitty/front_0", itoa, ".xpm");
-        //  printf("%s\n",path);
-        tx_img = mlx_xpm_file_to_image(v->mlx.mlx, path, &v->sprite_width, &v->sprite_height);
-        free(itoa);
-        free(path);
-        if(!tx_img)
-            ft_error("Sprite PATH");
-        v->sprite_buff[i++] = (unsigned int *)mlx_get_data_addr(tx_img, &endian,  &v->sprite_line, &endian);
-    }
-}
-
-void fill_sprite(t_data *v, int ind)
-{
-    v->txt.buff = v->sprite_buff[ind];
-    v->txt.width = v->sprite_width;
-    v->txt.height = v->sprite_height;
-    v->txt.line = v->sprite_line;
+    t_object *node;
+	double FOV_angle ;
+	double ProjP_sprite;
+    
+    node = malloc(sizeof(t_object));
+    if (!node)
+        ft_error("Allocate new door failed");
+	node->type = SPRITE;
+	FOV_angle = Deg(atan2(sprite.ys - v->y, sprite.xs - v->x)) - (v->orientation);
+	ProjP_sprite = tan(Rad(FOV_angle)) * v->ProjPlane;
+    node->x = sprite.xs;
+    node->y = sprite.ys;
+	node->rydis_fbw = des_betw_2pt(sprite.xs, sprite.ys, v->x, v->y) * cos(Rad(FOV_angle));
+	node->Diemension = (v->scal / node->rydis_fbw) * v->ProjPlane;
+	node->y0 = (HIGHT / 2) - (node->Diemension / 2);
+	node->y1 = node->y0 + node->Diemension;
+	node->x0 = (WIDTH / 2) + ProjP_sprite - (node->Diemension / 2);
+	node->x1 = node->x0 + node->Diemension;
+	// printf("x = %f y = %f ryd = %f\n", sprite.xs, sprite.ys, node->rydis_fbw);
+	node->next = NULL;
+    return(node);
 }
 
 void	dda_sprite(t_data *v, double y0, double y1, int x) // opti
@@ -58,7 +49,7 @@ void	dda_sprite(t_data *v, double y0, double y1, int x) // opti
 	(y1 > HIGHT) && (y1 = HIGHT);
 	steps = fabs(y0 - y1);
 	i = 0;
-    (x_texel = v->txt.width * (x - v->xs0) / v->spriteDimension);
+    (x_texel = v->txt.width * (x - v->tmpobj->x0) / v->tmpobj->Diemension);
 	while (i < steps)
 	{
         y_texel = v->txt.height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
@@ -76,10 +67,9 @@ t_object *visible_sprite(t_data *v)
     double ang;
     t_object *visible_sprite;
     
-    
     i = -1;
     visible_sprite = NULL;
-    while (++i < v->count_sprites)
+    while (++i < v->sprt.count_sprites)
     {
         ang = fabs((normalize_angle_360(v->orientation) - normalize_angle_360(Deg(atan2(v->sprite[i].ys - v->y, v->sprite[i].xs - v->x)))));
         (ang > 330) && (ang -= 330);
@@ -91,21 +81,27 @@ t_object *visible_sprite(t_data *v)
 
 void render_ssprite(t_data *v)
 {
-	double proj_sp;
-    
-    (v->frames == 9 * WIDTH + 1) && (v->frames = 0);
-    (v->frames == 9 * WIDTH) && (v->ind_sprite_text += 1);
-    (v->ind_sprite_text == 4) && (v->ind_sprite_text = 0);
-    fill_sprite(v, v->ind_sprite_text % 4);
-    v->frames += 1;
-    // fill_sprite(v, 0);
-    // disc(v, v->sprite[i].i * v->scal + v->scal / 2, v->sprite[i].j * v->scal + v->scal / 2, 0xff0000);
-	v->spriteDimension = (v->scal / v->tmpobj->rydis) * v->disProj;
-	v->y0 = (HIGHT / 2) - (v->spriteDimension / 2);
-	v->y1 = v->y0 + v->spriteDimension;
-    proj_sp = tan(Rad(v->tmpobj->angle)) * v->disProj;
-	v->xs0 = (WIDTH / 2) + proj_sp - (v->spriteDimension / 2);
-	v->xs1 = v->xs0 + v->spriteDimension;
-    if(v->x_wind >= v->xs0  && v->x_wind <= v->xs1)
+    (v->sprt.frames == 4 * WIDTH + 1) && (v->sprt.frames = 0);
+    (v->sprt.frames == 4 * WIDTH) && (v->sprt.ind_sprite_text += 1);
+    (v->sprt.ind_sprite_text == 4) && (v->sprt.ind_sprite_text = 0);
+    fill_sprite(v, v->sprt.ind_sprite_text % 4);
+    v->sprt.frames += 1;
+    v->y0 = v->tmpobj->y0;
+	v->y1 = v->tmpobj->y1;
+    if(v->x_wind >= v->tmpobj->x0  && v->x_wind <= v->tmpobj->x1)
 	    dda_sprite(v, v->y0, v->y1, v->x_wind);
+}
+
+void render_sprite_MiniMap(t_data *v, t_object *sprites)
+{
+    t_object *hold;
+
+    hold = sprites;
+    while (hold)
+    {
+        if (hold->x + v->MiniMap.trans_x >= 0 && hold->x + v->MiniMap.trans_x < WIDTH && hold->y+ v->MiniMap.trans_y >= 0 && hold->y+ v->MiniMap.trans_y < HIGHT)
+            disc(v, hold->x + v->MiniMap.trans_x, hold->y+ v->MiniMap.trans_y, 0xff0000, v->scal/3);
+        hold = hold->next;
+    }
+    
 }

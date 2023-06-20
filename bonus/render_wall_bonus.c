@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 00:27:41 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/19 01:51:21 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 00:03:34 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void texel_object(t_data *v) //raname and rplace to file of rendring
     double wall_hight;
 	double ration;
 
-    wall_hight = (v->scal / v->tmpobj->rydis_fbw) * v->disProj; // indersta
+    wall_hight = (v->scal / v->tmpobj->rydis_fbw) * v->ProjPlane; // indersta
     v->y0 = ((HIGHT) / 2) - (wall_hight / 2);
     v->y1 = v->y0 + wall_hight;
 	if (v->tmpobj->type == DOOR && v->tmpobj->rydis_fbw < v->raydis_fishbowl)
@@ -67,7 +67,7 @@ void render_wall_bonus(t_data *v, double ang)
     double wall_hight;
 
     
-    wall_hight = (v->scal / v->raydis_fishbowl) * v->disProj;
+    wall_hight = (v->scal / v->raydis_fishbowl) * v->ProjPlane;
     v->y0 = ((HIGHT) / 2) - (wall_hight / 2);
     v->y1 = v->y0 + wall_hight;
     if ((is(v, ang, UP) || (int)v->ryc.ang == 180) && v->txt.hitWall == HORI) 

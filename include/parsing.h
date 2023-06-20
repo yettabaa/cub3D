@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/19 03:49:47 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 02:11:03 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # include<unistd.h>
 # include<stdlib.h>
 # include<fcntl.h>
-# include "../Parsing/get_next_line/get_next_line.h"
+# include "../Mandatory/parsing/get_next_line/get_next_line.h"
 # include <mlx.h>
 #include <math.h>
-// typedef struct s_data t_data;
+typedef struct s_data t_data;
 typedef struct s_map_result
 {
 	int		f;
@@ -31,6 +31,7 @@ typedef struct s_map_result
 	char	*we;
 	char	*ea;
 	char	**map;
+	char	**map2;
 	int		y;
 	int		x;
 	int		i;
@@ -59,26 +60,29 @@ void	last_line(char **map, int last, char **array);
 void	check_sides(char **map, char **array);
 void	if_different_1(char *str, char **array, char **map);
 void	if_allow(char *str, char **array, char **map);
-void	if_valid(char **map, char **array);
+void	if_valid(char **map, char **array, t_map_result *res);
 int		up_and_down(char **map, int *i, int *count, t_map_result	*res);
 void	go_down(char **map, int i, t_map_result	*res);
 void	fill_down_map(char **map, char **new, char **array);
 void	if_empty(char **map);
 void	check_0_pos(char *str, char **array, int y, char **map);
 int		re_long_line(char **map);
-void	fill_spaces(char **p, int row, char **map);
+void	fill_spaces(char **p, int row, char **map, t_map_result *res);
 void	map_copy(char **p, char **map);
-void	if_valid(char **map, char **array);
+//void	if_valid(char **map, char **array);
 int		check_directions(char **map, int y, int x);
-// void	parsing(t_data *v ,int ac, char **av);
 // void	if_duplicate(t_map_result *res, int *count_sprites);
 // int		player_position(t_map_result *res, int count_sprites);
+void	if_duplicate(t_map_result *v);
 // void fill_sprites(t_data *v ,int k, int i, int j);
+int tab_spaces_checker(char *str);
 void	duplicate_error(t_map_result *res);
-// void	parsing_bonus(t_data *v, int ac, char **av);
-// void	if_duplicate(t_data *v);
-// int	player_position(t_data *v);
-// int tab_spaces_checker(char *str);
-// void _sprites(t_data *v ,int k, int i, int j);
-
+int		door_sides(char **map, int y, int x);
+void	check_door_pos(char *str, char **array, int y, char **map);
+void	parsing(t_data *v ,int ac, char **av);
+int	player_position(t_map_result *res);
+void	if_duplicate_bonus(t_data *v);
+void _sprites(t_data *v ,int k, int i, int j);
+void	checker_bonus(t_data *v);
+void	parsing_bonus(t_data *v, int ac, char **av);
 #endif

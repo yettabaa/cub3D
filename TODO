@@ -1,12 +1,10 @@
 -libft dlete functions 
-- heap-use-after-free ==> valide_map.c line 65
 -add mause
 -add collision
 -minimap
 -leaks
 - max doors and sprites
-- fixing time compliex sprites
-- 
+- malloc protection parsing
 
 
 

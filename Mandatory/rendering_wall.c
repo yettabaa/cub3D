@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 00:27:41 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/17 16:05:13 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 04:06:43 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void get_textures(t_data *v)
     tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, v->pars.no, &v->txt.NO_width, &v->txt.NO_height);
     if(!tx_img)
         ft_error("NO PATH");
-    v->txt.NO_buff = (unsigned int *)mlx_get_data_addr(tx_img, &bitspp, &v->txt.NO_line, &endian); // get buff of colors
+    v->txt.NO_buff = (unsigned int *)mlx_get_data_addr(tx_img, &bitspp, &v->txt.NO_line, &endian);
     tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, v->pars.so, &v->txt.SO_width, &v->txt.SO_height);
     if(!tx_img)
         ft_error("SO PATH");
@@ -56,7 +56,36 @@ void fill_textures(t_data *v, int flag)
     (flag == EA) && (v->txt.height = v->txt.EA_height);
     (flag == EA) && (v->txt.line = v->txt.EA_line);
 }
-
+void	dda_textures(t_data *v, double y0, double y1, int flag)
+{
+	int		i;
+    int x_texel;
+    int y_texel;
+	double	yinc;
+	double	steps;
+   
+	(flag == CEIL && y1 < 0) && (y1 = 0);
+	(flag == TEXT && y0 < 0) && (y0 = 0);
+	(flag == TEXT && y1 > HIGHT) && (y1 = HIGHT);
+	(flag == FLOOR && y0 > HIGHT) && (y0 = HIGHT);
+	steps = fabs(y0 - y1);
+	yinc = (y1 - y0) / steps;
+	i = 0;
+    (v->txt.hitWall == VER) && (x_texel = v->txt.width * fmod(v->yw - v->epsilon, v->scal) / v->scal);
+    (v->txt.hitWall == HORI) && (x_texel = v->txt.width * fmod(v->xw - v->epsilon, v->scal) / v->scal);
+	while (i < steps)
+	{
+        y_texel = v->txt.height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
+		if (round(v->x_wind) >= 0 && round(v->x_wind) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
+		{
+			(flag == TEXT) && (my_mlx_pixel_put(v ,round(v->x_wind), round(y0), v->txt.buff[y_texel * (v->txt.line / 4) + x_texel]));
+			(flag == CEIL) && (my_mlx_pixel_put(v ,round(v->x_wind), round(y0), v->pars.c));
+			(flag == FLOOR) && (my_mlx_pixel_put(v ,round(v->x_wind), round(y0), v->pars.f));
+		}
+		y0 = y0 + yinc;
+		i++;
+	}
+}
 void rendering_wall(t_data *v, double ang)
 {
     double disProj;

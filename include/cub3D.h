@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/19 05:06:19 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 04:50:40 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,25 +131,26 @@ typedef struct s_door{
 
 typedef struct s_object{
 	int type;
-	int hitw; // door wall
-	int i; // sprite
-	int j; // sprite
-	// double rendered; //sprite
-	double angle;
 	double x;
 	double y;
 	double rydis; // ??
     double rydis_fbw;
+	int hitw; // door wall
+	//sprite
+	double Diemension;
+	double x0;
+	double x1;
+	double y0;
+	double y1;
     struct s_object *next;
 } t_object;
 
-typedef struct s_sprites{
+typedef struct s_GetSprites{
 	int i;
 	int j;
 	double xs;
 	double ys;
-	double rydis;
-}t_sprites;
+}t_GetSprites;
 
 
 typedef struct s_minimap
@@ -157,11 +158,19 @@ typedef struct s_minimap
 	double raduis;
 	double trans_x;
 	double trans_y;
-	// double transz_x;
-	// double transz_y;
    	double x;
    	double y;
 }t_minimap;
+
+typedef struct s_sprites{
+	unsigned int **sprite_buff; //180
+	int sprite_width;
+	int sprite_height;
+	int sprite_line;
+	int count_sprites;
+	int frames;
+	int ind_sprite_text;
+}t_sprites;
 
 
 typedef struct	s_data {
@@ -175,31 +184,18 @@ typedef struct	s_data {
 	double raydis;
 	double raydis_fishbowl;
 	// reder_WALL
-	double disProj;
+	double ProjPlane;
 	double xw;
 	double yw;
 	int x_wind;
 	double y0;
 	double y1;
-	//sptites
-	unsigned int **sprite_buff; //180
-	int sprite_width;
-	int sprite_height;
-	int sprite_line;
-	int count_sprites;
-	double xs0;
-	double xs1;
-	double spriteDimension;
-	int frames;
-	int ind_sprite_text;
-	t_sprites *sprite;
-	// t_object *sprt;
-	//objct
+	t_GetSprites *sprite;
+	t_sprites sprt;
 	t_object *object;
 	t_object *tmpobj;
 	t_minimap MiniMap;
 	t_door door;
-	// t_list_door *list_door;
 	t_textures txt;
 	t_hook hook;
 	t_map_result pars;
@@ -212,10 +208,10 @@ typedef struct	s_data {
 int	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
 void	dda(t_data *v, double x0, double y0, unsigned int color);
 // void	dda(t_data *v, double x0, double y0, double x1, double y1, int color);
-void rectangle(t_data *v, int x, int y, int color);
+// void rectangle(t_data *v, int x, int y, int color);
 // void disc(t_data *v, int color);
-void disc(t_data *v, double x, double y, int color);
-
+void disc(t_data *v, double x, double y, int color, double radius);
+int check_(t_data *v, int i, int j, int flag);
 double	Rad(double angle);
 double Deg(double radians); 
 double normalize_angle_360(double x);
@@ -227,7 +223,7 @@ void rendering_wall(t_data *v, double ang);
 void update(t_data *v);
 //rycast
 void steps(t_data *v, double ang);
-double raycasting(t_data *v, double ang, int hit);
+double raycasting(t_data *v, double ang);
 void visualize_maps(t_data *v, double ang, int *i, int *j);
 //minimap
 
@@ -237,6 +233,7 @@ int	key_press(int keycode, t_data *v);
 int key_release(int keycode, t_data *v);
 int destroy(void);
 void update(t_data *v);
+int mouse_hook(int x, int y, t_data *v);
 // textures
 void get_textures(t_data *v);
 void	dda_textures(t_data *v, double y0, double y1, int flag);
@@ -262,6 +259,7 @@ void	dda_door(t_data *v, double y0, double y1);
 // void _sprites(t_data *v ,int k, int i, int j);
 void get_text_sprites(t_data *v);
 t_object *visible_sprite(t_data *v);
+void render_sprite_MiniMap(t_data *v, t_object *sprites);
 // void	dda_sprite(t_data *v, double y0, double y1);
 void	dda_sprite(t_data *v, double y0, double y1, int x);
 void fill_sprite(t_data *v, int ind);
@@ -269,19 +267,23 @@ void render_ssprite(t_data *v);
 //utils
 double des_betw_2pt(double x0, double y0, double x1, double y1);
 //object
-t_object *newsprite(t_data *v, t_sprites s);
+t_object *newsprite(t_data *v, t_GetSprites s);
 t_object *newdoor(t_data *v, double ryd, int flag);
-
+t_object *copie_node(t_object *src);
+t_object *copie_list( t_object *copie);
 void	addobjt(t_object **lst, t_object *new);
 void	clear_objt(t_object **lst);
 // void	addback_objt(t_object **lst, t_object *new);
 // t_object	*last(t_object *lst);
 // parsing
 void	parsing_bonus(t_data *v, int ac, char **av);
-void	if_duplicate(t_data *v);
-int	player_position(t_data *v);
+// void	if_duplicate(t_data *v);
+// int	player_position(t_data *v);
 int tab_spaces_checker(char *str);
 void _sprites(t_data *v ,int k, int i, int j);
 void	parsing(t_data *v ,int ac, char **av);
 void drawCircle(t_data*v, int radius);
+
+
+void	old_dda(t_data *v, double x0, double y0, unsigned int color);
 #endif
