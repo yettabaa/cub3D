@@ -6,38 +6,13 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 22:58:38 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/20 03:58:35 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 03:11:59 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-t_object *newsprite(t_data *v, t_GetSprites sprite)
-{
-    t_object *node;
-	double FOV_angle ;
-	double ProjP_sprite;
-    
-    node = malloc(sizeof(t_object));
-    if (!node)
-        ft_error("Allocate new door failed");
-	node->type = SPRITE;
-	FOV_angle = Deg(atan2(sprite.ys - v->y, sprite.xs - v->x)) - (v->orientation);
-	ProjP_sprite = tan(Rad(FOV_angle)) * v->ProjPlane;
-    node->x = sprite.xs;
-    node->y = sprite.ys;
-	node->rydis_fbw = des_betw_2pt(sprite.xs, sprite.ys, v->x, v->y) * cos(Rad(FOV_angle));
-	node->Diemension = (v->scal / node->rydis_fbw) * v->ProjPlane;
-	node->y0 = (HIGHT / 2) - (node->Diemension / 2);
-	node->y1 = node->y0 + node->Diemension;
-	node->x0 = (WIDTH / 2) + ProjP_sprite - (node->Diemension / 2);
-	node->x1 = node->x0 + node->Diemension;
-	// printf("x = %f y = %f ryd = %f\n", sprite.xs, sprite.ys, node->rydis_fbw);
-	node->next = NULL;
-    return(node);
-}
-
-void	dda_sprite(t_data *v, double y0, double y1, int x) // opti
+void	dda_sprite(t_data *v,t_object *object, double y0, double y1) // opti
 {
     int		i;
     int x_texel;
@@ -49,13 +24,16 @@ void	dda_sprite(t_data *v, double y0, double y1, int x) // opti
 	(y1 > HIGHT) && (y1 = HIGHT);
 	steps = fabs(y0 - y1);
 	i = 0;
-    (x_texel = v->txt.width * (x - v->tmpobj->x0) / v->tmpobj->Diemension);
+    (x_texel = v->txt.width * (v->x_wind - object->x0) / object->Diemension);
+    (x_texel < 0) && (x_texel = 0);
+    (x_texel > v->txt.width) && (x_texel = v->txt.width);
 	while (i < steps)
 	{
         y_texel = v->txt.height * (i + (fabs(v->y1 - v->y0 - steps) / 2)) / fabs(v->y1 - v->y0);
+        (y_texel < 0) && (y_texel = 0);
+        (y_texel > v->txt.height) && (y_texel = v->txt.height);
 		color = v->txt.buff[y_texel * (v->txt.line / 4) + x_texel];
-		if (x >= 0 && x < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
-			((color >> 24 & 0x000000ff) != 255) && my_mlx_pixel_put(v ,x, y0, color);
+		((color >> 24 & 0x000000ff) != 255) && my_mlx_pixel_put(v ,v->x_wind, y0, color);
 		y0++;
 		i++;
 	}
@@ -79,17 +57,39 @@ t_object *visible_sprite(t_data *v)
     return(visible_sprite);
 }
 
-void render_ssprite(t_data *v)
+void render_ssprite(t_data *v, t_object *object)
 {
-    (v->sprt.frames == 4 * WIDTH + 1) && (v->sprt.frames = 0);
-    (v->sprt.frames == 4 * WIDTH) && (v->sprt.ind_sprite_text += 1);
-    (v->sprt.ind_sprite_text == 4) && (v->sprt.ind_sprite_text = 0);
-    fill_sprite(v, v->sprt.ind_sprite_text % 4);
+    (v->sprt.frames == 7 * WIDTH + 1) && (v->sprt.frames = 0);
+    (v->sprt.frames == 7 * WIDTH) && (v->sprt.ind_sprite_text += 1);
+    (v->sprt.ind_sprite_text == 5) && (v->sprt.ind_sprite_text = 0);
+    fill_sprite(v, v->sprt.ind_sprite_text % 5);
     v->sprt.frames += 1;
-    v->y0 = v->tmpobj->y0;
-	v->y1 = v->tmpobj->y1;
-    if(v->x_wind >= v->tmpobj->x0  && v->x_wind <= v->tmpobj->x1)
-	    dda_sprite(v, v->y0, v->y1, v->x_wind);
+    v->y0 = object->y0;
+	v->y1 = object->y1;
+    if(v->x_wind >= object->x0  && v->x_wind <= object->x1)
+	    dda_sprite(v,object, v->y0, v->y1);
+}
+
+void sprite_disc(t_data *v, double x, double y, int color)
+{
+    double x0;
+    double y0;
+    double radius;
+
+    radius = v->scal / 3;
+    y0 = -radius;
+    while (y0 <= radius)
+    {
+        x0 = -radius;
+        while (x0 <= radius)
+        {
+			if (round(x0 + x) >= 0 && round(x0 + x) < WIDTH && round(y0 + y) >= 0 && round(y0 + y) < HIGHT)
+            	if ((x0 * x0) + y0 * y0 <= radius * radius)
+                	my_mlx_pixel_put(v, x0 + x, y0 + y, color);
+            x0++;
+        }
+        y0++;
+    }
 }
 
 void render_sprite_MiniMap(t_data *v, t_object *sprites)
@@ -100,7 +100,7 @@ void render_sprite_MiniMap(t_data *v, t_object *sprites)
     while (hold)
     {
         if (hold->x + v->MiniMap.trans_x >= 0 && hold->x + v->MiniMap.trans_x < WIDTH && hold->y+ v->MiniMap.trans_y >= 0 && hold->y+ v->MiniMap.trans_y < HIGHT)
-            disc(v, hold->x + v->MiniMap.trans_x, hold->y+ v->MiniMap.trans_y, 0xff0000, v->scal/3);
+            sprite_disc(v, hold->x + v->MiniMap.trans_x, hold->y+ v->MiniMap.trans_y, 0xff0000);
         hold = hold->next;
     }
     

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:04:20 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/18 23:41:28 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/21 04:39:19 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	parsing_bonus(t_data *v, int ac, char **av)
 		if (up_and_down(map, &i, &count, &v->pars))
 			break ;
 	}
-	// free_array(map);
+	free_array(map);
+	// free_array(v->pars.map);
 	if_duplicate_bonus(v);
-	player_position(&v->pars);
 }

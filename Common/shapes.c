@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:52:24 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/20 04:50:26 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 04:54:12 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 int	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color)
 {
 	char	*dst;
-
-	dst = v->mlx.addr + (y * v->mlx.line_length + x * (v->mlx.bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HIGHT)
+	{
+		dst = v->mlx.addr + (y * v->mlx.line_length + x * (v->mlx.bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 	return (1);
 }
 
@@ -35,8 +38,7 @@ void	old_dda(t_data *v, double x0, double y0, unsigned int color)// hyedha
 	i = 0;
 	while (i <= steps + v->epsilon)
 	{
-		if (round(x0) >= 0 && round(x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
-			my_mlx_pixel_put(v ,round(x0), round(y0), color);
+		my_mlx_pixel_put(v ,round(x0), round(y0), color);
 		x0 = x0 + xinc;
 		y0 = y0 + yinc;
 		i++;
@@ -55,31 +57,31 @@ void	dda(t_data *v, double x0, double y0, unsigned int color)
 	i = 0;
 	while (i <= steps + v->epsilon)
 	{
-		if (round(x0) >= 0 && round(x0) < WIDTH && round(y0) >= 0 && round(y0) < HIGHT)
-			if ((i * xinc) * (i * xinc) + (i * yinc) * (i * yinc) < v->MiniMap.raduis * v->MiniMap.raduis)
-				my_mlx_pixel_put(v ,(x0), (y0), color);
+		if ((i * xinc) * (i * xinc) + (i * yinc) * (i * yinc) < v->MiniMap.raduis * v->MiniMap.raduis)
+			my_mlx_pixel_put(v ,(x0), (y0), color);
 		x0 = x0 + xinc;
 		y0 = y0 + yinc;
 		i++;
 	}
 }
 
-void disc(t_data *v, double x, double y, int color, double radius)
+void disc(t_data *v, int color, double radius)
 {
     double x0;
     double y0;
-    // double radius;
+    double x;
+	double y;
 
-    // radius = v->scal / 3;
+	x = v->x + v->MiniMap.trans_x;
+	y = v->y + v->MiniMap.trans_y;
     y0 = -radius;
     while (y0 <= radius)
     {
         x0 = -radius;
         while (x0 <= radius)
         {
-			if (round(x0 + x) >= 0 && round(x0 + x) < WIDTH && round(y0 + y) >= 0 && round(y0 + y) < HIGHT)
-            	if ((x0 * x0) + y0 * y0 <= radius * radius)
-                	my_mlx_pixel_put(v, x0 + x, y0 + y, color);
+            if ((x0 * x0) + y0 * y0 <= radius * radius)
+                my_mlx_pixel_put(v, x0 + x, y0 + y, color);
             x0++;
         }
         y0++;
@@ -95,4 +97,18 @@ void	ft_error(const char *str)
 {
 	perror(str);
 	exit(1);
+}
+
+void	ft_exit(t_data *v ,const char *str, int status)
+{
+	(void)v;
+	if (status)
+		ft_putendl_fd((char *)str, STDERR_FILENO);
+	free_array(v->pars.map2);
+	free(v->pars.so);
+	free(v->pars.no);
+	free(v->pars.ea);
+	free(v->pars.we);
+	free(v->sprite);
+	exit(status);
 }

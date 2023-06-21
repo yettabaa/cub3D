@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/20 03:37:07 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 01:20:47 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_norme{
     int txw;
 }t_norme;
 
-void inc_smal_steps(t_data *v, double ang)
+static void inc_smal_steps(t_data *v,t_object **object, double ang)
 {
     t_norme n;
 
@@ -35,7 +35,7 @@ void inc_smal_steps(t_data *v, double ang)
     visualize_maps(v, ang, &n.i, &n.j);
     v->ryc.smal_stp = n.smal_sidstp;
     if (check_(v, n.i, n.j, DOOR) ) 
-        addobjt(&v->object, newdoor(v, n.smal_sidstp, n.txw));
+        addobjt(object, newdoor(v, n.smal_sidstp, n.txw));
     n.iq = 1;
     while (check_(v, n.i, n.j, WALL))
     {
@@ -44,11 +44,11 @@ void inc_smal_steps(t_data *v, double ang)
         v->ryc.y = v->y + (v->ryc.smal_stp * sin(Rad(ang)));
         visualize_maps(v, ang, &n.i, &n.j);
         if (check_(v, n.i, n.j, DOOR)) 
-            addobjt(&v->object, newdoor(v, v->ryc.smal_stp, n.txw));
+            addobjt(object, newdoor(v, v->ryc.smal_stp, n.txw));
     }
 }
 
-void inc_big_steps(t_data *v, double ang)
+static void inc_big_steps(t_data *v,t_object **object, double ang)
 {
     t_norme n;
     
@@ -61,7 +61,7 @@ void inc_big_steps(t_data *v, double ang)
     visualize_maps(v, ang, &n.i, &n.j);
     v->ryc.big_stp = n.big_sidstp;
     if (n.big_sidstp < v->ryc.smal_stp && check_(v, n.i, n.j, DOOR)) 
-        addobjt(&v->object, newdoor(v, n.big_sidstp, n.txw));
+        addobjt(object, newdoor(v, n.big_sidstp, n.txw));
     n.iq = 1;
     while (n.big_sidstp < v->ryc.smal_stp && check_(v, n.i, n.j, WALL))
     {
@@ -70,17 +70,17 @@ void inc_big_steps(t_data *v, double ang)
         v->ryc.y = v->y + (v->ryc.big_stp * sin(Rad(ang)));
         visualize_maps(v, ang, &n.i, &n.j);
         if (v->ryc.big_stp < v->ryc.smal_stp && check_(v, n.i, n.j, DOOR)) 
-            addobjt(&v->object, newdoor(v, v->ryc.big_stp, n.txw));
+            addobjt(object, newdoor(v, v->ryc.big_stp, n.txw));
         if (v->ryc.big_stp > v->ryc.smal_stp || check_(v, n.i, n.j, 0))
             break;
     }
 }
 
-double raycasting_bonus(t_data *v, double ang)
+double raycasting_bonus(t_data *v,t_object **object, double ang)
 {
     steps(v, ang);
-    inc_smal_steps(v, ang);
-    inc_big_steps(v, ang);
+    inc_smal_steps(v,object,  ang);
+    inc_big_steps(v,object, ang);
 
     v->raydis = fmin(v->ryc.smal_stp, v->ryc.big_stp); // fixing fishbowl
     v->raydis_fishbowl = fmin(v->ryc.smal_stp, v->ryc.big_stp) * cos(Rad(v->orientation - ang)); // fixing fishbowl
@@ -94,6 +94,6 @@ double raycasting_bonus(t_data *v, double ang)
         v->txt.hitWall = HORI;
     v->xw = v->x + (v->raydis * cos(Rad(ang))); //translation with distace of adjacent
     v->yw = v->y + (v->raydis * sin(Rad(ang))); //translation with distace of opposite
-    addobjt(&v->object, newdoor(v, v->raydis, WALL));
+    addobjt(object, newdoor(v, v->raydis, WALL));
     return(v->raydis);
 }

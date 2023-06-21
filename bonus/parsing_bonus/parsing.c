@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:12:39 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/19 21:01:21 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 03:26:47 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,12 @@ char	**fill_array_map(char **av)
 		exit(1);
 	}
 	line = get_next_line(fd);
-	count = map_line_count(fd, line); 
+	count = map_line_count(fd, line);
 	close(fd);
 	fd = open(av[1], O_RDONLY);
-	// printf("line ======= %s\n", line); 
 	array = malloc(sizeof(char *) * (count + 1));
+	if (!array)
+		ft_error("Error\n");
 	if (!array)
 		exit(1);
 	fill_map(array, fd);

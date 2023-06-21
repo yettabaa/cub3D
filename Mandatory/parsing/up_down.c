@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   up_down.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:14:10 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/19 21:04:30 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:32:57 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	fill_down_map(char **map, char **new, char **array)
 		j = 0;
 		new[i] = malloc(sizeof(char) * (ft_strlen(map[i]) + 1));
 		if (!new[i])
-			ft_error("error msg");
+			ft_error("Error\n");
 		while (map[i][j] && map[i][j] != '\n')
 		{
 			new[i][j] = map[i][j];
@@ -52,8 +52,7 @@ void	fill_down_map(char **map, char **new, char **array)
 	{
 		free_array(array);
 		free_array(new);
-		write(2, "Error: empty line\n", 19);
-		exit(1);
+		ft_error("Error: empty line\n");
 	}
 }
 
@@ -66,6 +65,8 @@ void	go_down(char **map, int i, t_map_result	*res)
 	while ((map + i)[j])
 		j++;
 	down_map = malloc(sizeof(char *) * (j + 1));
+	if (!down_map)
+		ft_error("Error\n");
 	fill_down_map(map + i, down_map, map);
 	res->map = down_map;
 	wall_check(down_map, map);

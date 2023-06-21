@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 02:11:03 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:31:57 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-// #include "cub3D.h"
 # include<stdio.h>
 # include<unistd.h>
 # include<stdlib.h>
 # include<fcntl.h>
 # include "../Mandatory/parsing/get_next_line/get_next_line.h"
 # include <mlx.h>
-#include <math.h>
-typedef struct s_data t_data;
+# include <math.h>
+
+typedef struct s_data	t_data;
 typedef struct s_map_result
 {
 	int		f;
@@ -67,22 +67,18 @@ void	fill_down_map(char **map, char **new, char **array);
 void	if_empty(char **map);
 void	check_0_pos(char *str, char **array, int y, char **map);
 int		re_long_line(char **map);
-void	fill_spaces(char **p, int row, char **map, t_map_result *res);
+void	fill_spaces(char **p, char **map, t_map_result *res);
 void	map_copy(char **p, char **map);
-//void	if_valid(char **map, char **array);
 int		check_directions(char **map, int y, int x);
-// void	if_duplicate(t_map_result *res, int *count_sprites);
-// int		player_position(t_map_result *res, int count_sprites);
+void	parsing(t_data *v, int ac, char **av);
+void	parsing_bonus(t_data *v, int ac, char **av);
 void	if_duplicate(t_map_result *v);
-// void fill_sprites(t_data *v ,int k, int i, int j);
-int tab_spaces_checker(char *str);
+void	if_duplicate_bonus(t_data *v);
+int		tab_spaces_checker(char *str);
+void	_sprites(t_data *v, int k, int i, int j);
 void	duplicate_error(t_map_result *res);
 int		door_sides(char **map, int y, int x);
 void	check_door_pos(char *str, char **array, int y, char **map);
-void	parsing(t_data *v ,int ac, char **av);
-int	player_position(t_map_result *res);
-void	if_duplicate_bonus(t_data *v);
-void _sprites(t_data *v ,int k, int i, int j);
 void	checker_bonus(t_data *v);
-void	parsing_bonus(t_data *v, int ac, char **av);
+int		player_position(t_map_result *res);
 #endif

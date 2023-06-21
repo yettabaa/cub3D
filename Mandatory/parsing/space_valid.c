@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:08:27 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/19 22:14:55 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 22:22:24 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,58 +51,54 @@ int	re_long_line(char **map)
 	return (len);
 }
 
-void	fill_spaces(char **p, int row, char **map, t_map_result *res)
+void	fill_spaces(char **p, char **map, t_map_result *res)
 {
 	int	i;
 	int	len;
-	int j = 0;
-	(void)row;
+	int	j;
 
+	j = 0;
 	len = re_long_line(map) - 1;
 	res->i = len;
 	while (map[j])
 	{
 		i = 0;
 		p[j] = malloc(sizeof(char) * (len + 1));
+		if (!p[j])
+			ft_error("Error\n");
 		while (i < len)
 		{
 			if (i < (int)ft_strlen(map[j]) && map[j][i] && map[j][i] != '\n')
-			{
 				p[j][i] = map[j][i];
-			}
 			else
 				p[j][i] = ' ';
-			i++;	
+			i++;
 		}
 		p[j][i] = '\0';
 		j++;
 	}
 	p[j] = NULL;
-	i = 0;
-	// while(p[i])
-	// 	printf(">> |%s|\n", p[i++]);
-
 }
-
 
 void	if_valid(char **map, char **array, t_map_result *res)
 {
 	int		i;
 	int		row;
 	char	**p;
-	(void)res;
+
 	i = 1;
 	row = 0;
 	while (map[row])
 		row++;
-	res->j = row;	
+	res->j = row;
 	p = malloc(sizeof(char *) * (row + 1));
-	fill_spaces(p, row, map, res);
+	if (!p)
+		ft_error("Error\n");
+	fill_spaces(p, map, res);
 	res->map2 = p;
 	while (i < row)
 	{
 		check_0_pos(map[i], array, i, p);
 		i++;
 	}
-	// free_array(p);
 }

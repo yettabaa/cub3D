@@ -6,25 +6,25 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:24:45 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/20 02:22:22 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 04:55:12 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"cub3D.h"
 
-t_object *copie_node(t_object *src)
+t_object *copie_node(t_data *v,  t_object *src)
 {
 	t_object *node;
 
 	node = malloc(sizeof(t_object));
 	if(!node)
-		ft_error("Alocate copie node failed");
+		ft_exit(v, "Alocate copie node failed !", 1);
 	ft_memmove(node, src, sizeof(t_object) - sizeof(void *));
 	node->next = NULL;
 	return(node);
 }
 
-t_object *copie_list( t_object *copie)
+t_object *copie_list(t_data *v, t_object *copie)
 {
 	t_object *tmp;
 	t_object *node;
@@ -33,7 +33,7 @@ t_object *copie_list( t_object *copie)
 	tmp = copie;
 	while (tmp)
 	{
-		addobjt(&node, copie_node(tmp));
+		addobjt(&node, copie_node(v, tmp));
 		tmp = tmp->next;
 	}
 	return(node);
@@ -51,24 +51,50 @@ void	addobjt(t_object **lst, t_object *new)
 	new->next = *lst;
 	*lst = new;
 }
+// void	ft_gcclear(t_gc **g)
+// {
+// 	t_gc	*node;
 
+// 	while (*g)
+// 	{
+// 		node = *g;
+// 		*g = (*g)->next;
+// 		free(node->ptr);
+// 		free(node);
+// 		node = NULL;
+// 	}
+// 	g = NULL;
+// }
+// void	clear_objt(t_object **lst)
+// {
+// 	t_object	*c;
+
+// 	if (!lst)
+// 		return ;
+// 	c = *lst;
+// 	while (c)
+// 	{
+// 		if (c->next == NULL)
+// 		{
+// 			free(*lst);
+// 			break ;
+// 		}
+// 		c = c->next;
+// 		free(*lst);
+// 		*lst = c;
+// 	}
+// 	*lst = NULL;
+// }
 void	clear_objt(t_object **lst)
 {
-	t_object	*c;
+	t_object	*node;
 
-	if (!lst)
-		return ;
-	c = *lst;
-	while (c)
+	while (*lst)
 	{
-		if (c->next == NULL)
-		{
-			free((void*)*lst);
-			break ;
-		}
-		c = c->next;
-		free((void*)*lst);
-		*lst = c;
+		node = *lst;
+		*lst = (*lst)->next;
+		free(node);
+		node = NULL;
 	}
 	*lst = NULL;
 }
@@ -81,21 +107,20 @@ void	checker_bonus(t_data *v)
 
 	j = -1;
 	k = 0;
-	v->sprite = NULL;
 	if (v->sprt.count_sprites)
 	{
 		v->sprite = malloc(sizeof(t_GetSprites) * v->sprt.count_sprites);
 		if(!v->sprite)
-			ft_error("Allocate t_sprites failed");
+			ft_exit(v, "Allocate t_sprites failed !", 1);
 	}
-	while (v->pars.map[++j])
+	while (v->pars.map2[++j])
 	{
 		i = -1;
-		while (v->pars.map[j][++i])
+		while (v->pars.map2[j][++i])
 		{
-			if ((v->pars.map[j][i] == '2' && (v->pars.map[j + 1][i] != '1' || v->pars.map[j - 1][i] != '1')) && (v->pars.map[j][i] == '2' && (v->pars.map[j][i + 1] != '1' || v->pars.map[j][i - 1] != '1')))
+			if ((v->pars.map2[j][i] == '2' && (v->pars.map2[j + 1][i] != '1' || v->pars.map2[j - 1][i] != '1')) && (v->pars.map2[j][i] == '2' && (v->pars.map2[j][i + 1] != '1' || v->pars.map2[j][i - 1] != '1')))
 				duplicate_error(&v->pars); //set an error
-			if (v->pars.map[j][i] == '3')
+			if (v->pars.map2[j][i] == '3')
 				_sprites(v, k++, i, j);
 		}
 	}

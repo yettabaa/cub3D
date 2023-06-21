@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:12:39 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/15 19:12:40 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:21:30 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**fill_array_map(char **av)
 	fd = open(av[1], O_RDONLY);
 	array = malloc(sizeof(char *) * (count + 1));
 	if (!array)
-		exit(1);
+		ft_error("Error\n");
 	fill_map(array, fd);
 	close(fd);
 	return (array);

@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 19:24:49 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/17 19:28:48 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:55:54 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	door_sides(char **map, int y, int x)
 {
 	int	up_down;
 	int	lift_right;
-	printf("x ===> %d  and y ====> %d\n", x, y);
+
 	up_down = 0;
 	lift_right = 0;
 	if (map[y][x + 1] == '1')
@@ -27,7 +27,7 @@ int	door_sides(char **map, int y, int x)
 		up_down++;
 	if (map[y - 1][x] == '1')
 		up_down++;
-	if(up_down == 2 || lift_right == 2)
+	if (up_down == 2 || lift_right == 2)
 		return (1);
 	return (0);
 }

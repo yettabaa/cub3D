@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:26 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/05 22:26:18 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:29:56 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*ft_strdap(char *str)
 	count = ft_count_char(str);
 	i = 0;
 	p = malloc(sizeof(char) * (count + 1));
+	if (!p)
+		ft_error("Error\n");
 	while (i < count)
 	{
 		p[i] = str[i];
@@ -87,6 +89,8 @@ char	**split_spc_tab(char *str)
 
 	count = count_word(str);
 	array = malloc(sizeof(char *) * (count + 1));
+	if (!array)
+		ft_error("Error\n");
 	fill_array(array, str);
 	array[count] = 0;
 	return (array);

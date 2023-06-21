@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls_sides.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:54 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/16 19:29:46 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:48:16 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	if_allow(char *str, char **array, char **map)
 	while (str[i] && str[i] != '\n')
 	{
 		if (str[i] != '0' && str[i] != '1' && str[i] != 'N' && str[i] != 'S'
-			&& str[i] != 'E' && str[i] != 'W' && str[i] != ' ')
+			&& str[i] != 'E' && str[i] != 'W' && str[i] != ' '
+			&& str[i] != '2' && str[i] != '3')
 		{
 			free_array(map);
 			free_array(array);
@@ -61,7 +62,7 @@ void	check_sides(char **map, char **array)
 	{
 		str = ft_strtrim(map[i], " ");
 		if_different_1(str, array, map);
-		// if_allow(str, array, map);
+		if_allow(str, array, map);
 		free(str);
 		i++;
 	}

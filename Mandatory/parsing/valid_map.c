@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:04:20 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/19 21:05:09 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:33:31 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,41 +68,25 @@ void	split_and_check(char *str, t_map_result *res)
 void	wall_check(char **map, char **array)
 {
 	int		i;
-	char	*str;
 
 	i = 0;
 	while (map[i])
-	{
-		str = ft_strtrim(map[i], " ");
-		if (ft_strlen(str) == 1)
-		{
-			free(str);
-			free_array(map);
-			free_array(array);
-			write(2, "Error: empty line\n", 19);
-			exit(1);
-		}
-		free(str);
-		i++;
-	}
+	i++;
 	first_and_last(map, i, array);
 	check_sides(map, array);
 }
 
-void	parsing(t_data *v ,int ac, char **av)
+void	parsing(t_data *v, int ac, char **av)
 {
 	char	**map;
 	int		i;
 	int		count;
-	
+
 	init_map(&v->pars);
 	check_arg(ac, av);
 	map = fill_array_map(av);
-	// int k = 8;
-	// while(map[k])
-	// 	printf("== %s\n", map[k++]);
-	i = 0;
 	count = 0;
+	i = 0;
 	if_empty(map);
 	while (map[i])
 	{
@@ -112,7 +96,8 @@ void	parsing(t_data *v ,int ac, char **av)
 		if (up_and_down(map, &i, &count, &v->pars))
 			break ;
 	}
-	// free_array(map);
+	free_array(map);
 	if_duplicate(&v->pars);
 	player_position(&v->pars);
+	free_array(v->pars.map);
 }
