@@ -1,11 +1,12 @@
--libft dlete functions 
--add mause
--add collision
--minimap
 -leaks
 - max doors and sprites
-- malloc protection parsing
-
+-memmove
+-leaks buff bonus
+-error msg
+-error msg invalid placement of doors
+-vitesse
+-norm
+-tan(90)
 
 
 === >modif parsing;

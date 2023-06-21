@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:04:20 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 16:33:31 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:00:10 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,52 +17,54 @@ int	create_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-void	if_args_true(char **split, t_map_result *res)
+int	derection_name(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(split[0], "NO") == 0 && res->no == NULL)
-	res->no = split[1];
-	else if (ft_strcmp(split[0], "SO") == 0 && res->so == NULL)
-	res->so = split[1];
-	else if (ft_strcmp(split[0], "WE") == 0 && res->we == NULL)
-	res->we = split[1];
-	else if (ft_strcmp(split[0], "EA") == 0 && res->ea == NULL)
-	res->ea = split[1];
-	else if (ft_strcmp(split[0], "F") == 0 && res->f == 0)
-		check_f_and_c (split[1], res, 6, split);
-	else if (ft_strcmp(split[0], "C") == 0 && res->c == 0)
-		check_f_and_c (split[1], res, 3, split);
-	else
-	{
-		free_array(split);
-		write(2, "Error formula is incorrect\n", 28);
-		exit(1);
-	}
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (!ft_strncmp((str + i), "NO ", 3))
+		return (NO);
+	if (!ft_strncmp(str + i, "SO ", 3))
+		return (SO);
+	if (!ft_strncmp(str + i, "WE ", 3))
+		return (WE);
+	if (!ft_strncmp(str + i, "EA ", 3))
+		return (EA);
+	if (!ft_strncmp(str + i, "F ", 2))
+		return (FLOOR);
+	if (!ft_strncmp(str + i, "C ", 2))
+		return (CEIL);
+	return (0);
 }
 
 void	split_and_check(char *str, t_map_result *res)
 {
-	int		i;
-	int		j;
-	char	**split;
+	int	i;
 
 	i = 0;
-	j = 0;
-	split = split_spc_tab(str);
-	while (split[i])
-		i++;
-	if (i != 2)
-	{
-		free_array(split);
-		write(2, "Error Should be two arguments\n", 31);
-		exit(1);
-	}
+	if (!derection_name(str))
+		ft_error("Invalid map", "");
 	else
-		if_args_true(split, res);
-	free(split[0]);
-	free(split);
+	{
+		while (str[i] && str[i] == ' ')
+		i++;
+		while (str[i] && str[i] != ' ')
+		i++;
+		if (derection_name(str) == SO)
+			res->so = ft_strtrim(str + i, "\n ");
+		else if (derection_name(str) == NO)
+			res->no = ft_strtrim(str + i, "\n ");
+		else if (derection_name(str) == WE)
+			res->we = ft_strtrim(str + i, "\n ");
+		else if (derection_name(str) == EA)
+			res->ea = ft_strtrim(str + i, "\n ");
+		else if (derection_name(str) == FLOOR)
+			check_f_and_c (ft_strtrim(str + i, "\n "), res, 6);
+		else if (derection_name(str) == CEIL)
+			check_f_and_c (ft_strtrim(str + i, "\n "), res, 3);
+	}
 }
 
 void	wall_check(char **map, char **array)
@@ -97,6 +99,8 @@ void	parsing(t_data *v, int ac, char **av)
 			break ;
 	}
 	free_array(map);
+	if (!v->pars.map)
+		ft_error("map not found", "");
 	if_duplicate(&v->pars);
 	player_position(&v->pars);
 	free_array(v->pars.map);

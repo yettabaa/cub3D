@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:14:10 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 16:32:57 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:40:16 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	if_empty(char **map)
 	if (i == 0)
 	{
 		free_array(map);
-		write(2, "Error: empty file44\n", 21);
-		exit(1);
+		ft_error("empty file44", "");
 	}
 }
 
@@ -38,7 +37,7 @@ void	fill_down_map(char **map, char **new, char **array)
 		j = 0;
 		new[i] = malloc(sizeof(char) * (ft_strlen(map[i]) + 1));
 		if (!new[i])
-			ft_error("Error\n");
+			ft_error("malloc failed", "");
 		while (map[i][j] && map[i][j] != '\n')
 		{
 			new[i][j] = map[i][j];
@@ -52,7 +51,7 @@ void	fill_down_map(char **map, char **new, char **array)
 	{
 		free_array(array);
 		free_array(new);
-		ft_error("Error: empty line\n");
+		ft_error("Error: empty line", "");
 	}
 }
 
@@ -65,8 +64,8 @@ void	go_down(char **map, int i, t_map_result	*res)
 	while ((map + i)[j])
 		j++;
 	down_map = malloc(sizeof(char *) * (j + 1));
-	if (!down_map)
-		ft_error("Error\n");
+	if (down_map == NULL)
+		ft_error("malloc failed", "");
 	fill_down_map(map + i, down_map, map);
 	res->map = down_map;
 	wall_check(down_map, map);
@@ -90,8 +89,7 @@ int	up_and_down(char **map, int *i, int *count, t_map_result *res)
 	else
 	{
 		free_array(map);
-		write(2, "Error: empty map\n", 18);
-		exit(1);
+		ft_error("empty map", "");
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:54 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 20:48:16 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:59:33 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@ void	if_allow(char *str, char **array, char **map)
 	while (str[i] && str[i] != '\n')
 	{
 		if (str[i] != '0' && str[i] != '1' && str[i] != 'N' && str[i] != 'S'
-			&& str[i] != 'E' && str[i] != 'W' && str[i] != ' '
-			&& str[i] != '2' && str[i] != '3')
+			&& str[i] != 'E' && str[i] != 'W' && str[i] != ' ' && str[i] != '2'
+			&& str[i] != '3')
 		{
 			free_array(map);
 			free_array(array);
 			free(str);
-			write(2, "Error: different character\n", 28);
-			write(2, "the map must be composed of only 6 possible\
-characters:0,1,W,N,S,E\n", 67);
-			exit(1);
+			ft_error("the map must be composed of only 6 possible\
+characters:0,1,W,N,S,E", str);
 		}
 		i++;
 	}
@@ -45,10 +43,7 @@ void	if_different_1(char *str, char **array, char **map)
 		free_array(map);
 		free_array(array);
 		free(str);
-		write(2, "Error: different character\n", 28);
-		write(2, "the map must be composed of only 2\
-possible characters in sides:0 and 1\n", 72);
-		exit(1);
+		ft_error("character different 1", "");
 	}
 }
 

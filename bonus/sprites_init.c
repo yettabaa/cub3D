@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 02:19:46 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 03:35:22 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:13:16 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void get_text_sprites(t_data *v)
     i = 0;
     v->sprt.sprite_buff = malloc(sizeof(unsigned int *) * 5);
     if(!v->sprt.sprite_buff)
-        ft_exit(v, "Allocate sprite buff failed !", 1);
+        ft_exit(v, "Error\nAllocate sprite buff failed !", 1);
     while (i <= 4)
     { //Users/yettabaa/Desktop/cub3D/textures/sprite/0.xpm
         itoa = ft_itoa(i);
-        path = ft_strjoin3("./textures/sprite/", itoa, ".xpm");
+        path = ft_strjoin3("./Common/textures/sprite/", itoa, ".xpm");
         //  printf("%s\n",path);
         tx_img = mlx_xpm_file_to_image(v->mlx.mlx, path, &v->sprt.sprite_width, &v->sprt.sprite_height);
         free(itoa);
         free(path);
         if(!tx_img)
-            ft_exit(v, "Invalid Sprite PATH !", 1);
+            ft_exit(v, "Error\nInvalid Sprite PATH !", 1);
         v->sprt.sprite_buff[i++] = (unsigned int *)mlx_get_data_addr(tx_img, &endian,  &v->sprt.sprite_line, &endian);
     }
 }
@@ -62,7 +62,7 @@ t_object *newsprite(t_data *v, t_GetSprites sprite)
     
     node = malloc(sizeof(t_object));
     if (!node)
-        ft_exit(v, "Allocate new sprite failed !", 1);
+        ft_exit(v, "Error\nAllocate new sprite failed !", 1);
 	node->type = SPRITE;
 	FOV_angle = Deg(atan2(sprite.ys - v->y, sprite.xs - v->x)) - (v->orientation);
 	ProjP_sprite = tan(Rad(FOV_angle)) * v->ProjPlane;

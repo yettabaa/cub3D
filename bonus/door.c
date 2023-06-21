@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:47:25 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 03:37:52 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:14:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void get_text_door(t_data *v)
     i = 0;
     v->door.DOOR_buff = malloc(sizeof(unsigned int*) * 34);
     if (!v->door.DOOR_buff)
-        ft_exit(v, "Allocate door buffer failed !", 1);
+        ft_exit(v, "Error\nAllocate door buffer failed !", 1);
     while (i <= 32)
     {
         itoa = ft_itoa(i+1);
-        path = ft_strjoin3("./textures/DOOR/", itoa, ".xpm");
+        path = ft_strjoin3("./Common/textures/DOOR/", itoa, ".xpm");
         tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, path, &v->door.DOOR_width, &v->door.DOOR_height);
         free(itoa);
         free(path);
         if(!tx_img)
-            ft_exit(v, "Invalid Door PATH !", 1);
+            ft_exit(v, "Error\nInvalid Door PATH !", 1);
         v->door.DOOR_buff[i++] = (unsigned int *)mlx_get_data_addr(tx_img, &endian, &v->door.DOOR_line, &endian);
     }
 
@@ -53,7 +53,7 @@ t_object *newdoor(t_data *v, double ryd, int flag)
     
     nd = malloc(sizeof(t_object));
     if (!nd)
-        ft_exit(v, "Allocate new door failed !", 1);
+        ft_exit(v, "Error\nAllocate new door failed !", 1);
 	nd->type = DOOR;
 	(flag == WALL) && (nd->type = WALL);
 	nd->rydis = ryd;

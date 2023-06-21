@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 00:27:41 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 03:37:16 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:18:10 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ void get_textures(t_data *v)
     
     tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, v->pars.no, &v->txt.NO_width, &v->txt.NO_height);
     if(!tx_img)
-        ft_exit(v, "Invalid NO PATH !", 1);
+        ft_exit(v, "Error\nInvalid NO PATH !", 1);
     v->txt.NO_buff = (unsigned int *)mlx_get_data_addr(tx_img, &bitspp, &v->txt.NO_line, &endian);
     tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, v->pars.so, &v->txt.SO_width, &v->txt.SO_height);
     if(!tx_img)
-        ft_exit(v, "Invalid SO PATH !", 1);
+        ft_exit(v, "Error\nInvalid SO PATH !", 1);
     v->txt.SO_buff = (unsigned int *)mlx_get_data_addr(tx_img, &bitspp, &v->txt.SO_line, &endian);
     tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, v->pars.we, &v->txt.WE_width, &v->txt.WE_height);
     if(!tx_img)
-        ft_exit(v, "Invalid WE PATH !", 1);
+        ft_exit(v, "Error\nInvalid WE PATH !", 1);
     v->txt.WE_buff = (unsigned int *)mlx_get_data_addr(tx_img, &bitspp, &v->txt.WE_line, &endian);
     tx_img =  mlx_xpm_file_to_image(v->mlx.mlx, v->pars.ea, &v->txt.EA_width, &v->txt.EA_height);
     if(!tx_img)
-        ft_exit(v, "Invalid EA PATH !", 1);
+        ft_exit(v, "Error\nInvalid EA PATH !", 1);
     v->txt.EA_buff = (unsigned int *)mlx_get_data_addr(tx_img, &bitspp, &v->txt.EA_line, &endian);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 04:09:59 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:33:31 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void initialisation(t_data *v)
     v->x = (v->pars.x * v->scal + v->scal / 2);
     v->y = (v->pars.y * v->scal + v->scal / 2);
     v->sprite = NULL;
+    v->door.DOOR_buff = NULL;
+	v->sprt.sprite_buff = NULL;
     get_textures(v);
 }
 void maps2d(t_data *v)
@@ -114,7 +116,7 @@ int main(int ac ,char **av)
 {
 	t_data v;
 
-    atexit(f);
+    // atexit(f);
 	v.mlx.mlx = mlx_init();
 	v.mlx.mlx_win = mlx_new_window(v.mlx.mlx, WIDTH, HIGHT, "cub3D");
 	v.mlx.img = mlx_new_image(v.mlx.mlx, WIDTH, HIGHT);

@@ -6,21 +6,11 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 03:22:31 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 01:20:47 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:21:13 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-typedef struct s_norme{
-    
-    int i;
-    int j;
-    int iq;
-    double smal_sidstp;
-    double big_sidstp;
-    int txw;
-}t_norme;
 
 static void inc_smal_steps(t_data *v,t_object **object, double ang)
 {

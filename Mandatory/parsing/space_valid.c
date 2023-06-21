@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_valid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:08:27 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 22:22:24 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:00:00 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	check_0_pos(char *str, char **array, int y, char **map)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '0')
+		if (str[i] == '0' || str[i] == 'N'
+			|| str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
 		{
 			if (check_directions(map, y, i) == 0)
 			{
 				free_array(map);
 				free_array(array);
-				write(2, "Error: map is not valid\n", 25);
-				exit(1);
+				ft_error("map is not valid", "");
 			}
 		}
 		i++;
@@ -65,7 +65,7 @@ void	fill_spaces(char **p, char **map, t_map_result *res)
 		i = 0;
 		p[j] = malloc(sizeof(char) * (len + 1));
 		if (!p[j])
-			ft_error("Error\n");
+			ft_error("malloc failed", "");
 		while (i < len)
 		{
 			if (i < (int)ft_strlen(map[j]) && map[j][i] && map[j][i] != '\n')
@@ -93,7 +93,7 @@ void	if_valid(char **map, char **array, t_map_result *res)
 	res->j = row;
 	p = malloc(sizeof(char *) * (row + 1));
 	if (!p)
-		ft_error("Error\n");
+		ft_error("malloc failed", "");
 	fill_spaces(p, map, res);
 	res->map2 = p;
 	while (i < row)

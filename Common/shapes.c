@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:52:24 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 04:54:12 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:21:35 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,10 @@ double des_betw_2pt(double x0, double y0, double x1, double y1)
     return(sqrt(pow(fabs(x0 - x1), 2) + pow(fabs(y0 - y1), 2)));
 }
 
-void	ft_error(const char *str)
+double Deg(double radians) 
 {
-	perror(str);
-	exit(1);
+    return radians * (180.0 / M_PI);
 }
 
-void	ft_exit(t_data *v ,const char *str, int status)
-{
-	(void)v;
-	if (status)
-		ft_putendl_fd((char *)str, STDERR_FILENO);
-	free_array(v->pars.map2);
-	free(v->pars.so);
-	free(v->pars.no);
-	free(v->pars.ea);
-	free(v->pars.we);
-	free(v->sprite);
-	exit(status);
-}
+
+

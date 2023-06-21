@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:14 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/19 20:38:19 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 23:44:10 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while ((s1[i] || s2[i]))
-	{
-		if ((unsigned char)s1[i] != (unsigned char)s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
-	}
-	return (0);
-}
 
 void	init_map(t_map_result *res)
 {
@@ -35,7 +21,6 @@ void	init_map(t_map_result *res)
 	res->no = NULL;
 	res->so = NULL;
 	res->we = NULL;
-	res->map2 = NULL;
 }
 
 void	free_array(char **array)
@@ -76,4 +61,12 @@ int	tab_spaces_checker(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	ft_error(const char *error_msg, const char *str)
+{
+	write(2, "Error\n", 7);
+	ft_putendl_fd((char *)error_msg, STDERR_FILENO);
+	ft_putendl_fd((char *)str, STDERR_FILENO);
+	exit(1);
 }

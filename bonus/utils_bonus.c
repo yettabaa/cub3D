@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 04:24:45 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 04:55:12 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:42:35 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_object *copie_node(t_data *v,  t_object *src)
 
 	node = malloc(sizeof(t_object));
 	if(!node)
-		ft_exit(v, "Alocate copie node failed !", 1);
-	ft_memmove(node, src, sizeof(t_object) - sizeof(void *));
+		ft_exit(v, "Error\nAlocate copie node failed !", 1);
+	ft_memmove(node, src, sizeof(t_object));
 	node->next = NULL;
 	return(node);
 }
@@ -51,40 +51,7 @@ void	addobjt(t_object **lst, t_object *new)
 	new->next = *lst;
 	*lst = new;
 }
-// void	ft_gcclear(t_gc **g)
-// {
-// 	t_gc	*node;
 
-// 	while (*g)
-// 	{
-// 		node = *g;
-// 		*g = (*g)->next;
-// 		free(node->ptr);
-// 		free(node);
-// 		node = NULL;
-// 	}
-// 	g = NULL;
-// }
-// void	clear_objt(t_object **lst)
-// {
-// 	t_object	*c;
-
-// 	if (!lst)
-// 		return ;
-// 	c = *lst;
-// 	while (c)
-// 	{
-// 		if (c->next == NULL)
-// 		{
-// 			free(*lst);
-// 			break ;
-// 		}
-// 		c = c->next;
-// 		free(*lst);
-// 		*lst = c;
-// 	}
-// 	*lst = NULL;
-// }
 void	clear_objt(t_object **lst)
 {
 	t_object	*node;
@@ -111,7 +78,7 @@ void	checker_bonus(t_data *v)
 	{
 		v->sprite = malloc(sizeof(t_GetSprites) * v->sprt.count_sprites);
 		if(!v->sprite)
-			ft_exit(v, "Allocate t_sprites failed !", 1);
+			ft_exit(v, "Error\nAllocate t_sprites failed !", 1);
 	}
 	while (v->pars.map2[++j])
 	{

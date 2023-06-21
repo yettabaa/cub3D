@@ -6,13 +6,13 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:16 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 04:28:16 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:21:24 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CUB3D_H
 # define CUB3D_H
-# include "../Libft/libft.h"
+# include "../Common/Libft/libft.h"
 # include "parsing.h"
 # include <fcntl.h>
 # include <math.h>
@@ -194,6 +194,15 @@ typedef struct	s_data {
 	t_mlx mlx;
 }	t_data;
 
+typedef struct s_norme{
+    
+    int i;
+    int j;
+    int iq;
+    double smal_sidstp;
+    double big_sidstp;
+    int txw;
+}t_norme;
 
 // void	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
 int	my_mlx_pixel_put(t_data *v, int x, int y, unsigned int color);
@@ -208,7 +217,7 @@ double	Rad(double angle);
 double Deg(double radians); 
 double normalize_angle_360(double x);
 int is(t_data *v, double ang, int flag);
-void	ft_error(const char *str);
+// void	ft_error(const char *str);
 void	ft_exit(t_data *v ,const char *str, int status);
 //wall
 void cube3D(t_data *v);

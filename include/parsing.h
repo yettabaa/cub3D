@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 20:31:57 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:51:29 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ char	**fill_array_map(char **av);
 void	init_map(t_map_result *res);
 void	free_array(char **array);
 void	split_and_check(char *str, t_map_result *res);
-void	if_args_true(char **split, t_map_result *res);
-void	check_f_and_c(char *str, t_map_result *res, int value, char **split);
+void	if_args_true(char *sub, char* trim, t_map_result *res);
+void	check_f_and_c(char *str, t_map_result *res, int value);
 void	coma_split(char *str, int value, t_map_result *res);
 void	if_int(char **split);
 int		is_number(char c);
@@ -81,4 +81,5 @@ int		door_sides(char **map, int y, int x);
 void	check_door_pos(char *str, char **array, int y, char **map);
 void	checker_bonus(t_data *v);
 int		player_position(t_map_result *res);
+void	ft_error(const char *error_msg, const char *str);
 #endif

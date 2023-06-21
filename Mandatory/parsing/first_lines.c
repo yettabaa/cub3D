@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:06:30 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/15 18:38:11 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:37:19 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,14 @@ void	if_int(char **split)
 			if (is_number(split[i][j]) == 0)
 			{
 				free_array(split);
-				write(2, "Error most write numbers only\n", 31);
-				exit(1);
+				ft_error("most write numbers only", "");
 			}
 			j++;
 		}
 		if (between_0_255(split[i]) == 0)
 		{
 			free_array(split);
-			write(2, "Error numbers must be between 0 and 255\n", 41);
-			exit (1);
+			ft_error("numbers must be between 0 and 255", "");
 		}
 		i++;
 	}
@@ -72,8 +70,7 @@ void	coma_split(char *str, int value, t_map_result *res)
 	if (i != 3)
 	{
 		free_array(split);
-		write(2, "Error: should write 3 numbers\n", 31);
-		exit(1);
+		ft_error("should write 3 numbers", "");
 	}
 	if_int(split);
 	if (value == 3)
@@ -86,7 +83,7 @@ void	coma_split(char *str, int value, t_map_result *res)
 	free(str);
 }
 
-void	check_f_and_c(char *str, t_map_result *res, int value, char **split)
+void	check_f_and_c(char *str, t_map_result *res, int value)
 {
 	int	coma;
 	int	i;
@@ -99,10 +96,6 @@ void	check_f_and_c(char *str, t_map_result *res, int value, char **split)
 			coma++;
 	}
 	if (coma != 2)
-	{
-		free_array(split);
-		write(2, "Error formula is incorrect\n", 28);
-		exit(1);
-	}
+		ft_error("formula is incorrect", "");
 	coma_split(str, value, res);
 }

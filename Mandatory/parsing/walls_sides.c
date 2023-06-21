@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:54 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 16:37:38 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:00:36 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	if_allow(char *str, char **array, char **map)
 			free_array(map);
 			free_array(array);
 			free(str);
-			write(2, "Error: different character\n", 28);
-			write(2, "the map must be composed of only 6 possible\
-characters:0,1,W,N,S,E\n", 67);
-			exit(1);
+			ft_error("the map must be composed of only 6 possible\
+characters:0,1,W,N,S,E", "");
 		}
 		i++;
 	}
@@ -44,10 +42,7 @@ void	if_different_1(char *str, char **array, char **map)
 		free_array(map);
 		free_array(array);
 		free(str);
-		write(2, "Error: different character\n", 28);
-		write(2, "the map must be composed of only 2\
-possible characters in sides:0 and 1\n", 72);
-		exit(1);
+		ft_error("character different 1", "");
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:26:29 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 05:28:56 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:21:38 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	init_bonus(t_data *v)
 {
 	v->epsilon = 1e-8; // ??? hit the wall in the origin axis 
-		// (1,5) angle 225
-	v->scal = 12;      // 19
+	v->scal = 6;      // 19
 	v->orientation = strchr_c("WSEN", v->pars.palayer_dir) * 90;
-	// v->orientation = 0;
 	v->hook.angle_dir = 0;
 	v->hook.angle_speed = 3;
 	v->hook.walk_dir = 0;
@@ -30,10 +28,11 @@ void	init_bonus(t_data *v)
 	v->sprt.frames = 0;
 	v->sprt.ind_sprite_text = 0;
 	v->sprite = NULL;
+	v->door.DOOR_buff = NULL;
+	v->sprt.sprite_buff = NULL;
 	get_textures(v);
 	get_text_door(v);
 	get_text_sprites(v);
-	// v->hold_objt = NULL;
 	v->MiniMap.raduis = HIGHT / 10;
 	v->MiniMap.trans_x = (WIDTH / 2) - v->x - 650;
     v->MiniMap.trans_y = v->MiniMap.raduis - v->y + 750;
@@ -111,8 +110,9 @@ int	main(int ac, char **av)
 // int	main(int ac, char **av)
 // {
 // 	t_data v;
-// 	// atexit(f);
+// 	atexit(f);
 // 	parsing_bonus(&v, ac, av);
+// 	init_bonus(&v);
 // 		checker_bonus(&v);
 // 	int i = 0;
 // 	 while (v.pars.map2[i])
@@ -123,12 +123,14 @@ int	main(int ac, char **av)
 // 	printf("%s\n", v.pars.so);
 // 	printf("%s\n", v.pars.ea);
 // 	printf("%s\n", v.pars.we);
-// 	// free_array(v.pars.map2);
+// 	free_array(v.pars.map2);
 // 	// free_array(v.pars.map);
-// 	// free(v.pars.so);
-// 	// free(v.pars.no);
-// 	// free(v.pars.ea);
-// 	// free(v.pars.we);
-// 	// free(v.sprite);
+// 	free(v.pars.so);
+// 	free(v.pars.no);
+// 	free(v.pars.ea);
+// 	free(v.pars.we);
+// 	free(v.sprite);
+// 	free(v.sprt.sprite_buff);
+// 	free(v.door.DOOR_buff);
 //     printf("i = %d j = %d\n", v.pars.i, v.pars.j);
 // }

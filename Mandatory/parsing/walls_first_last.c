@@ -6,7 +6,7 @@
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:08:12 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 14:56:43 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:00:21 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	last_line(char **map, int last, char **array)
 			free(str);
 			free_array(map);
 			free_array(array);
-			write(2, "Error : different character 1\n", 30);
-			exit(1);
+			ft_error("character different 1", "");
 		}
 		i++;
 	}
@@ -48,8 +47,7 @@ void	first_line(char **map, char **array)
 			free(str);
 			free_array(map);
 			free_array(array);
-			write(2, "Error :character different 1\n", 30);
-			exit(1);
+			ft_error("character different 1", "");
 		}
 		i++;
 	}

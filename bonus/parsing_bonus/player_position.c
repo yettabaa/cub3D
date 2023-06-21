@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 17:40:09 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/20 20:54:06 by nfoughal         ###   ########.fr       */
+/*   Created: 2023/06/21 23:43:46 by nfoughal          #+#    #+#             */
+/*   Updated: 2023/06/21 23:43:47 by nfoughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	duplicate_error(t_map_result *res)
 	free(res->we);
 	free(res->ea);
 	free_array(res->map);
-	write(2, "Error: duplacate symbol\n", 25);
-	exit (1);
+	ft_error("need one player's position", "");
 }
 
 void	if_duplicate_bonus(t_data *v)
@@ -47,6 +46,6 @@ void	if_duplicate_bonus(t_data *v)
 			}
 		}
 	}
-	if (count > 1)
+	if (count > 1 || count == 0)
 		duplicate_error(&v->pars);
 }
