@@ -4,10 +4,11 @@
 -leaks buff bonus
 -error msg
 -error msg invalid placement of doors
--vitesse
 -norm
--tan(90)
-
+- fham my_exel_pute bonus
+-add heder bonus to makefile
+-relinke headers
+-atan2
 
 === >modif parsing;
 -if_maps_is_valid

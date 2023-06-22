@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/22 00:33:31 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 05:56:07 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void initialisation(t_data *v)
 {
-    v->epsilon = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
+    v->epsil = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
     v->scal = 12; // 19
     v->orientation = strchr_c("WSEN", v->pars.palayer_dir) * 90;
     v->hook.angle_dir = 0;
     v->hook.angle_speed = 3;
     v->hook.walk_dir = 0;
     v->hook.walk_speed = 1.5;
-    v->hook.angleOr = 0;
+    v->hook.angleor = 0;
     v->x = (v->pars.x * v->scal + v->scal / 2);
     v->y = (v->pars.y * v->scal + v->scal / 2);
     v->sprite = NULL;
-    v->door.DOOR_buff = NULL;
+    v->door.door_buff = NULL;
 	v->sprt.sprite_buff = NULL;
     get_textures(v);
 }
@@ -41,35 +41,49 @@ void maps2d(t_data *v)
         while ((int)v->pars.map2[(int)(j / v->scal)][(int)(i / v->scal)])
         {
                 if ((int)v->pars.map2[(int)(j / v->scal)][(int)(i / v->scal)] == '1')
-                    my_mlx_pixel_put(v, i, j, 0);
+                    my_pixel_put(v, i, j, 0);
                 else if ((int)v->pars.map2[(int)(j / v->scal)][(int)(i / v->scal)] == '2')
-                    my_mlx_pixel_put(v, i, j, 0xff);
+                    my_pixel_put(v, i, j, 0xff);
                 else if ((int)v->pars.map2[(int)(j / v->scal)][(int)(i / v->scal)] != 32)
-                    my_mlx_pixel_put(v, i, j, 0xffffff); 
+                    my_pixel_put(v, i, j, 0xffffff); 
             i++;
         }
         j++;
     }
 }
+void	old_dda(t_data *v, double x0, double y0, unsigned int color) // hyedha
+{
+	int i;
+	double xinc;
+	double yinc;
+	double steps;
 
+	steps = fmax(fabs(x0 - v->xw), fabs(y0 - v->yw));
+	xinc = (v->xw - x0) / steps;
+	yinc = (v->yw - y0) / steps;
+	i = 0;
+	while (i <= steps + v->epsil)
+	{
+		my_pixel_put(v, round(x0), round(y0), color);
+		x0 = x0 + xinc;
+		y0 = y0 + yinc;
+		i++;
+	}
+}
 void minimaps(t_data *v, int color)
 {
     double vi;
     double frequency;
     
-    // disc(v, v->x + v->MiniMap.trans_x, v->y + v->MiniMap.trans_y, 0x009DDF, v->MiniMap.raduis - 1);
     maps2d(v);
-    // disc(v, v->x + v->MiniMap.trans_x, v->y + v->MiniMap.trans_y, color, v->scal/3);
-    // disc(v, v->x, v->y, color, v->scal/3);
     frequency = 60;
     vi = 0;
-    while (vi <= (frequency + v->epsilon))
+    while (vi <= (frequency + v->epsil))
     {
         // puts("---------------------------------\n");
         v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
         raycasting(v, v->ryc.ang);
-        // if (((v->x) * (v->x)) + ((v->y) * (v->y)) <= v->MiniMap.raduis * v->MiniMap.raduis)
-        // dda(v, v->x + v->MiniMap.trans_x, v->y + v->MiniMap.trans_y, color);  // round to int for handle the corner in 2d
+    
         old_dda(v, v->x , v->y , color);  // round to int for handle the corner in 2d
         vi += 0.1;
     }
@@ -83,7 +97,7 @@ void cube3D(t_data *v)
     vi = 0;
     frequency = 60;
     update(v);
-    while (vi <= (frequency + v->epsilon))
+    while (vi <= (frequency + v->epsil))
     {
         // puts("---------------------------------\n");
         v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);

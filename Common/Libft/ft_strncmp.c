@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 21:14:07 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/21 20:53:41 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 04:39:37 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 00:26:29 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 20:21:38 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 05:53:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 void	init_bonus(t_data *v)
 {
-	v->epsilon = 1e-8; // ??? hit the wall in the origin axis 
+	v->epsil = 1e-8; // ??? hit the wall in the origin axis 
 	v->scal = 6;      // 19
 	v->orientation = strchr_c("WSEN", v->pars.palayer_dir) * 90;
 	v->hook.angle_dir = 0;
 	v->hook.angle_speed = 3;
 	v->hook.walk_dir = 0;
 	v->hook.walk_speed = 1.5;
-	v->hook.angleOr = 0;
-	v->ProjPlane = (WIDTH / 2) / tan(Rad(30));
+	v->hook.angleor = 0;
+	v->projplane = (WIDTH / 2) / tan(rad(30));
 	v->x = (v->pars.x * v->scal + v->scal / 2);
 	v->y = (v->pars.y * v->scal + v->scal / 2);
 	v->sprt.frames = 0;
 	v->sprt.ind_sprite_text = 0;
 	v->sprite = NULL;
-	v->door.DOOR_buff = NULL;
+	v->door.door_buff = NULL;
 	v->sprt.sprite_buff = NULL;
 	get_textures(v);
 	get_text_door(v);
 	get_text_sprites(v);
-	v->MiniMap.raduis = HIGHT / 10;
-	v->MiniMap.trans_x = (WIDTH / 2) - v->x - 650;
-    v->MiniMap.trans_y = v->MiniMap.raduis - v->y + 750;
+	v->minimap.raduis = HIGHT / 10;
+	v->minimap.trans_x = (WIDTH / 2) - v->x - 650;
+    v->minimap.trans_y = v->minimap.raduis - v->y + 750;
 }
 
 
@@ -63,7 +63,7 @@ void	cube3D_bonus(t_data *v)
 		v->x_wind += 1;
 	}
 	mini_maps(v, 0x808080);
-	render_sprite_MiniMap(v, hold);
+	render_sprite_minimap(v, hold);
 	clear_objt(&hold);
 }
 

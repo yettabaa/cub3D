@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/21 20:51:29 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 05:34:41 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	parsing_bonus(t_data *v, int ac, char **av);
 void	if_duplicate(t_map_result *v);
 void	if_duplicate_bonus(t_data *v);
 int		tab_spaces_checker(char *str);
-void	_sprites(t_data *v, int k, int i, int j);
 void	duplicate_error(t_map_result *res);
 int		door_sides(char **map, int y, int x);
 void	check_door_pos(char *str, char **array, int y, char **map);

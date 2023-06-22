@@ -6,7 +6,7 @@
 #    By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:39:51 by yettabaa          #+#    #+#              #
-#    Updated: 2023/06/22 00:33:42 by yettabaa         ###   ########.fr        #
+#    Updated: 2023/06/22 05:21:17 by yettabaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -Iinclude -Ofast -g -fsanitize=address
 
 MLXFLAGS =  -lmlx -framework OpenGL -framework AppKit -Iinclude -g -fsanitize=address 
 
-HEADER = ./include/cub3D.h ./include/parsing.h ./Libft/libft.h
+HEADER = ./include/cub3D.h ./include/parsing.h ./Libft/libft.h ./include/cub3D_bonus.h
 
 MAND =	Mandatory/cub3D.c  Mandatory/raycasting.c Mandatory/rendering_wall.c
 		

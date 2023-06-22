@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 12:19:49 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/21 16:43:26 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 04:40:14 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	if (!s1 || !set)
 		return (0);
-	if (spaces_checker((char*)s1))
+	if (spaces_checker((char *)s1))
 		return (ft_strdup(""));
 	l = ft_strlen(s1);
 	i = 0;

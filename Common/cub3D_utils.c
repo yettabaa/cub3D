@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 00:57:49 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/21 20:20:24 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 05:53:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	is(t_data *v, double ang, int flag)
 		return (0);
 }
 
-double	Rad(double angle)
+double	rad(double angle)
 {
 	return (angle * (M_PI / 180));
 }
@@ -69,6 +69,6 @@ void	ft_exit(t_data *v, const char *str, int status)
 	free(v->pars.we);
 	free(v->sprite);
 	free(v->sprt.sprite_buff);
-	free(v->door.DOOR_buff);
+	free(v->door.door_buff);
 	exit(status);
 }
