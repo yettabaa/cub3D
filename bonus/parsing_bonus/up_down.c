@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   up_down.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:14:10 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/21 22:40:16 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:17:35 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	fill_down_map(char **map, char **new, char **array)
 	{
 		free_array(array);
 		free_array(new);
-		ft_error("Error: empty line", "");
+		ft_error("Invalid data", "");
 	}
 }
 

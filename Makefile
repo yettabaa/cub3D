@@ -6,15 +6,15 @@
 #    By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/15 18:39:51 by yettabaa          #+#    #+#              #
-#    Updated: 2023/06/22 05:21:17 by yettabaa         ###   ########.fr        #
+#    Updated: 2023/06/22 18:55:12 by yettabaa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Ofast -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Ofast -g #-fsanitize=address
 
-MLXFLAGS =  -lmlx -framework OpenGL -framework AppKit -Iinclude -g -fsanitize=address 
+MLXFLAGS =  -lmlx -framework OpenGL -framework AppKit -Iinclude -g #-fsanitize=address 
 
 HEADER = ./include/cub3D.h ./include/parsing.h ./Libft/libft.h ./include/cub3D_bonus.h
 
@@ -41,15 +41,15 @@ OMAND = $(MAND:.c=.o) $(pars:.c=.o) $(COMMON:.c=.o)
 OBONUS = $(BONUS:.c=.o) $(parsB:.c=.o) $(COMMON:.c=.o) 
 
 
-OCOMM = 
-
 LIBFT = Common/Libft/libft.a
 
 NAME = cub3D
 
+NAME_BONUS = cub3D_bonus
+
 all:	$(NAME)
 
-%.o: %.c $(HEADER)
+%.o: %.c include/cub3D.h include/parsing.h include/cub3D_bonus.h Common/Libft/libft.h
 	$(CC)  $(CFLAGS) -c $< -o $@ 
 	
 $(NAME): $(OMAND)
@@ -58,13 +58,13 @@ $(NAME): $(OMAND)
 	
 bonus: $(OBONUS)
 	make -C Common/Libft
-	$(CC)  $(MLXFLAGS) $(OBONUS) $(LIBFT) -o cub3D_bonus
+	$(CC)  $(MLXFLAGS) $(OBONUS) $(LIBFT) -o $(NAME_BONUS)
 	
 clean: 
 	make clean -C Common/Libft
 	rm -rf $(OMAND) $(OBONUS)
 
 fclean:clean
-	rm -rf $(NAME) $(LIBFT) cub3D_bonus
+	rm -rf $(NAME) $(LIBFT) $(NAME_BONUS)
 
 re:fclean all bonus

@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 02:19:46 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/22 05:54:21 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:56:07 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,15 @@ t_object	*newsprite(t_data *v, t_GetSprites sprite)
 {
 	t_object	*node;
 	double		fov_angle;
-	double		projp_sprite;
+	double		sprite_screen_post;
 
 	node = malloc(sizeof(t_object));
 	if (!node)
 		ft_exit(v, "Error\nAllocate new sprite failed !", 1);
 	node->type = SPRITE;
 	fov_angle = _deg(atan2(sprite.ys - v->y, sprite.xs - v->x))
-		- (v->orientation);
-	projp_sprite = tan(rad(fov_angle)) * v->projplane;
+		- v->orientation;
+	sprite_screen_post = tan(rad(fov_angle)) * v->projplane;
 	node->x = sprite.xs;
 	node->y = sprite.ys;
 	node->rydis_fbw = des_betw_2pt(sprite.xs, sprite.ys, v->x, v->y)
@@ -76,7 +76,7 @@ t_object	*newsprite(t_data *v, t_GetSprites sprite)
 	node->diemension = (v->scal / node->rydis_fbw) * v->projplane;
 	node->y0 = (HIGHT / 2) - (node->diemension / 2);
 	node->y1 = node->y0 + node->diemension;
-	node->x0 = (WIDTH / 2) + projp_sprite - (node->diemension / 2);
+	node->x0 = (WIDTH / 2) + sprite_screen_post - (node->diemension / 2);
 	node->x1 = node->x0 + node->diemension;
 	node->next = NULL;
 	return (node);

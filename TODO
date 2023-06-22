@@ -1,13 +1,7 @@
 -leaks
-- max doors and sprites
--memmove
--leaks buff bonus
 -error msg
--error msg invalid placement of doors
 -norm
 - fham my_exel_pute bonus
--add heder bonus to makefile
--relinke headers
 -atan2
 
 === >modif parsing;

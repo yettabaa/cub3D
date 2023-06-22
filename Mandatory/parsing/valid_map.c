@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:04:20 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/22 01:02:19 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:14:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	parsing(t_data *v, int ac, char **av)
 	free_array(map);
 	if (!v->pars.map)
 		ft_error("map not found", "");
+	check_null(&v->pars);
 	if_duplicate(&v->pars);
 	player_position(&v->pars);
 	free_array(v->pars.map);

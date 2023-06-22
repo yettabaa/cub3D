@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:39:19 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/22 05:56:07 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:36:22 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void initialisation(t_data *v)
 {
-    v->epsil = 1e-8; // ??? hit the wall in the origin axis  // (1,5) angle 225
-    v->scal = 12; // 19
+    v->epsil = 1e-8;
+    v->scal = 12;
     v->orientation = strchr_c("WSEN", v->pars.palayer_dir) * 90;
     v->hook.angle_dir = 0;
     v->hook.angle_speed = 3;
     v->hook.walk_dir = 0;
-    v->hook.walk_speed = 1.5;
+    v->hook.walk_speed = 1.6;
     v->hook.angleor = 0;
     v->x = (v->pars.x * v->scal + v->scal / 2);
     v->y = (v->pars.y * v->scal + v->scal / 2);

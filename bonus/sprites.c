@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 22:58:38 by yettabaa          #+#    #+#             */
-/*   Updated: 2023/06/22 05:54:21 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:50:10 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ t_object	*visible_sprite(t_data *v)
 
 void	render_ssprite(t_data *v, t_object *object)
 {
-	(v->sprt.frames == 7 * WIDTH + 1) && (v->sprt.frames = 0);
-	(v->sprt.frames == 7 * WIDTH) && (v->sprt.ind_sprite_text += 1);
+	(v->sprt.frames == 5 * WIDTH + 1) && (v->sprt.frames = 0);
+	(v->sprt.frames == 5 * WIDTH) && (v->sprt.ind_sprite_text += 1);
 	(v->sprt.ind_sprite_text == 5) && (v->sprt.ind_sprite_text = 0);
 	fill_sprite(v, v->sprt.ind_sprite_text % 5);
 	v->sprt.frames += 1;
@@ -87,10 +87,8 @@ void	sprite_disc(t_data *v, double x, double y, int color)
 		x0 = -radius;
 		while (x0 <= radius)
 		{
-			if (round(x0 + x) >= 0 && round(x0 + x) < WIDTH && round(y0
-					+ y) >= 0 && round(y0 + y) < HIGHT)
-				if ((x0 * x0) + y0 * y0 <= radius * radius)
-					my_pixel_put(v, x0 + x, y0 + y, color);
+			if ((x0 * x0) + y0 * y0 <= radius * radius)
+				my_pixel_put(v, x0 + x, y0 + y, color);
 			x0++;
 		}
 		y0++;
@@ -104,9 +102,7 @@ void	render_sprite_minimap(t_data *v, t_object *sprites)
 	hold = sprites;
 	while (hold)
 	{
-		if (hold->x + v->minimap.trans_x >= 0 && hold->x
-			+ v->minimap.trans_x < WIDTH && hold->y + v->minimap.trans_y >= 0
-			&& hold->y + v->minimap.trans_y < HIGHT)
+		if (hold->rydis_fbw < v->minimap.raduis)
 			sprite_disc(v, hold->x + v->minimap.trans_x, hold->y
 				+ v->minimap.trans_y, 0xff0000);
 		hold = hold->next;

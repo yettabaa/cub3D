@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   space_valid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:08:27 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/21 23:58:49 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 19:32:44 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	check_0_pos(char *str, char **array, int y, char **map)
 	while (str[i])
 	{
 		if (str[i] == '0' || str[i] == 'N'
-			|| str[i] == 'S' || str[i] == 'E' || str[i] == 'W')
+			|| str[i] == 'S' || str[i] == 'E' || str[i] == 'W' || str[i] == '3' || str[i] == '2')
 		{
 			if (check_directions(map, y, i) == 0)
 			{

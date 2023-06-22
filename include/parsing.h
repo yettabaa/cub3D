@@ -6,7 +6,7 @@
 /*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:45 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/22 05:34:41 by yettabaa         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:14:06 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,6 @@ void	check_door_pos(char *str, char **array, int y, char **map);
 void	checker_bonus(t_data *v);
 int		player_position(t_map_result *res);
 void	ft_error(const char *error_msg, const char *str);
+void	check_null(t_map_result *res);
+
 #endif

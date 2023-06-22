@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfoughal <nfoughal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yettabaa <yettabaa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 22:12:14 by nfoughal          #+#    #+#             */
-/*   Updated: 2023/06/21 23:42:20 by nfoughal         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:10:19 by yettabaa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	init_map(t_map_result *res)
 {
-	res->c = 0;
-	res->f = 0;
+	res->c = -1;
+	res->f = -1;
 	res->ea = NULL;
 	res->map = NULL;
 	res->no = NULL;
