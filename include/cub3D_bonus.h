@@ -101,5 +101,6 @@ void				addobjt(t_object **lst, t_object *new);
 void				clear_objt(t_object **lst);
 void				mini_maps(t_data *v, int color);
 int					mouse_hook(int x, int y, t_data *v);
+int					_mouse_hook(int x, int y, t_data *v);
 
 #endif

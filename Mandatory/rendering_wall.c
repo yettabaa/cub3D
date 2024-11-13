@@ -20,23 +20,27 @@ void	get_textures(t_data *v)
 	tx_img = mlx_xpm_file_to_image(v->mlx.mlx, v->pars.no, &v->tx.nowdt,
 			&v->tx.noh);
 	if (!tx_img)
-		ft_exit(v, "Error\nInvalid NO PATH !", 1);
+		my_exit(v, "Error\nInvalid NO PATH !", 1);
 	v->tx.nob = (unsigned int *)mlx_get_data_addr(tx_img, &b, &v->tx.nol, &b);
+	collect_node(&v->collect, creat_node(v, tx_img));
 	tx_img = mlx_xpm_file_to_image(v->mlx.mlx, v->pars.so, &v->tx.sow,
 			&v->tx.soh);
 	if (!tx_img)
-		ft_exit(v, "Error\nInvalid SO PATH !", 1);
+		my_exit(v, "Error\nInvalid SO PATH !", 1);
 	v->tx.sob = (unsigned int *)mlx_get_data_addr(tx_img, &b, &v->tx.sol, &b);
+	collect_node(&v->collect, creat_node(v, tx_img));
 	tx_img = mlx_xpm_file_to_image(v->mlx.mlx, v->pars.we, &v->tx.wew,
 			&v->tx.weh);
 	if (!tx_img)
-		ft_exit(v, "Error\nInvalid WE PATH !", 1);
+		my_exit(v, "Error\nInvalid WE PATH !", 1);
 	v->tx.web = (unsigned int *)mlx_get_data_addr(tx_img, &b, &v->tx.wel, &b);
+	collect_node(&v->collect, creat_node(v, tx_img));
 	tx_img = mlx_xpm_file_to_image(v->mlx.mlx, v->pars.ea, &v->tx.eaw,
 			&v->tx.eah);
 	if (!tx_img)
-		ft_exit(v, "Error\nInvalid EA PATH !", 1);
+		my_exit(v, "Error\nInvalid EA PATH !", 1);
 	v->tx.eab = (unsigned int *)mlx_get_data_addr(tx_img, &b, &v->tx.wal, &b);
+	collect_node(&v->collect, creat_node(v, tx_img));
 }
 
 void	fill_textures(t_data *v, int flag)

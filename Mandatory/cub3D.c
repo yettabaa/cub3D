@@ -12,6 +12,7 @@
 
 #include "cub3D.h"
 
+
 void initialisation(t_data *v)
 {
     v->epsil = 1e-8;
@@ -27,6 +28,7 @@ void initialisation(t_data *v)
     v->sprite = NULL;
     v->door.door_buff = NULL;
 	v->sprt.sprite_buff = NULL;
+    v->collect = NULL;
     get_textures(v);
 }
 void maps2d(t_data *v)
@@ -51,7 +53,7 @@ void maps2d(t_data *v)
         j++;
     }
 }
-void	old_dda(t_data *v, double x0, double y0, unsigned int color) // hyedha
+void	old_dda(t_data *v, double x0, double y0, unsigned int color)
 {
 	int i;
 	double xinc;
@@ -84,7 +86,7 @@ void minimaps(t_data *v, int color)
         v->ryc.ang = normalize_angle_360(v->orientation -30 + vi);
         raycasting(v, v->ryc.ang);
     
-        old_dda(v, v->x , v->y , color);  // round to int for handle the corner in 2d
+        old_dda(v, v->x , v->y , color);
         vi += 0.1;
     }
 }
@@ -106,7 +108,7 @@ void cube3D(t_data *v)
         vi += (double)60 / (double)WIDTH;
         v->x_wind += 1;
     }
-    minimaps(v, 0x808080);
+    minimaps(v, 0x808080); // remove this if you don't need map
 }
 
 int loop_hook(void *ptr)
@@ -122,48 +124,18 @@ int loop_hook(void *ptr)
     mlx_destroy_image(v->mlx.mlx, v->mlx.img);
     return (0);
 }
-void f()
-{
-	system("leaks cub3D");
-}
+
 int main(int ac ,char **av)
 {
 	t_data v;
 
-    // atexit(f);
 	v.mlx.mlx = mlx_init();
 	v.mlx.mlx_win = mlx_new_window(v.mlx.mlx, WIDTH, HIGHT, "cub3D");
-	v.mlx.img = mlx_new_image(v.mlx.mlx, WIDTH, HIGHT);
-	v.mlx.addr = mlx_get_data_addr(v.mlx.img, &v.mlx.bits_per_pixel, &v.mlx.line_length,
-								&v.mlx.endian); 
     parsing(&v, ac, av);
     initialisation(&v);
-    cube3D(&v);
-	mlx_put_image_to_window(v.mlx.mlx, v.mlx.mlx_win, v.mlx.img, 0, 0);
     mlx_loop_hook(v.mlx.mlx, loop_hook, &v);
-    mlx_hook(v.mlx.mlx_win, 2, 0, key_press, &v);
-    mlx_hook(v.mlx.mlx_win, 3, 0, key_release, &v);
-    mlx_hook(v.mlx.mlx_win, 17, 0, destroy, &v);
+    mlx_hook(v.mlx.mlx_win, 2, 1L<<0, _press, &v);
+    mlx_hook(v.mlx.mlx_win, 3, 1L<<1, _release, &v);
+    mlx_hook(v.mlx.mlx_win, 17, 0, _destroy, &v);
 	mlx_loop(v.mlx.mlx);
 }
-// int	main(int ac, char **av)
-// {
-// 	t_data v;
-// 	atexit(f);
-// 	parsing(&v, ac, av);
-//     initialisation(&v);
-// 		// checker_bonus(&v);
-// 	int i = 0;
-// 	 while (v.pars.map2[i])
-//     {
-//         printf("|%s|\n", v.pars.map2[i++]);
-//     }
-// 	free_array(v.pars.map2);
-// 	// free_array(v.pars.map);
-// 	free(v.pars.so);
-// 	free(v.pars.no);
-// 	free(v.pars.ea);
-// 	free(v.pars.we);
-// 	free(v.sprite);
-//     printf("i = %d j = %d\n", v.pars.i, v.pars.j);
-// }

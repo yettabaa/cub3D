@@ -18,7 +18,7 @@ t_object	*copie_node(t_data *v, t_object *src)
 
 	node = malloc(sizeof(t_object));
 	if (!node)
-		ft_exit(v, "Error\nAlocate copie node failed !", 1);
+		my_exit(v, "Error\nAlocate copie node failed !", 1);
 	ft_memmove(node, src, sizeof(t_object));
 	node->next = NULL;
 	return (node);
@@ -78,7 +78,7 @@ void	checker_bonus(t_data *v)
 	{
 		v->sprite = malloc(sizeof(t_GetSprites) * v->sprt.count_sprites);
 		if (!v->sprite)
-			ft_exit(v, "Error\nAllocate t_sprites failed !", 1);
+			my_exit(v, "Error\nAllocate t_sprites failed !", 1);
 	}
 	while (v->pars.map2[++j])
 	{
@@ -89,7 +89,7 @@ void	checker_bonus(t_data *v)
 				|| v->pars.map2[j - 1][i] != '1'))
 				&& (v->pars.map2[j][i] == '2' && (v->pars.map2[j][i + 1] != '1'
 						|| v->pars.map2[j][i - 1] != '1')))
-				ft_exit(v, "Error\nInvalid placement of a door", 1);
+				my_exit(v, "Error\nInvalid placement of a door", 1);
 			(v->pars.map2[j][i] == '3') && (_sprites(v, k++, i, j));
 		}
 	}

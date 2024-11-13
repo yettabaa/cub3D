@@ -12,9 +12,13 @@
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Iinclude -Ofast -g #-fsanitize=address
+CFLAGS = -Iinclude -Ofast -g #-fsanitize=address
+
+MLX_DIR = mlx-linux
 
 MLXFLAGS =  -lmlx -framework OpenGL -framework AppKit -Iinclude -g #-fsanitize=address 
+
+MLXFLAGS_LINUX = -L$(MLX_DIR) -lmlx -L/usr/lib -I$(MLX_DIR) -lXext -lX11 -lm -lz -Iinclude -Ofast
 
 HEADER = ./include/cub3D.h ./include/parsing.h ./Libft/libft.h ./include/cub3D_bonus.h
 
@@ -24,7 +28,7 @@ BONUS = bonus/cub3D_bonus.c bonus/maps_2D.c bonus/raycasting_bonus.c bonus/door.
 		bonus/sprites.c bonus/render_wall_bonus.c bonus/sprites_init.c \
 		Mandatory/raycasting.c Mandatory/rendering_wall.c
 		
-COMMON = Common/hooks.c Common/cub3D_utils.c Common/shapes.c
+COMMON = Common/hooks.c Common/cub3D_utils.c Common/shapes.c adapt_linux/utils.c
 
 pars = 	Mandatory/parsing/parsing.c Mandatory/parsing/utils.c Mandatory/parsing/get_next_line/get_next_line.c \
 		Mandatory/parsing/get_next_line/get_next_line_utils.c Mandatory/parsing/valid_map.c Mandatory/parsing/first_lines.c \
@@ -50,18 +54,21 @@ NAME_BONUS = cub3D_bonus
 all:	$(NAME)
 
 %.o: %.c include/cub3D.h include/parsing.h include/cub3D_bonus.h Common/Libft/libft.h
-	$(CC)  $(CFLAGS) -c $< -o $@ 
+	$(CC) $(CFLAGS) -I/usr/include -I$(MLX_DIR) -O3 -c $< -o $@ 
 	
 $(NAME): $(OMAND)
 	make -C Common/Libft
-	$(CC)  $(MLXFLAGS) $(OMAND) $(LIBFT) -o $(NAME)
+	make -C mlx-linux
+	$(CC) $(CFLAGS) $(OMAND) $(LIBFT) $(MLXFLAGS_LINUX) -o $(NAME)
 	
 bonus: $(OBONUS)
 	make -C Common/Libft
-	$(CC)  $(MLXFLAGS) $(OBONUS) $(LIBFT) -o $(NAME_BONUS)
+	make -C mlx-linux
+	$(CC) $(CFLAGS) $(OBONUS) $(LIBFT) $(MLXFLAGS_LINUX) -o $(NAME_BONUS)
 	
 clean: 
 	make clean -C Common/Libft
+	make clean -C mlx-linux
 	rm -rf $(OMAND) $(OBONUS)
 
 fclean:clean

@@ -51,6 +51,7 @@ typedef struct s_mlx
 	void			*mlx;
 	void			*mlx_win;
 	void			*img;
+	void 			*img_background;
 	char			*addr;
 	int				bits_per_pixel;
 	int				line_length;
@@ -106,6 +107,13 @@ typedef struct s_textures
 
 }					t_textures;
 
+typedef struct s_collect
+{
+	void *ptr;
+	struct s_collect *next;
+} t_collect;
+
+
 typedef struct s_data
 {
 	double			x;
@@ -130,6 +138,7 @@ typedef struct s_data
 	t_map_result	pars;
 	t_rycast		ryc;
 	t_mlx			mlx;
+	t_collect		*collect;
 }					t_data;
 
 typedef struct s_norme1
@@ -176,5 +185,12 @@ void				update(t_data *v);
 void				get_textures(t_data *v);
 void				dda_textures(t_data *v, double y0, double y1, int flag);
 void				fill_textures(t_data *v, int flag);
+void				my_exit(t_data *v, const char *str, int status);
+int					_press(int keycode, t_data *v);
+int					_release(int keycode, t_data *v);
+int					_destroy(t_data *v);
+t_collect *creat_node(t_data *v, void *ptr);
+void	collect_node(t_collect **lst, t_collect *new);
+void	clear_collector(t_data *v, t_collect **lst);
 
 #endif

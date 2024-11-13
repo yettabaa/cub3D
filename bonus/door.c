@@ -21,10 +21,10 @@ void	get_text_door(t_data *v)
 	void	*tx_img;
 
 	i = 0;
-	v->door.door_buff = malloc(sizeof(unsigned int *) * 34);
+	v->door.door_buff = malloc(sizeof(unsigned int *) * 33);
 	if (!v->door.door_buff)
-		ft_exit(v, "Error\nAllocate door buffer failed !", 1);
-	while (i <= 32)
+		my_exit(v, "Error\nAllocate door buffer failed !", 1);
+	while (i < 33)
 	{
 		itoa = ft_itoa(i + 1);
 		path = ft_strjoin3("./Common/textures/DOOR/", itoa, ".xpm");
@@ -33,9 +33,10 @@ void	get_text_door(t_data *v)
 		free(itoa);
 		free(path);
 		if (!tx_img)
-			ft_exit(v, "Error\nInvalid Door PATH !", 1);
+			my_exit(v, "Error\nInvalid Door PATH !", 1);
 		v->door.door_buff[i++] = (unsigned int *)mlx_get_data_addr(tx_img,
 				&endian, &v->door.door_line, &endian);
+		collect_node(&v->collect, creat_node(v, tx_img));
 	}
 }
 
@@ -51,10 +52,9 @@ t_object	*newdoor(t_data *v, double ryd, int flag)
 {
 	t_object	*nd;
 
-	(void)v;
 	nd = malloc(sizeof(t_object));
 	if (!nd)
-		ft_exit(v, "Error\nAllocate new door failed !", 1);
+		my_exit(v, "Error\nAllocate new door failed !", 1);
 	nd->type = DOOR;
 	(flag == WALL) && (nd->type = WALL);
 	nd->rydis = ryd;

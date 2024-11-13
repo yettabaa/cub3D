@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <mlx_int.h>
 
 void	get_text_sprites(t_data *v)
 {
@@ -23,8 +24,8 @@ void	get_text_sprites(t_data *v)
 	i = 0;
 	v->sprt.sprite_buff = malloc(sizeof(unsigned int *) * 5);
 	if (!v->sprt.sprite_buff)
-		ft_exit(v, "Error\nAllocate sprite buff failed !", 1);
-	while (i <= 4)
+		my_exit(v, "Error\nAllocate sprite buff failed !", 1);
+	while (i < 5)
 	{
 		itoa = ft_itoa(i);
 		path = ft_strjoin3("./Common/textures/sprite/", itoa, ".xpm");
@@ -33,9 +34,10 @@ void	get_text_sprites(t_data *v)
 		free(itoa);
 		free(path);
 		if (!tx_img)
-			ft_exit(v, "Error\nInvalid Sprite PATH !", 1);
+			my_exit(v, "Error\nInvalid Sprite PATH !", 1);
 		v->sprt.sprite_buff[i++] = (unsigned int *)mlx_get_data_addr(tx_img,
 				&endian, &v->sprt.sprite_line, &endian);
+		collect_node(&v->collect, creat_node(v, tx_img));
 	}
 }
 
@@ -64,7 +66,7 @@ t_object	*newsprite(t_data *v, t_GetSprites sprite)
 
 	node = malloc(sizeof(t_object));
 	if (!node)
-		ft_exit(v, "Error\nAllocate new sprite failed !", 1);
+		my_exit(v, "Error\nAllocate new sprite failed !", 1);
 	node->type = SPRITE;
 	fov_angle = _deg(atan2(sprite.ys - v->y, sprite.xs - v->x))
 		- v->orientation;
