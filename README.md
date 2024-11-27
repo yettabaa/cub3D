@@ -2,7 +2,7 @@
 
 [![42 Badge](https://img.shields.io/badge/Score-125%2F100-brightgreen)](#)
 
-![Project Preview](https://github.com/yettabaa/cube3D/blob/master/assets/cube3D.gif)
+![Project Preview](https://github.com/yettabaa/cub3D/blob/master/assets/cub3D.gif)
 
 **Cube3D** is a 42 School project that implements a 3D maze renderer using raycasting techniques. This project demonstrates real-time rendering of walls, ceilings, and floors, delivering an immersive gaming experience. Completed with all mandatory and bonus features, including a minimap system, animated sprites, and interactive doors.
 
