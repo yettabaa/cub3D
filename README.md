@@ -29,11 +29,11 @@
 - **Validation Date**: June 22, 2023  
 - **Score**: 125/100 (including bonus)  
 - **Mandatory Features**:  
-  1. Parsing a well-defined map file format.  
-  2. Real-time 3D rendering using raycasting.  
-  3. Texture mapping for walls.  
-  4. Floor and ceiling color rendering.  
-  5. Basic player navigation (movement and rotation).  
+  - Parsing a well-defined map file format.  
+  - Real-time 3D rendering using raycasting.  
+  - Texture mapping for walls.  
+  - Floor and ceiling color rendering.  
+  - Basic player navigation (movement and rotation).  
 - **Bonus Features**:  
   1. Minimap system.  
   2. Interactive doors that open and close.  
