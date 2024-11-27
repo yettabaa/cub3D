@@ -18,8 +18,9 @@
 7. [Rendering Process](#rendering-process)  
 8. [Bonus Features](#bonus-features)  
 9. [Installation](#installation)  
-10. [Contributing](#contributing)  
-11. [License](#license)  
+10. [Usage](#usage)
+11. [Contributing](#contributing)  
+12. [License](#license)  
 
 ---
 
@@ -181,7 +182,26 @@ Run the program with all features enabled:
 ```  
 
 ---
-## **10. Contributing**  
+## **10. Usage**  
+
+**Cube3D** provides intuitive controls for navigating the 3D maze:  
+
+- **Arrow Keys**:  
+  - Left Arrow: Rotate the camera left.  
+  - Right Arrow: Rotate the camera right.  
+
+- **W/A/S/D**:  
+  - W: Move forward.  
+  - A: Move left.  
+  - S: Move backward.  
+  - D: Move right.  
+
+- **Shift**:  
+  - Hold Shift to increase movement speed.
+**Key Combinations**:  
+- You can combine any of the above keys for more complex movements, such as moving forward while rotating or moving sideways while increasing speed.
+---
+## **11. Contributing**  
 Contributions are welcome! If you have suggestions for improving this project, feel free to fork the repository and submit a pull request.  
 
 1. **Fork the Repository**  
@@ -201,7 +221,7 @@ Contributions are welcome! If you have suggestions for improving this project, f
 
 ---
 
-## **11. License**  
+## **12. License**  
 This project is licensed under the [MIT License](LICENSE).  
 
 ---
