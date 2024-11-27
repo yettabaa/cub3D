@@ -92,12 +92,11 @@ Additionally, the map specifies:
 Example map configuration:  
 
 ```  
-NO ./textures/north_wall.xpm  
-SO ./textures/south_wall.xpm  
-WE ./textures/west_wall.xpm  
-EA ./textures/east_wall.xpm  
-DO ./textures/door_texture.xpm  
-SP ./textures/sprite_texture.xpm  
+NO   ./Common/textures/text/image1.xpm
+SO   ./Common/textures/text/image3.xpm
+WE   ./Common/textures/text/image2.xpm
+EA   ./Common/textures/text/image4.xpm
+
 F 220,100,0  (Floor RGB Color)  
 C 0,50,200  (Ceiling RGB Color)  
 
