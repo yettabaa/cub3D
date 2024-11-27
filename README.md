@@ -35,9 +35,9 @@
   - Floor and ceiling color rendering.  
   - Basic player navigation (movement and rotation).  
 - **Bonus Features**:  
-  1. Minimap system.  
-  2. Interactive doors that open and close.  
-  3. Animated sprites.  
+  - Minimap system.  
+  - Interactive doors that open and close.  
+  - Animated sprites.  
 
 ---
 
