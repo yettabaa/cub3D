@@ -15,12 +15,11 @@
 4. [Allowed Functions and Libraries](#allowed-functions-and-libraries)  
 5. [Map Format](#map-format)  
 6. [Raycasting: The Core Logic](#raycasting-the-core-logic)  
-7. [Rendering Process](#rendering-process)  
-8. [Bonus Features](#bonus-features)  
-9. [Installation](#installation)  
-10. [Usage](#usage)
-11. [Contributing](#contributing)  
-12. [License](#license)  
+7. [Bonus Features](#bonus-features)  
+8. [Installation](#installation)  
+9. [Usage](#usage)
+10. [Contributing](#contributing)  
+11. [License](#license)  
 
 ---
 
@@ -131,21 +130,7 @@ Raycasting transforms a 2D map into a 3D-rendered environment. Key steps include
 
 ---
 
-## **7. Rendering Process**  
-Rendering occurs pixel by pixel for precision:  
-
-1. **Walls**:  
-   Textures are scaled and rendered based on the distance to each wall.  
-
-2. **Ceilings and Floors**:  
-   Pixels are filled with solid colors or optional textures.  
-
-3. **Doors and Sprites**:  
-   Doors automatically open/close when the player approaches, and sprites are animated.  
-
----
-
-## **8. Bonus Features**
+## **7. Bonus Features**
 
 - **Minimap System**:  
   Displays the player's position and the maze layout in real-time, aiding navigation through the environment. Additionally, it can detect enemies (sprites) even if they are behind walls, by using raycasting to identify if the line of sight is blocked by obstacles. This ensures that the minimap provides an accurate representation of the player’s surroundings, including hidden or obstructed enemies.
@@ -162,7 +147,7 @@ Rendering occurs pixel by pixel for precision:
 ---
 
 
-## **9. Installation**  
+## **8. Installation**  
 Clone the repository and compile the project:  
 
 ```bash  
@@ -190,7 +175,7 @@ Run the program with all features enabled:
 ```  
 
 ---
-## **10. Usage**  
+## **9. Usage**  
 
 **Cube3D** provides intuitive controls for navigating the 3D maze:  
 
@@ -209,7 +194,7 @@ Run the program with all features enabled:
 **Key Combinations**:  
 - You can combine any of the above keys for more complex movements, such as moving forward while rotating or moving sideways while increasing speed.
 ---
-## **11. Contributing**  
+## **10. Contributing**  
 Contributions are welcome! If you have suggestions for improving this project, feel free to fork the repository and submit a pull request.  
 
 1. **Fork the Repository**  
@@ -229,7 +214,7 @@ Contributions are welcome! If you have suggestions for improving this project, f
 
 ---
 
-## **12. License**  
+## **11. License**  
 This project is licensed under the [MIT License](LICENSE).  
 
 ---
