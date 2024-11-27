@@ -146,10 +146,19 @@ Rendering occurs pixel by pixel for precision:
 
 ---
 
-## **8. Bonus Features**  
-- **Minimap**: Displays the player's position and the maze layout in real-time.  
-- **Interactive Doors**: React to player proximity and animate open/close actions.  
-- **Animated Sprites**: Objects such as enemies or collectibles move and animate dynamically.  
+## **8. Bonus Features**
+
+- **Minimap System**:  
+  Displays the player's position and the maze layout in real-time, aiding navigation through the environment. Additionally, it can detect enemies (sprites) even if they are behind walls, by using raycasting to identify if the line of sight is blocked by obstacles. This ensures that the minimap provides an accurate representation of the player’s surroundings, including hidden or obstructed enemies.
+
+- **Interactive Doors**:  
+  Doors react to player proximity, animating open/close actions as the player approaches or interacts with them. The door textures are preloaded to represent different stages of the opening. As the player approaches, the door's texture index increases to simulate gradual opening, and decreases as the player moves away to close it. Raycasting is used to determine the player's proximity to the door, affecting which texture frame is displayed. Since raycasting can detect multiple doors in a single line of sight, objects are sorted by distance, and rendering occurs from the farthest to the closest.
+
+- **Animated Sprites**:  
+  Objects like enemies or collectibles are dynamically animated within the 3D environment. Similar to doors, sprites are rendered based on their distance from the player, with nearer objects appearing more prominently. Sprites are detected during map parsing using the player's viewpoint and field of vision. Their position is calculated using the arctangent of the difference between the player's and sprite's coordinates. Like doors, multiple sprites can be detected along the same ray, and all objects are sorted by distance, ensuring correct rendering order from farthest to closest.
+
+- **Distance Sorting**:  
+  Objects (walls, doors, sprites) are rendered in the correct order relative to the player's viewpoint by sorting them based on their distance from the player. This ensures that closer objects, such as doors or sprites, are rendered on top of farther ones to avoid visual overlap and maintain proper layering.
 
 ---
 
