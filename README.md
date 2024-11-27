@@ -165,7 +165,7 @@ make
 Run the program with a sample map (mandatory part only):  
 
 ```bash  
-./cub3d maps/maze.cub  
+./cub3D maps/map1.cub 
 ```  
 
 To compile the project with bonus features:  
@@ -177,7 +177,7 @@ make bonus
 Run the program with all features enabled:  
 
 ```bash  
-./cub3d_bonus maps/bonus_maze.cub  
+./cub3D_bonus maps/map0.cub 
 ```  
 
 ---
